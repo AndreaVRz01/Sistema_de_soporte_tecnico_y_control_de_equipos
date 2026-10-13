@@ -1,0 +1,8 @@
+{
+    "agents": [
+        "antigravity"
+    ],
+    "mcp": true,
+    "nightwatch": false,
+    "sail": false
+}
