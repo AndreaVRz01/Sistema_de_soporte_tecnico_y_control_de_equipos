@@ -17,6 +17,23 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', [
+                'admin',
+                'supervisor',
+                'encargado_activos',
+                'encargado_prestamos',
+                'tecnico',
+                'usuario',
+            ])->default('usuario')->comment('Cargos: admin, supervisor, encargado de activos, encargado de prestamos, tecnico, usuario');
+            $table->enum('user_type', [
+                'alumno',
+                'docente',
+                'administrativo',
+            ])->default('alumno')->comment('Tipo institucional: solo alumnos y maestros de la universidad');
+            $table->string('institutional_id')->unique()->comment('Matricula o clave de empleado universitario');
+            $table->string('career_or_department')->nullable()->comment('Carrera, facultad o departamento academico');
+            $table->string('phone', 25)->nullable();
+            $table->enum('status', ['activo', 'inactivo', 'sancionado'])->default('activo');
             $table->rememberToken();
             $table->timestamps();
         });
