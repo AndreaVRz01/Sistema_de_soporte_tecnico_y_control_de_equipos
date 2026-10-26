@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGA Enterprise - Módulo de Gestión de Activos y Préstamos</title>
+<!-- Google Fonts: Space Grotesk, JetBrains Mono, Hanken Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration verbatim from instructions -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "on-primary-container": "#7398b6",
+            "background": "#fff8f7",
+            "surface-bright": "#fff8f7",
+            "surface": "#fff8f7",
+            "secondary-container": "#feb956",
+            "secondary-fixed-dim": "#feb956",
+            "secondary": "#835500",
+            "on-primary-fixed": "#001e2f",
+            "tertiary-fixed-dim": "#d2c888",
+            "surface-container": "#ffe9e7",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-surface-variant": "#42474d",
+            "inverse-primary": "#a5cbea",
+            "on-background": "#410004",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#244a64",
+            "surface-container-high": "#ffe1df",
+            "on-secondary-fixed-variant": "#633f00",
+            "on-surface": "#410004",
+            "primary": "#001a2b",
+            "outline-variant": "#c2c7cd",
+            "inverse-surface": "#5f1415",
+            "inverse-on-surface": "#ffedeb",
+            "surface-variant": "#ffdad7",
+            "primary-fixed-dim": "#a5cbea",
+            "on-tertiary-container": "#47400e",
+            "primary-container": "#003049",
+            "primary-fixed": "#cae6ff",
+            "on-tertiary-fixed": "#201c00",
+            "on-error": "#ffffff",
+            "tertiary": "#675f2b",
+            "on-tertiary-fixed-variant": "#4e4715",
+            "on-secondary-fixed": "#291800",
+            "surface-dim": "#ffcfcb",
+            "secondary-fixed": "#ffddb4",
+            "surface-tint": "#3d627d",
+            "tertiary-fixed": "#efe4a2",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#ffdad7",
+            "tertiary-container": "#b6ac6f",
+            "outline": "#72787e",
+            "surface-container-low": "#fff0ef",
+            "on-secondary-container": "#734a00",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "0.75rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg": ["2.25rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-lg": ["0.875rem", { "lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-md": ["0.9375rem", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+            "headline-lg-mobile": ["1.625rem", { "lineHeight": "1.25", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-xl": ["3rem", { "lineHeight": "1.15", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "body-sm": ["0.8125rem", { "lineHeight": "1.45", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "body-lg": ["1.125rem", { "lineHeight": "1.55", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["1.5rem", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["2rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "1.2", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "label-md": ["0.75rem", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "headline-sm": ["1.25rem", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Material Symbols setup */
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+
+    /* Tactile Neumorphism Tokens */
+    .neo-surface-extruded {
+      background: #ffffff;
+      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .neo-surface-inset {
+      background: #fff8f7;
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 48, 73, 0.06);
+    }
+    .neo-button-tactile {
+      background: #003049;
+      box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.8), 4px 4px 12px rgba(0, 48, 73, 0.25);
+      transition: all 0.15s ease-in-out;
+    }
+    .neo-button-tactile:active {
+      transform: scale(0.98);
+      box-shadow: inset 2px 2px 5px rgba(0, 10, 20, 0.6);
+    }
+    .neo-button-secondary {
+      background: #ffffff;
+      box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.9), 3px 3px 9px rgba(0, 48, 73, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    .neo-button-secondary:active {
+      transform: scale(0.98);
+      box-shadow: inset 2px 2px 4px rgba(0, 48, 73, 0.1);
+    }
+    .neo-dropdown-floating {
+      box-shadow: 0 20px 35px -10px rgba(0, 48, 73, 0.2), 0 2px 8px rgba(0, 48, 73, 0.08);
+    }
+    /* Soft-Delete Strike-through and Styling */
+    .row-soft-deleted {
+      background-color: #fff0ef !important;
+      opacity: 0.78;
+    }
+    .row-soft-deleted .serial-strike {
+      text-decoration: line-through;
+      color: #9E2A2B;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-secondary-container selection:text-primary">
+<!-- ==================== TOP NAVIGATION BAR ==================== -->
+<!-- Conforms strictly to TopNavBar JSON Anchor and Styling Guidelines -->
+<header class="bg-surface text-primary border-b border-outline-variant shadow-sm w-full docked full-width top-0 z-40">
+<div class="flex justify-between items-center w-full px-space-lg py-space-sm h-16">
+<!-- Brand & Left Drawer Trigger Cluster -->
+<div class="flex items-center gap-space-md">
+<button class="neo-button-secondary p-space-xs rounded-xl flex items-center justify-center text-primary-container active:scale-[0.98] transition-transform duration-100 ease-in-out" id="sidebarToggleBtn" title="Abrir Menú de Navegación">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary-container" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1; font-size: 26px;">inventory_2</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">SIGA Enterprise</span>
+</div>
+<span class="hidden lg:inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full text-label-sm font-label-sm bg-primary-container text-surface-container-lowest border border-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+          v4.8 ERP Console
+        </span>
+</div>
+<!-- Center Links (Web Breakpoint) -->
+<nav class="hidden md:flex items-center gap-space-lg">
+<a class="text-on-surface-variant pb-1 hover:text-primary transition-colors duration-150 text-label-md font-label-md" href="#dashboard">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-secondary-container pb-1 text-label-md font-label-md flex items-center gap-1" href="#activos">
+<span class="material-symbols-outlined" data-icon="devices" style="font-size: 16px;">devices</span> Activos
+        </a>
+<a class="text-on-surface-variant pb-1 hover:text-primary transition-colors duration-150 text-label-md font-label-md" href="#prestamos">Préstamos</a>
+<a class="text-on-surface-variant pb-1 hover:text-primary transition-colors duration-150 text-label-md font-label-md" href="#mantenimiento">Mantenimiento</a>
+<a class="text-on-surface-variant pb-1 hover:text-primary transition-colors duration-150 text-label-md font-label-md" href="#bitacora">Bitácora</a>
+</nav>
+<!-- Trailing Controls: Quick Search, Quick Actions & Identity -->
+<div class="flex items-center gap-space-md">
+<!-- Quick search prompt trigger Ctrl+K -->
+<button class="hidden xl:flex items-center gap-space-sm px-space-sm py-1 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface-variant text-label-sm font-label-sm hover:border-secondary transition-all" onclick="document.getElementById('predictiveSearchInput').focus()">
+<span class="material-symbols-outlined" data-icon="search" style="font-size: 16px;">search</span>
+<span>Buscar activo...</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-[10px] border border-outline-variant">Ctrl + K</kbd>
+</button>
+<!-- Utility Icons -->
+<div class="flex items-center gap-1 border-r border-outline-variant pr-space-sm">
+<button class="p-space-xs rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" id="themeToggleBtn" title="Alternar Modo Oscuro/Claro">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<button class="relative p-space-xs rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Notificaciones del Sistema">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+</button>
+<button class="p-space-xs rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Centro de Soporte y ER Diagram">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+<!-- Role Badge & User Avatar -->
+<div class="flex items-center gap-space-sm pl-1">
+<div class="relative">
+<img alt="Avatar de usuario activo con chip de rol de Administrador" class="w-9 h-9 rounded-full object-cover border-2 border-secondary-container shadow-sm" data-alt="Fotografía de perfil profesional de un administrador de sistemas institucionales vestido con camisa ejecutiva azul marino, iluminado con luz neutra de estudio tecnológico, fondo desenfocado de centro de cómputo empresarial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyLhtVXjs1Bu5Ovujkv4OIS73G5bIne4vh19m6vyVWHaH58Lt6Q5abhXoCxIzJuvn7qqy52VZ75nKM0fk6M8-gCjKxTEFwqJ_PMFlEqGBdaTbIwzcWZktEYD1FuTBAJkHZlcpc5CpzhfQ6r5o7oyKx2e-1QHhKPnG-tN5FfO5jxc2gb1qlQ8krN83A2q_cpLwJ560uumabHc7v9R9fw_l5EBG3XIWU2ABL-F0OQ7c"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-600 rounded-full border-2 border-white" title="En línea"></span>
+</div>
+<div class="hidden sm:flex flex-col text-left">
+<div class="flex items-center gap-1">
+<span class="text-body-sm font-body-sm font-bold text-primary">Ing. Marcos V.</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm font-bold px-1.5 py-0.2 rounded text-[10px] uppercase">Admin</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant text-[11px]">Encargado de Activos / SysAdmin</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==================== SIDE NAVIGATION DRAWER ==================== -->
+<!-- SideNavBar Component as requested by Shared Components JSON -->
+<aside class="fixed top-0 left-0 h-full w-72 flex flex-col justify-between p-space-md bg-surface-container-low border-r border-outline-variant shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out" id="sideDrawer">
+<div>
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-space-md border-b border-outline-variant">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center font-bold text-headline-sm shadow-md">
+<span class="material-symbols-outlined" data-icon="apartment" style="font-variation-settings: 'FILL' 1;">apartment</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary">SIGA Enterprise</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Consola de Operaciones</p>
+</div>
+</div>
+<button class="p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container" id="closeDrawerBtn" title="Cerrar barra lateral">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Institutional Profile / ER Anchor Metadata -->
+<div class="my-space-md p-space-sm rounded-xl neo-surface-inset">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant mb-1">
+<span>Esquema Relacional:</span>
+<span class="font-bold text-primary">PostgreSQL 16</span>
+</div>
+<div class="text-[11px] font-label-sm text-on-surface-variant flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded bg-surface border border-outline-variant">Activos</span>
+<span class="px-1.5 py-0.5 rounded bg-surface border border-outline-variant">Tipo_activo</span>
+<span class="px-1.5 py-0.5 rounded bg-surface border border-outline-variant">Prestamos</span>
+<span class="px-1.5 py-0.5 rounded bg-surface border border-outline-variant">Ubicaciones</span>
+</div>
+</div>
+<!-- Navigation Tabs (Exact 7 tabs from JSON) -->
+<nav class="space-y-1">
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#dashboard">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="text-primary bg-surface-container-high font-bold rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg shadow-sm" href="#activos">
+<span class="material-symbols-outlined text-secondary" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>Activos</span>
+<span class="ml-auto text-label-sm font-label-sm bg-primary-container text-white px-1.5 py-0.5 rounded-full">148</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#prestamos">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span>Préstamos</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#tickets">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span>Tickets &amp; Mantenimiento</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#usuarios">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+<span>Usuarios &amp; Roles</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#bitacora">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>Bitácora</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#catalogo">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Catálogo Público</span>
+</a>
+</nav>
+<!-- Primary Sidebar CTA -->
+<div class="mt-space-lg">
+<button class="w-full neo-button-tactile text-white py-space-sm px-space-md rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-space-sm active:scale-[0.98]">
+<span class="material-symbols-outlined text-secondary-container" data-icon="confirmation_number">confirmation_number</span>
+<span>Generar Ticket</span>
+</button>
+</div>
+</div>
+<!-- Drawer Footer (Exact 2 tabs from JSON) -->
+<div class="pt-space-md border-t border-outline-variant space-y-1">
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#configuracion">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Configuración</span>
+</a>
+<a class="text-error hover:bg-error-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#logout">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Backdrop for Drawer -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden" id="drawerBackdrop"></div>
+<!-- ==================== MAIN CONTENT CANVAS ==================== -->
+<main class="flex-1 w-full max-w-[1600px] mx-auto px-space-md sm:px-space-lg lg:px-margin py-space-lg">
+<!-- Breadcrumb & Telemetry Banner -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-lg">
+<div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant mb-1">
+<span>Sistema Central</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right" style="font-size: 14px;">chevron_right</span>
+<span>Operación de Hardware</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right" style="font-size: 14px;">chevron_right</span>
+<span class="text-secondary font-bold">Gestión de Activos y Préstamos</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">Control Maestro de Activos</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">CRUD operacional de hardware, asignación de garantías, detalle de préstamos y auditoría de baja lógica.</p>
+</div>
+<!-- Action Buttons Cluster (Role Restricted) -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="neo-button-secondary text-primary font-label-md text-label-md px-space-md py-space-sm rounded-xl flex items-center gap-space-sm hover:border-secondary transition-all" id="btnOpenLoanModal">
+<span class="material-symbols-outlined text-secondary" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span>+ Generar Préstamo</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-surface-container font-label-sm text-on-surface-variant">Préstamos</span>
+</button>
+<button class="neo-button-tactile text-white font-label-md text-label-md px-space-md py-space-sm rounded-xl flex items-center gap-space-sm border border-secondary-container/40" id="btnOpenCreateAssetModal">
+<span class="material-symbols-outlined text-secondary-container" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span>+ Registrar Nuevo Activo</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-secondary text-white font-label-sm">Admin</span>
+</button>
+</div>
+</div>
+<!-- Quick Telemetry Bento Strip -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md mb-space-lg">
+<div class="neo-surface-extruded p-space-md rounded-2xl flex items-center justify-between border-l-4 border-l-emerald-600">
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Disponibles</span>
+<div class="text-headline-md font-headline-md text-primary mt-0.5">92 <span class="text-body-sm font-body-sm text-on-surface-variant font-normal">/ 148</span></div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<div class="neo-surface-extruded p-space-md rounded-2xl flex items-center justify-between border-l-4 border-l-secondary-container">
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">En Préstamo</span>
+<div class="text-headline-md font-headline-md text-primary mt-0.5">38 <span class="text-body-sm font-body-sm text-on-surface-variant font-normal">equipos</span></div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-amber-50 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="sync_alt">sync_alt</span>
+</div>
+</div>
+<div class="neo-surface-extruded p-space-md rounded-2xl flex items-center justify-between border-l-4 border-l-error">
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">En Reparación / Taller</span>
+<div class="text-headline-md font-headline-md text-primary mt-0.5">12 <span class="text-body-sm font-body-sm text-on-surface-variant font-normal">tickets</span></div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-error-container text-error flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="engineering">engineering</span>
+</div>
+</div>
+<div class="neo-surface-extruded p-space-md rounded-2xl flex items-center justify-between border-l-4 border-l-outline">
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Baja Lógica (Soft-Delete)</span>
+<div class="text-headline-md font-headline-md text-primary mt-0.5">6 <span class="text-body-sm font-body-sm text-on-surface-variant font-normal">archivados</span></div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="archive">archive</span>
+</div>
+</div>
+</div>
+<!-- ==================== SEARCH & ADVANCED FILTER PANEL ==================== -->
+<div class="neo-surface-extruded p-space-lg rounded-2xl mb-space-lg">
+<div class="flex flex-col lg:flex-row gap-space-md items-stretch lg:items-center justify-between">
+<!-- Live Predictive Search Box with Debossed Inset Style -->
+<div class="relative flex-1 max-w-2xl">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary" data-icon="search" style="font-variation-settings: 'FILL' 1;">search</span>
+<input class="w-full neo-surface-inset pl-11 pr-24 py-2.5 rounded-xl text-body-md font-body-md text-primary placeholder-on-surface-variant/70 focus:outline-none focus:ring-2 focus:ring-secondary-container transition-all" id="predictiveSearchInput" placeholder="Buscar por Número de Serie (SN), Código de Inventario, Nombre o Responsable..." type="text"/>
+<div class="absolute right-2.5 flex items-center gap-1.5">
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface px-1.5 py-0.5 rounded border border-outline-variant" id="searchStatusIndicator">Auto</span>
+<button class="text-on-surface-variant hover:text-error p-0.5 rounded hidden" id="clearSearchBtn" title="Limpiar búsqueda">
+<span class="material-symbols-outlined" data-icon="backspace" style="font-size: 16px;">backspace</span>
+</button>
+</div>
+</div>
+<!-- Predictive Results Dropdown (Interactive Overlay) -->
+<div class="hidden absolute top-full left-0 right-0 mt-2 neo-surface-extruded neo-dropdown-floating rounded-2xl p-space-sm z-30 border border-outline-variant" id="predictiveDropdown">
+<div class="px-space-sm py-1 border-b border-outline-variant flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Coincidencias en Vivo (Diagrama ER: Activos, Préstamos, Usuarios)</span>
+<span class="text-secondary font-bold">3 resultados</span>
+</div>
+<div class="divide-y divide-outline-variant/40 mt-1">
+<div class="p-space-sm hover:bg-surface-container rounded-lg cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="laptop_chromebook">laptop_chromebook</span>
+<div>
+<div class="text-body-md font-bold text-primary">MacBook Pro 16" M3 Max</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">SN: <span class="text-primary font-bold">C02FX088MD6R</span> • Código: <span class="text-secondary font-bold">ACT-2024-0012</span></div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-emerald-100 text-emerald-800 border border-emerald-300">Disponible</span>
+</div>
+<div class="p-space-sm hover:bg-surface-container rounded-lg cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary-container" data-icon="precision_manufacturing">precision_manufacturing</span>
+<div>
+<div class="text-body-md font-bold text-primary">Osciloscopio Digital Rigol DS1054Z</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">SN: <span class="text-primary font-bold">DS1ZA2239014</span> • Prestado a: <span class="font-bold">Dra. Claudia Méndez</span></div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-amber-100 text-secondary border border-amber-300">En Préstamo</span>
+</div>
+<div class="p-space-sm hover:bg-surface-container rounded-lg cursor-pointer flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline" data-icon="router">router</span>
+<div>
+<div class="text-body-md font-bold text-primary line-through text-on-surface-variant">Switch Cisco Catalyst 2960</div>
+<div class="text-label-sm font-label-sm text-error">Baja Lógica / Desmantelamiento (Audit #BL-991)</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-error-container text-on-error-container border border-error">Baja Lógica</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filter Selectors conforming directly to ER Entities -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Estatus_activo filter -->
+<div class="flex items-center gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="filterStatus">Estatus:</label>
+<select class="neo-surface-inset rounded-xl py-1.5 px-space-sm text-body-sm font-label-sm text-primary focus:outline-none focus:ring-1 focus:ring-secondary" id="filterStatus">
+<option value="ALL">Todos los Estatus</option>
+<option value="DISPONIBLE">Disponible (En Almacén)</option>
+<option value="PRESTAMO">En Préstamo (Activo)</option>
+<option value="MANTENIMIENTO">En Mantenimiento</option>
+<option value="GARANTIA">En Garantía Oficial</option>
+<option value="BAJA">Baja Lógica (Soft-Delete)</option>
+</select>
+</div>
+<!-- Tipo_activo filter -->
+<div class="flex items-center gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="filterType">Tipo:</label>
+<select class="neo-surface-inset rounded-xl py-1.5 px-space-sm text-body-sm font-label-sm text-primary focus:outline-none focus:ring-1 focus:ring-secondary" id="filterType">
+<option value="ALL">Todos los Tipos</option>
+<option value="COMPUTO">Cómputo &amp; Servidores</option>
+<option value="LAB">Instrumentación de Laboratorio</option>
+<option value="RED">Telecomunicaciones &amp; Red</option>
+<option value="AUDIO">Audiovisual &amp; Proyección</option>
+</select>
+</div>
+<!-- Area & Ubicaciones filter -->
+<div class="flex items-center gap-1">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="filterLocation">Ubicación:</label>
+<select class="neo-surface-inset rounded-xl py-1.5 px-space-sm text-body-sm font-label-sm text-primary focus:outline-none focus:ring-1 focus:ring-secondary" id="filterLocation">
+<option value="ALL">Todas las Áreas</option>
+<option value="LAB_A">Laboratorio Central A-102</option>
+<option value="DATACENTER">Datacenter Nivel 2</option>
+<option value="ALMACEN">Almacén General B</option>
+<option value="AULA_MAGNA">Aula Magna Auditorio</option>
+</select>
+</div>
+<!-- Reset Filter Button -->
+<button class="neo-button-secondary p-1.5 rounded-xl text-on-surface-variant hover:text-error transition-colors" id="resetFiltersBtn" title="Restablecer todos los filtros">
+<span class="material-symbols-outlined" data-icon="filter_alt_off">filter_alt_off</span>
+</button>
+</div>
+</div>
+<!-- Selection Batch Bar (Hidden by default, shown when items are checked) -->
+<div class="hidden mt-space-md pt-space-sm border-t border-outline-variant flex items-center justify-between bg-surface-container p-space-sm rounded-xl" id="batchActionBar">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="check_box">check_box</span>
+<span class="text-label-md font-label-md font-bold text-primary"><span id="selectedCountText">0</span> activos seleccionados</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="neo-button-secondary px-space-sm py-1 rounded-lg text-label-sm font-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined" data-icon="print">print</span> Imprimir Etiquetas QR
+          </button>
+<button class="neo-button-secondary px-space-sm py-1 rounded-lg text-label-sm font-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined" data-icon="assignment_return">assignment_return</span> Préstamo Masivo
+          </button>
+<button class="px-space-sm py-1 rounded-lg text-label-sm font-label-sm bg-error-container text-error hover:bg-error hover:text-white transition-colors flex items-center gap-1" id="batchSoftDeleteBtn">
+<span class="material-symbols-outlined" data-icon="delete_sweep">delete_sweep</span> Baja Lógica Múltiple
+          </button>
+</div>
+</div>
+</div>
+<!-- ==================== MAIN DATA TABLE & EMPTY STATE CONTAINER ==================== -->
+<div class="neo-surface-extruded rounded-2xl overflow-hidden border border-outline-variant shadow-md">
+<!-- Interactive Table Container -->
+<div class="overflow-x-auto" id="tableScrollContainer">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant text-label-md font-label-md text-primary">
+<th class="p-space-md w-12 text-center">
+<input class="rounded border-outline text-primary-container focus:ring-secondary-container h-4 w-4" id="selectAllCheckbox" type="checkbox"/>
+</th>
+<th class="p-space-md font-bold">Código &amp; Serial (Activos)</th>
+<th class="p-space-md font-bold">Nombre / Modelo</th>
+<th class="p-space-md font-bold">Tipo &amp; Categoría</th>
+<th class="p-space-md font-bold">Área &amp; Ubicación</th>
+<th class="p-space-md font-bold">Estatus</th>
+<th class="p-space-md font-bold">Garantía</th>
+<th class="p-space-md text-right font-bold pr-space-lg">Acciones Operativas</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-body-sm text-body-sm" id="assetsTableBody">
+<!-- ROW 1: Disponible -->
+<tr class="hover:bg-surface-container/50 transition-colors group" data-location="LAB_A" data-status="DISPONIBLE" data-type="COMPUTO">
+<td class="p-space-md text-center">
+<input class="row-checkbox rounded border-outline text-primary-container focus:ring-secondary-container h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-space-md">
+<div class="font-label-md font-bold text-primary tracking-wide">ACT-2024-0012</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span>SN:</span> <span class="font-semibold text-primary">C02FX088MD6R</span>
+</div>
+</td>
+<td class="p-space-md">
+<div class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary" data-icon="laptop_chromebook" style="font-size: 18px;">laptop_chromebook</span>
+                  MacBook Pro 16" Apple M3 Max
+                </div>
+<div class="text-on-surface-variant text-[11px]">36GB RAM • 1TB SSD • Space Black</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-label-sm font-label-sm bg-surface-container text-primary border border-outline-variant">
+                  Cómputo &amp; Servidores
+                </span>
+</td>
+<td class="p-space-md">
+<div class="font-semibold text-primary">Laboratorio Central</div>
+<div class="text-on-surface-variant text-label-sm font-label-sm">A-102 • Estante 04</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold shadow-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                  Disponible
+                </span>
+</td>
+<td class="p-space-md">
+<div class="text-label-sm font-label-sm text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-emerald-600" data-icon="verified" style="font-size: 16px;">verified</span>
+                  24 Meses
+                </div>
+<div class="text-[11px] text-on-surface-variant">Vence: Nov 2026 (AppleCare)</div>
+</td>
+<td class="p-space-md text-right pr-space-lg">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary hover:text-secondary" title="Ver Detalle Técnico">
+<span class="material-symbols-outlined" data-icon="visibility" style="font-size: 18px;">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary hover:text-secondary" title="Editar Activo">
+<span class="material-symbols-outlined" data-icon="edit" style="font-size: 18px;">edit</span>
+</button>
+<button class="btnLoanRow p-1.5 rounded-lg bg-secondary-container text-on-secondary-container hover:brightness-105 shadow-sm" title="Prestar este equipo">
+<span class="material-symbols-outlined" data-icon="handshake" style="font-size: 18px;">handshake</span>
+</button>
+<button class="btnTicketRow p-1.5 rounded-lg neo-button-secondary text-primary hover:text-error" title="Levantar Ticket de Servicio">
+<span class="material-symbols-outlined" data-icon="build" style="font-size: 18px;">build</span>
+</button>
+<button class="btnSoftDeleteRow p-1.5 rounded-lg neo-button-secondary text-error hover:bg-error-container" title="Dar de Baja Lógica (Soft-Delete)">
+<span class="material-symbols-outlined" data-icon="delete_forever" style="font-size: 18px;">delete_forever</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 2: En Préstamo -->
+<tr class="hover:bg-surface-container/50 transition-colors group" data-location="LAB_A" data-status="PRESTAMO" data-type="LAB">
+<td class="p-space-md text-center">
+<input class="row-checkbox rounded border-outline text-primary-container focus:ring-secondary-container h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-space-md">
+<div class="font-label-md font-bold text-primary tracking-wide">ACT-2023-0891</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span>SN:</span> <span class="font-semibold text-primary">DS1ZA2239014</span>
+</div>
+</td>
+<td class="p-space-md">
+<div class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary" data-icon="precision_manufacturing" style="font-size: 18px;">precision_manufacturing</span>
+                  Osciloscopio Digital Rigol DS1054Z
+                </div>
+<div class="text-on-surface-variant text-[11px]">4 Canales • 50 MHz • Decodificación I2C/SPI</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-label-sm font-label-sm bg-surface-container text-primary border border-outline-variant">
+                  Instrumentación Lab
+                </span>
+</td>
+<td class="p-space-md">
+<div class="font-semibold text-primary">Lab de Microelectrónica</div>
+<div class="text-secondary font-label-sm font-label-sm font-bold">Resp: Dra. Claudia Méndez</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-amber-50 text-secondary border border-secondary-container font-bold shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="schedule" style="font-size: 14px;">schedule</span>
+                  En Préstamo (3d rest.)
+                </span>
+</td>
+<td class="p-space-md">
+<div class="text-label-sm font-label-sm text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-emerald-600" data-icon="verified" style="font-size: 16px;">verified</span>
+                  12 Meses
+                </div>
+<div class="text-[11px] text-on-surface-variant">Vence: Mar 2025</div>
+</td>
+<td class="p-space-md text-right pr-space-lg">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary hover:text-secondary" title="Ver Detalle del Préstamo">
+<span class="material-symbols-outlined" data-icon="description" style="font-size: 18px;">description</span>
+</button>
+<button class="p-1.5 rounded-lg bg-surface-container text-secondary hover:bg-secondary hover:text-white font-label-sm px-2 py-1 flex items-center gap-1" title="Registrar Devolución Inmediata">
+<span class="material-symbols-outlined" data-icon="keyboard_return" style="font-size: 16px;">keyboard_return</span> Retorno
+                  </button>
+<button class="btnTicketRow p-1.5 rounded-lg neo-button-secondary text-primary hover:text-error" title="Reportar Falla">
+<span class="material-symbols-outlined" data-icon="build" style="font-size: 18px;">build</span>
+</button>
+<button class="btnSoftDeleteRow p-1.5 rounded-lg neo-button-secondary text-error hover:bg-error-container" title="Dar de Baja Lógica (Soft-Delete)">
+<span class="material-symbols-outlined" data-icon="delete_forever" style="font-size: 18px;">delete_forever</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 3: En Mantenimiento -->
+<tr class="hover:bg-surface-container/50 transition-colors group" data-location="DATACENTER" data-status="MANTENIMIENTO" data-type="RED">
+<td class="p-space-md text-center">
+<input class="row-checkbox rounded border-outline text-primary-container focus:ring-secondary-container h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-space-md">
+<div class="font-label-md font-bold text-primary tracking-wide">ACT-2022-0450</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span>SN:</span> <span class="font-semibold text-primary">FOC1824U01A</span>
+</div>
+</td>
+<td class="p-space-md">
+<div class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary" data-icon="router" style="font-size: 18px;">router</span>
+                  Switch Gestionable Cisco Catalyst 3850
+                </div>
+<div class="text-on-surface-variant text-[11px]">48 Puertos PoE+ • Módulo 10G SFP+</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-label-sm font-label-sm bg-surface-container text-primary border border-outline-variant">
+                  Telecom &amp; Redes
+                </span>
+</td>
+<td class="p-space-md">
+<div class="font-semibold text-primary">Datacenter Nivel 2</div>
+<div class="text-on-surface-variant text-label-sm font-label-sm">Rack Core B-02</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-error-container text-on-error-container border border-error font-bold shadow-sm">
+<span class="material-symbols-outlined" data-icon="construction" style="font-size: 14px;">construction</span>
+                  Ticket #TCK-2024-88
+                </span>
+</td>
+<td class="p-space-md">
+<div class="text-label-sm font-label-sm text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined" data-icon="gpp_bad" style="font-size: 16px;">gpp_bad</span>
+                  Expirada
+                </div>
+<div class="text-[11px] text-on-surface-variant">Soporte SmartNet Vencido</div>
+</td>
+<td class="p-space-md text-right pr-space-lg">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary hover:text-secondary" title="Ver Ticket de Mantenimiento">
+<span class="material-symbols-outlined" data-icon="receipt_long" style="font-size: 18px;">receipt_long</span>
+</button>
+<button class="p-1.5 rounded-lg neo-button-secondary text-emerald-700 hover:bg-emerald-50" title="Dar de Alta Técnica">
+<span class="material-symbols-outlined" data-icon="task_alt" style="font-size: 18px;">task_alt</span>
+</button>
+<button class="btnSoftDeleteRow p-1.5 rounded-lg neo-button-secondary text-error hover:bg-error-container" title="Dar de Baja Lógica (Soft-Delete)">
+<span class="material-symbols-outlined" data-icon="delete_forever" style="font-size: 18px;">delete_forever</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 4: Baja Lógica (Soft-Deleted Example with reversible restore) -->
+<tr class="row-soft-deleted transition-colors group" data-location="AULA_MAGNA" data-status="BAJA" data-type="AUDIO">
+<td class="p-space-md text-center">
+<input class="row-checkbox rounded border-outline text-primary-container focus:ring-secondary-container h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-space-md">
+<div class="font-label-md font-bold serial-strike tracking-wide">ACT-2021-0078</div>
+<div class="text-label-sm font-label-sm text-error flex items-center gap-1">
+<span>SN:</span> <span class="serial-strike font-semibold">EP98024190B</span>
+</div>
+</td>
+<td class="p-space-md">
+<div class="font-bold text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline" data-icon="videocam" style="font-size: 18px;">videocam</span>
+                  Proyector Láser Epson PowerLite L510U
+                </div>
+<div class="text-error text-[11px] font-bold">Desincorporado por daño irreparable en prisma óptico</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-label-sm font-label-sm bg-surface text-outline border border-outline-variant">
+                  Audiovisual
+                </span>
+</td>
+<td class="p-space-md">
+<div class="text-on-surface-variant line-through">Aula Magna Auditorio</div>
+<div class="text-error font-label-sm font-label-sm">Depósito Desecho Técnico</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant border border-outline font-semibold">
+<span class="material-symbols-outlined" data-icon="archive" style="font-size: 14px;">archive</span>
+                  Baja Lógica
+                </span>
+</td>
+<td class="p-space-md">
+<div class="text-label-sm font-label-sm text-outline">Anulada</div>
+<div class="text-[11px] text-on-surface-variant">Acta #DE-2023-14</div>
+</td>
+<td class="p-space-md text-right pr-space-lg">
+<div class="flex items-center justify-end gap-1">
+<button class="btnRestoreRow px-2.5 py-1 rounded-lg bg-primary-container text-white font-label-sm text-label-sm hover:bg-primary transition-all flex items-center gap-1 shadow-sm" title="Revertir y Restaurar Activo (Reversible)">
+<span class="material-symbols-outlined text-secondary-container" data-icon="restore_from_trash" style="font-size: 16px;">restore_from_trash</span>
+                    Restaurar
+                  </button>
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary" title="Ver Historial de Auditoría">
+<span class="material-symbols-outlined" data-icon="history_edu" style="font-size: 18px;">history_edu</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 5: En Garantía -->
+<tr class="hover:bg-surface-container/50 transition-colors group" data-location="DATACENTER" data-status="GARANTIA" data-type="COMPUTO">
+<td class="p-space-md text-center">
+<input class="row-checkbox rounded border-outline text-primary-container focus:ring-secondary-container h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-space-md">
+<div class="font-label-md font-bold text-primary tracking-wide">ACT-2024-0105</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span>SN:</span> <span class="font-semibold text-primary">DELL7900-SRV2</span>
+</div>
+</td>
+<td class="p-space-md">
+<div class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary" data-icon="dns" style="font-size: 18px;">dns</span>
+                  Servidor Dell PowerEdge R750 2U
+                </div>
+<div class="text-on-surface-variant text-[11px]">2x Xeon Gold 6330 • 128GB RAM ECC • 8x SAS SSD</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded-lg text-label-sm font-label-sm bg-surface-container text-primary border border-outline-variant">
+                  Cómputo &amp; Servidores
+                </span>
+</td>
+<td class="p-space-md">
+<div class="font-semibold text-primary">Datacenter Nivel 2</div>
+<div class="text-on-surface-variant text-label-sm font-label-sm">Rack Principal 01</div>
+</td>
+<td class="p-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-blue-50 text-blue-900 border border-blue-200 font-bold shadow-sm">
+<span class="material-symbols-outlined text-blue-700" data-icon="security" style="font-size: 14px;">security</span>
+                  En Garantía ProSupport
+                </span>
+</td>
+<td class="p-space-md">
+<div class="text-label-sm font-label-sm text-emerald-700 font-bold flex items-center gap-1">
+<span class="material-symbols-outlined" data-icon="verified_user" style="font-size: 16px;">verified_user</span>
+                  36 Meses Dell
+                </div>
+<div class="text-[11px] text-on-surface-variant">Vence: Ene 2027</div>
+</td>
+<td class="p-space-md text-right pr-space-lg">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary hover:text-secondary" title="Ver Póliza y Garantía">
+<span class="material-symbols-outlined" data-icon="shield" style="font-size: 18px;">shield</span>
+</button>
+<button class="btnLoanRow p-1.5 rounded-lg bg-secondary-container text-on-secondary-container hover:brightness-105 shadow-sm" title="Prestar este equipo">
+<span class="material-symbols-outlined" data-icon="handshake" style="font-size: 18px;">handshake</span>
+</button>
+<button class="btnTicketRow p-1.5 rounded-lg neo-button-secondary text-primary hover:text-error" title="Generar Ticket de RMA">
+<span class="material-symbols-outlined" data-icon="build" style="font-size: 18px;">build</span>
+</button>
+<button class="btnSoftDeleteRow p-1.5 rounded-lg neo-button-secondary text-error hover:bg-error-container" title="Dar de Baja Lógica (Soft-Delete)">
+<span class="material-symbols-outlined" data-icon="delete_forever" style="font-size: 18px;">delete_forever</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- ==================== CLEAN NEUMORPHIC EMPTY STATE PANEL ==================== -->
+<!-- Displayed dynamically when filter criteria produces 0 results or toggled -->
+<div class="hidden flex-col items-center justify-center p-space-xl text-center bg-surface-bright" id="emptyStatePanel">
+<div class="relative w-28 h-28 mb-space-md flex items-center justify-center rounded-3xl neo-surface-extruded">
+<!-- Tactile Empty Vector Glyphs -->
+<span class="material-symbols-outlined text-outline-variant" data-icon="inventory_2" style="font-size: 58px;">inventory_2</span>
+<div class="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-secondary-container text-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined" data-icon="search_off" style="font-size: 22px;">search_off</span>
+</div>
+</div>
+<h3 class="text-headline-md font-headline-md font-bold text-primary mb-1">Sin Resultados en la Consulta</h3>
+<p class="max-w-lg text-body-md font-body-md text-on-surface-variant mb-space-lg">
+          No se encontraron activos con los filtros aplicados. Intenta restablecer los términos de búsqueda o registra un nuevo equipo.
+        </p>
+<div class="flex flex-wrap items-center justify-center gap-space-md">
+<button class="neo-button-secondary px-space-lg py-space-sm rounded-xl font-label-md text-label-md text-primary flex items-center gap-space-sm hover:border-secondary transition-all" id="emptyResetBtn">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+<span>Restablecer Términos de Búsqueda</span>
+</button>
+<button class="neo-button-tactile text-white px-space-lg py-space-sm rounded-xl font-label-md text-label-md flex items-center gap-space-sm" onclick="document.getElementById('btnOpenCreateAssetModal').click()">
+<span class="material-symbols-outlined text-secondary-container" data-icon="add_circle">add_circle</span>
+<span>Registrar Nuevo Activo</span>
+</button>
+</div>
+</div>
+<!-- ==================== INTERACTIVE PAGINATION CONTROLS ==================== -->
+<div class="bg-surface-container-low px-space-lg py-space-md border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<!-- Left: Record Counters & Per-Page Selector -->
+<div class="flex items-center gap-space-md text-label-sm font-label-sm text-on-surface-variant">
+<div>
+            Mostrando <span class="font-bold text-primary">1 - 5</span> de <span class="font-bold text-primary">148</span> activos registrados
+          </div>
+<div class="flex items-center gap-1.5 pl-space-sm border-l border-outline-variant">
+<span>Filas por página:</span>
+<select class="neo-surface-inset rounded-lg py-0.5 px-2 text-label-sm font-label-sm text-primary focus:outline-none focus:ring-1 focus:ring-secondary">
+<option selected="" value="5">5</option>
+<option value="10">10</option>
+<option value="25">25</option>
+<option value="50">50</option>
+</select>
+</div>
+</div>
+<!-- Right: Pagination Buttons -->
+<div class="flex items-center gap-space-xs">
+<button class="p-1.5 rounded-lg neo-button-secondary text-outline hover:text-primary transition-colors disabled:opacity-40" disabled="" title="Página anterior">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-white font-label-sm font-bold flex items-center justify-center shadow-sm">1</button>
+<button class="w-8 h-8 rounded-lg neo-button-secondary text-primary font-label-sm hover:bg-surface-container flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded-lg neo-button-secondary text-primary font-label-sm hover:bg-surface-container flex items-center justify-center">3</button>
+<span class="px-1 text-on-surface-variant font-label-sm">...</span>
+<button class="w-8 h-8 rounded-lg neo-button-secondary text-primary font-label-sm hover:bg-surface-container flex items-center justify-center">15</button>
+<button class="p-1.5 rounded-lg neo-button-secondary text-primary hover:text-secondary transition-colors" title="Página siguiente">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ==================== ER DIAGRAM SCHEMATIC REFERENCE STRIP ==================== -->
+<div class="mt-space-lg p-space-md rounded-2xl bg-surface-container border border-outline-variant text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="schema">schema</span>
+<span class="font-bold text-primary">Esquema Relacional Operativo:</span>
+<span>Activos (PK id_activo, fk_tipo, fk_estatus, fk_garantia, fk_ubicacion, soft_delete_at) • Prestamos &amp; Detalle_prestamo • Usuarios &amp; Roles</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<span>Integridad Referencial: Activa</span>
+<span class="text-outline">|</span>
+<span class="font-bold text-primary">Auditoría: Habilitada</span>
+</div>
+</div>
+</div>
+</main>
+<!-- ==================== MODAL: REGISTRAR NUEVO ACTIVO ==================== -->
+<div class="fixed inset-0 bg-primary/50 backdrop-blur-sm z-50 flex items-center justify-center p-space-md hidden" id="modalCreateAsset">
+<div class="neo-surface-extruded w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl border border-outline-variant max-h-[921px] flex flex-col">
+<div class="p-space-lg bg-surface-container-high border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="post_add">post_add</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary">Registrar Nuevo Activo Institucional</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Entidad Activos + Garantia + Ubicaciones (Diagrama ER)</p>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant hover:text-error" id="closeModalCreateAsset">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<form class="p-space-lg overflow-y-auto space-y-space-md" id="formNewAsset">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Código de Inventario *</label>
+<input class="w-full neo-surface-inset rounded-xl p-2 text-label-md font-label-md text-primary font-bold focus:ring-1 focus:ring-secondary" required="" type="text" value="ACT-2024-0149"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Número de Serie (SN) *</label>
+<input class="w-full neo-surface-inset rounded-xl p-2 text-label-md font-label-md text-primary focus:ring-1 focus:ring-secondary" placeholder="Ej. SN8923019842" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Nombre / Modelo del Activo *</label>
+<input class="w-full neo-surface-inset rounded-xl p-2 text-body-md font-body-md text-primary focus:ring-1 focus:ring-secondary" placeholder="Ej. ThinkPad P16 Gen 2 Workstation" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Tipo de Activo</label>
+<select class="w-full neo-surface-inset rounded-xl p-2 text-body-sm font-label-sm text-primary">
+<option>Cómputo &amp; Servidores</option>
+<option>Instrumentación de Laboratorio</option>
+<option>Telecomunicaciones &amp; Red</option>
+<option>Audiovisual &amp; Proyección</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Área / Ubicación</label>
+<select class="w-full neo-surface-inset rounded-xl p-2 text-body-sm font-label-sm text-primary">
+<option>Laboratorio Central A-102</option>
+<option>Datacenter Nivel 2</option>
+<option>Almacén General B</option>
+<option>Aula Magna Auditorio</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Estatus Inicial</label>
+<select class="w-full neo-surface-inset rounded-xl p-2 text-body-sm font-label-sm text-primary">
+<option>Disponible</option>
+<option>En Garantía</option>
+<option>En Mantenimiento</option>
+</select>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container border border-outline-variant">
+<span class="block text-label-sm font-label-sm font-bold text-primary mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary" data-icon="verified" style="font-size: 16px;">verified</span>
+            Entidad Garantia (Póliza de Cobertura)
+          </span>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+<div>
+<label class="text-[11px] font-label-sm text-on-surface-variant block">Proveedor / Fabricante</label>
+<input class="w-full neo-surface-inset rounded-lg p-1.5 text-body-sm" placeholder="Ej. Lenovo Enterprise Services" type="text"/>
+</div>
+<div>
+<label class="text-[11px] font-label-sm text-on-surface-variant block">Fecha Límite de Garantía</label>
+<input class="w-full neo-surface-inset rounded-lg p-1.5 text-body-sm font-label-sm" type="date" value="2027-12-31"/>
+</div>
+</div>
+</div>
+</form>
+<div class="p-space-md bg-surface-container-low border-t border-outline-variant flex items-center justify-end gap-space-sm">
+<button class="neo-button-secondary px-space-md py-space-sm rounded-xl text-label-md font-label-md text-primary" id="cancelCreateAsset">Cancelar</button>
+<button class="neo-button-tactile px-space-lg py-space-sm rounded-xl text-label-md font-label-md text-white flex items-center gap-1" id="submitNewAsset">
+<span class="material-symbols-outlined text-secondary-container" data-icon="save">save</span> Guardar Registro
+        </button>
+</div>
+</div>
+</div>
+<!-- ==================== MODAL: GENERAR PRÉSTAMO DE ACTIVO ==================== -->
+<div class="fixed inset-0 bg-primary/50 backdrop-blur-sm z-50 flex items-center justify-center p-space-md hidden" id="modalCreateLoan">
+<div class="neo-surface-extruded w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl border border-outline-variant">
+<div class="p-space-lg bg-surface-container-high border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-secondary text-white flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary">Generar Contrato de Préstamo</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Entidades: Prestamos &amp; Detalle_prestamo</p>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant hover:text-error" id="closeModalCreateLoan">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="p-space-lg space-y-space-md">
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Activo Seleccionado para Préstamo</label>
+<div class="neo-surface-inset p-space-sm rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="laptop_chromebook">laptop_chromebook</span>
+<div>
+<div class="font-bold text-primary text-body-sm">MacBook Pro 16" Apple M3 Max</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">SN: C02FX088MD6R • ACT-2024-0012</div>
+</div>
+</div>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Apto</span>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Usuario / Responsable Solicitante *</label>
+<input class="w-full neo-surface-inset rounded-xl p-2 text-body-md font-body-md text-primary" placeholder="Ej. Dra. Carmen Salgado (Matrícula: 20491)" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Fecha de Salida</label>
+<input class="w-full neo-surface-inset rounded-xl p-2 text-label-sm font-label-sm text-primary" type="date" value="2024-11-20"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Fecha Compromiso de Retorno</label>
+<input class="w-full neo-surface-inset rounded-xl p-2 text-label-sm font-label-sm text-primary" type="date" value="2024-11-27"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-primary font-bold mb-1">Observaciones / Estado Físico de Entrega</label>
+<textarea class="w-full neo-surface-inset rounded-xl p-2 text-body-sm font-body-sm text-primary" placeholder="Equipo entregado con cargador original MagSafe de 140W y funda antigolpes en perfecto estado cosmético." rows="2"></textarea>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-low border-t border-outline-variant flex items-center justify-end gap-space-sm">
+<button class="neo-button-secondary px-space-md py-space-sm rounded-xl text-label-md font-label-md text-primary" id="cancelCreateLoan">Cancelar</button>
+<button class="neo-button-tactile px-space-lg py-space-sm rounded-xl text-label-md font-label-md text-white flex items-center gap-1" id="submitLoan">
+<span class="material-symbols-outlined text-secondary-container" data-icon="check">check</span> Formalizar Préstamo
+        </button>
+</div>
+</div>
+</div>
+<!-- ==================== JAVASCRIPT: LOGIC & MICRO-INTERACTIONS ==================== -->
+<script>
+    // 1. Sidebar Drawer Toggle
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+    function toggleDrawer(open) {
+      if (open) {
+        sideDrawer.classList.remove('-translate-x-full');
+        drawerBackdrop.classList.remove('hidden');
+      } else {
+        sideDrawer.classList.add('-translate-x-full');
+        drawerBackdrop.classList.add('hidden');
+      }
+    }
+
+    sidebarToggleBtn?.addEventListener('click', () => toggleDrawer(true));
+    closeDrawerBtn?.addEventListener('click', () => toggleDrawer(false));
+    drawerBackdrop?.addEventListener('click', () => toggleDrawer(false));
+
+    // 2. Dark Mode Switcher (Tactile feedback)
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeToggleBtn?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const icon = themeToggleBtn.querySelector('.material-symbols-outlined');
+      if (document.documentElement.classList.contains('dark')) {
+        icon.textContent = 'light_mode';
+      } else {
+        icon.textContent = 'dark_mode';
+      }
+    });
+
+    // 3. Live Predictive Search Dropdown Micro-Interaction
+    const searchInput = document.getElementById('predictiveSearchInput');
+    const predictiveDropdown = document.getElementById('predictiveDropdown');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+    searchInput?.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (val.length > 0) {
+        predictiveDropdown.classList.remove('hidden');
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        predictiveDropdown.classList.add('hidden');
+        clearSearchBtn.classList.add('hidden');
+      }
+      applyFilters();
+    });
+
+    clearSearchBtn?.addEventListener('click', () => {
+      searchInput.value = '';
+      predictiveDropdown.classList.add('hidden');
+      clearSearchBtn.classList.add('hidden');
+      applyFilters();
+      searchInput.focus();
+    });
+
+    // Close predictive dropdown on clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !predictiveDropdown.contains(e.target)) {
+        predictiveDropdown.classList.add('hidden');
+      }
+    });
+
+    // 4. Advanced Filter Mechanism & Empty State Integration
+    const filterStatus = document.getElementById('filterStatus');
+    const filterType = document.getElementById('filterType');
+    const filterLocation = document.getElementById('filterLocation');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    const emptyResetBtn = document.getElementById('emptyResetBtn');
+    const tableRows = document.querySelectorAll('#assetsTableBody tr');
+    const emptyStatePanel = document.getElementById('emptyStatePanel');
+    const tableScrollContainer = document.getElementById('tableScrollContainer');
+
+    function applyFilters() {
+      const query = searchInput.value.toLowerCase().trim();
+      const statusVal = filterStatus.value;
+      const typeVal = filterType.value;
+      const locVal = filterLocation.value;
+
+      let visibleCount = 0;
+
+      tableRows.forEach(row => {
+        const rowText = row.innerText.toLowerCase();
+        const rowStatus = row.getAttribute('data-status');
+        const rowType = row.getAttribute('data-type');
+        const rowLoc = row.getAttribute('data-location');
+
+        const matchesQuery = query === '' || rowText.includes(query);
+        const matchesStatus = statusVal === 'ALL' || rowStatus === statusVal;
+        const matchesType = typeVal === 'ALL' || rowType === typeVal;
+        const matchesLoc = locVal === 'ALL' || rowLoc === locVal;
+
+        if (matchesQuery && matchesStatus && matchesType && matchesLoc) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyStatePanel.classList.remove('hidden');
+        emptyStatePanel.classList.add('flex');
+        tableScrollContainer.classList.add('hidden');
+      } else {
+        emptyStatePanel.classList.add('hidden');
+        emptyStatePanel.classList.remove('flex');
+        tableScrollContainer.classList.remove('hidden');
+      }
+    }
+
+    filterStatus?.addEventListener('change', applyFilters);
+    filterType?.addEventListener('change', applyFilters);
+    filterLocation?.addEventListener('change', applyFilters);
+
+    function resetAllFilters() {
+      searchInput.value = '';
+      filterStatus.value = 'ALL';
+      filterType.value = 'ALL';
+      filterLocation.value = 'ALL';
+      clearSearchBtn.classList.add('hidden');
+      predictiveDropdown.classList.add('hidden');
+      applyFilters();
+    }
+
+    resetFiltersBtn?.addEventListener('click', resetAllFilters);
+    emptyResetBtn?.addEventListener('click', resetAllFilters);
+
+    // 5. Multi-selection batch action bar
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+    const batchActionBar = document.getElementById('batchActionBar');
+    const selectedCountText = document.getElementById('selectedCountText');
+
+    function updateBatchBar() {
+      const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+      const count = checkedBoxes.length;
+      selectedCountText.textContent = count;
+      if (count > 0) {
+        batchActionBar.classList.remove('hidden');
+      } else {
+        batchActionBar.classList.add('hidden');
+      }
+    }
+
+    selectAllCheckbox?.addEventListener('change', (e) => {
+      rowCheckboxes.forEach(cb => cb.checked = e.target.checked);
+      updateBatchBar();
+    });
+
+    rowCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        updateBatchBar();
+        if (!cb.checked) selectAllCheckbox.checked = false;
+      });
+    });
+
+    // 6. Soft-Delete (Baja Lógica Reversible) Simulation
+    document.querySelectorAll('.btnSoftDeleteRow').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const row = e.target.closest('tr');
+        if (confirm('¿Confirmas dar de BAJA LÓGICA este activo? El registro permanecerá en la base de datos pero se deshabilitará para préstamos de forma reversible.')) {
+          row.classList.add('row-soft-deleted');
+          row.setAttribute('data-status', 'BAJA');
+          const codeEl = row.querySelector('.tracking-wide');
+          if (codeEl) codeEl.classList.add('serial-strike');
+          alert('Activo marcado como Baja Lógica (Soft-Delete) con éxito.');
+          applyFilters();
+        }
+      });
+    });
+
+    // Restore Soft-Deleted Record
+    document.querySelectorAll('.btnRestoreRow').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const row = e.target.closest('tr');
+        row.classList.remove('row-soft-deleted');
+        row.setAttribute('data-status', 'DISPONIBLE');
+        const codeEl = row.querySelector('.serial-strike');
+        if (codeEl) codeEl.classList.remove('serial-strike');
+        alert('Activo restaurado exitosamente a estatus DISPONIBLE.');
+        applyFilters();
+      });
+    });
+
+    // 7. Modals: Create Asset & Loan
+    const modalCreateAsset = document.getElementById('modalCreateAsset');
+    const btnOpenCreateAssetModal = document.getElementById('btnOpenCreateAssetModal');
+    const closeModalCreateAsset = document.getElementById('closeModalCreateAsset');
+    const cancelCreateAsset = document.getElementById('cancelCreateAsset');
+    const submitNewAsset = document.getElementById('submitNewAsset');
+
+    btnOpenCreateAssetModal?.addEventListener('click', () => modalCreateAsset.classList.remove('hidden'));
+    closeModalCreateAsset?.addEventListener('click', () => modalCreateAsset.classList.add('hidden'));
+    cancelCreateAsset?.addEventListener('click', () => modalCreateAsset.classList.add('hidden'));
+    submitNewAsset?.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Nuevo Activo registrado exitosamente con Garantía vinculada en la base de datos.');
+      modalCreateAsset.classList.add('hidden');
+    });
+
+    const modalCreateLoan = document.getElementById('modalCreateLoan');
+    const btnOpenLoanModal = document.getElementById('btnOpenLoanModal');
+    const closeModalCreateLoan = document.getElementById('closeModalCreateLoan');
+    const cancelCreateLoan = document.getElementById('cancelCreateLoan');
+    const submitLoan = document.getElementById('submitLoan');
+
+    btnOpenLoanModal?.addEventListener('click', () => modalCreateLoan.classList.remove('hidden'));
+    document.querySelectorAll('.btnLoanRow').forEach(b => {
+      b.addEventListener('click', () => modalCreateLoan.classList.remove('hidden'));
+    });
+    closeModalCreateLoan?.addEventListener('click', () => modalCreateLoan.classList.add('hidden'));
+    cancelCreateLoan?.addEventListener('click', () => modalCreateLoan.classList.add('hidden'));
+    submitLoan?.addEventListener('click', () => {
+      alert('Préstamo formalizado exitosamente. Bitácora actualizada y voucher emitido.');
+      modalCreateLoan.classList.add('hidden');
+    });
+
+    // Keyboard shortcut Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInput?.focus();
+      }
+    });
+  </script>
+</body></html>

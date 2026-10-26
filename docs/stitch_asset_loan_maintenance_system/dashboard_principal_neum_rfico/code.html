@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGA Enterprise - Dashboard Principal de Control y Operaciones</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "on-primary-container": "#7398b6",
+            "background": "#fff8f7",
+            "surface-bright": "#fff8f7",
+            "surface": "#fff8f7",
+            "secondary-container": "#feb956",
+            "secondary-fixed-dim": "#feb956",
+            "secondary": "#835500",
+            "on-primary-fixed": "#001e2f",
+            "tertiary-fixed-dim": "#d2c888",
+            "surface-container": "#ffe9e7",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-surface-variant": "#42474d",
+            "inverse-primary": "#a5cbea",
+            "on-background": "#410004",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#244a64",
+            "surface-container-high": "#ffe1df",
+            "on-secondary-fixed-variant": "#633f00",
+            "on-surface": "#410004",
+            "primary": "#001a2b",
+            "outline-variant": "#c2c7cd",
+            "inverse-surface": "#5f1415",
+            "inverse-on-surface": "#ffedeb",
+            "surface-variant": "#ffdad7",
+            "primary-fixed-dim": "#a5cbea",
+            "on-tertiary-container": "#47400e",
+            "primary-container": "#003049",
+            "primary-fixed": "#cae6ff",
+            "on-tertiary-fixed": "#201c00",
+            "on-error": "#ffffff",
+            "tertiary": "#675f2b",
+            "on-tertiary-fixed-variant": "#4e4715",
+            "on-secondary-fixed": "#291800",
+            "surface-dim": "#ffcfcb",
+            "secondary-fixed": "#ffddb4",
+            "surface-tint": "#3d627d",
+            "tertiary-fixed": "#efe4a2",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#ffdad7",
+            "tertiary-container": "#b6ac6f",
+            "outline": "#72787e",
+            "surface-container-low": "#fff0ef",
+            "on-secondary-container": "#734a00",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "0.75rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg": ["2.25rem", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "label-lg": ["0.875rem", { lineHeight: "1.3", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-md": ["0.9375rem", { lineHeight: "1.5", letterSpacing: "0", fontWeight: "400" }],
+            "headline-lg-mobile": ["1.625rem", { lineHeight: "1.25", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-xl": ["3rem", { lineHeight: "1.15", letterSpacing: "-0.03em", fontWeight: "700" }],
+            "body-sm": ["0.8125rem", { lineHeight: "1.45", letterSpacing: "0.005em", fontWeight: "400" }],
+            "body-lg": ["1.125rem", { lineHeight: "1.55", letterSpacing: "-0.01em", fontWeight: "400" }],
+            "headline-md": ["1.5rem", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-xl-mobile": ["2rem", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "label-sm": ["0.6875rem", { lineHeight: "1.2", letterSpacing: "0.06em", fontWeight: "600" }],
+            "label-md": ["0.75rem", { lineHeight: "1.3", letterSpacing: "0.04em", fontWeight: "500" }],
+            "headline-sm": ["1.25rem", { lineHeight: "1.4", letterSpacing: "0", fontWeight: "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Neumorphic Lighting Models according to design guidelines */
+    .neu-raised {
+      background: #fff8f7;
+      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    .dark .neu-raised {
+      background: #001a2b;
+      box-shadow: -4px -4px 12px rgba(255, 243, 176, 0.04), 6px 6px 18px rgba(0, 10, 18, 0.75);
+      border: 1px solid rgba(224, 159, 62, 0.15);
+    }
+
+    .neu-inset {
+      background: #fff0ef;
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.09), inset -3px -3px 6px rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 48, 73, 0.06);
+    }
+    .dark .neu-inset {
+      background: #001524;
+      box-shadow: inset 3px 3px 6px rgba(0, 10, 18, 0.85), inset -2px -2px 5px rgba(255, 243, 176, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.6);
+    }
+
+    .neu-btn {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.95), 4px 4px 12px rgba(0, 48, 73, 0.1);
+    }
+    .neu-btn:active {
+      transform: scale(0.98);
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.18), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+    }
+
+    .neu-btn-primary {
+      background: #003049;
+      color: #ffffff;
+      box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.6), 4px 5px 12px rgba(0, 48, 73, 0.25);
+    }
+    .neu-btn-primary:active {
+      transform: scale(0.98);
+      box-shadow: inset 3px 3px 6px rgba(0, 10, 20, 0.6), inset -2px -2px 5px rgba(255, 243, 176, 0.2);
+    }
+
+    /* Floating Overlay Shadow */
+    .neu-floating {
+      box-shadow: 0 20px 35px -10px rgba(0, 48, 73, 0.2), 0 1px 3px rgba(0, 48, 73, 0.08);
+    }
+    .dark .neu-floating {
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(224, 159, 62, 0.2);
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c2c7cd;
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #003049;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen antialiased flex flex-col font-body-md text-body-md transition-colors duration-200">
+<!-- ================= TOP APP BAR (Shared Component Execution) ================= -->
+<header class="bg-surface dark:bg-primary docked full-width top-0 z-40 shadow-sm dark:shadow-none border-b border-outline-variant dark:border-primary-container h-16 sticky">
+<div class="flex justify-between items-center w-full px-space-lg py-space-sm h-16">
+<!-- Left: Hamburger Drawer Trigger & Product Name -->
+<div class="flex items-center gap-space-md">
+<button aria-label="Abrir navegación lateral" class="w-10 h-10 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-primary-fixed neu-btn active:scale-[0.98] transition-transform" id="sidebarToggleBtn">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed tracking-tight">SIGA Enterprise</span>
+<span class="text-label-sm font-label-sm text-secondary dark:text-secondary-container tracking-wider">CONSOLA OPERATIVA INSTITUCIONAL</span>
+</div>
+</div>
+<!-- Center: Smart Search Bar (Microinteractive Ctrl+K) -->
+<div class="relative hidden lg:flex items-center flex-1 max-w-xl mx-space-lg">
+<div class="w-full neu-inset rounded-xl flex items-center px-space-md py-1.5 focus-within:ring-2 focus-within:ring-secondary transition-all">
+<span class="material-symbols-outlined text-secondary mr-space-sm text-xl" data-icon="search">search</span>
+<input class="w-full bg-transparent border-0 text-body-sm font-body-sm text-on-surface dark:text-surface-bright focus:outline-none focus:ring-0 placeholder:text-outline p-0" id="globalSearchInput" placeholder="Buscar por serie (SN-...), ID ticket (#TK-...), técnico o activo..." type="text"/>
+<div class="flex items-center gap-space-xs ml-space-sm">
+<span class="px-1.5 py-0.5 rounded neu-raised text-label-sm font-label-sm text-secondary bg-surface-container-high dark:bg-primary-container border border-outline-variant/30">Ctrl + K</span>
+</div>
+</div>
+<!-- Predictive Dropdown Menu (Hidden by default, shown on focus/typing via script) -->
+<div class="hidden absolute top-12 left-0 right-0 rounded-2xl bg-surface dark:bg-primary neu-floating p-space-md z-50 border border-outline-variant/40 mt-1" id="searchDropdown">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/20 mb-space-sm">
+<span class="text-label-sm font-label-sm text-secondary uppercase font-semibold">Resultados Predictivos Recientes</span>
+<span class="text-label-sm font-label-sm text-outline">ESC para salir</span>
+</div>
+<div class="space-y-1">
+<!-- Activo suggestion -->
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container dark:hover:bg-primary-container cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="inventory_2">inventory_2</span>
+<div>
+<p class="text-body-sm font-headline-sm font-semibold text-primary dark:text-primary-fixed">Osciloscopio Digital Rigol DS1054Z</p>
+<p class="text-label-sm font-label-sm text-outline">Ubicación: Laboratorio Electrónica II - Estante B</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container-high dark:bg-primary-container text-primary dark:text-primary-fixed">SN-489201-A</span>
+</div>
+<!-- Ticket suggestion -->
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container dark:hover:bg-primary-container cursor-pointer transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-lg" data-icon="build">build</span>
+<div>
+<p class="text-body-sm font-headline-sm font-semibold text-primary dark:text-primary-fixed">TK-1082: Calibración Falla Sensor de Masa</p>
+<p class="text-label-sm font-label-sm text-outline">Prioridad Crítica • Asignado a Ing. Valenzuela</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-error-container text-on-error-container">Crítico</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Role Switcher, Quick Actions & System Icons -->
+<div class="flex items-center gap-space-md">
+<!-- Quick Action Trigger -->
+<button class="hidden sm:inline-flex items-center gap-1.5 neu-btn-primary px-space-md py-1.5 rounded-xl text-label-sm font-label-lg font-bold shadow-md hover:opacity-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add_circle">add_circle</span>
+<span>Nuevo Registro</span>
+</button>
+<!-- Role Selector Chip -->
+<div class="relative">
+<button class="flex items-center gap-space-sm neu-inset px-3 py-1.5 rounded-xl text-body-sm hover:border-secondary transition-all" id="roleDropdownBtn">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<div class="text-left hidden md:block">
+<span class="block text-label-sm font-label-sm text-outline leading-none">Rol Activo</span>
+<span class="text-label-sm font-label-md font-bold text-primary dark:text-primary-fixed leading-tight" id="currentRoleText">Administrador</span>
+</div>
+<span class="material-symbols-outlined text-outline text-lg" data-icon="expand_more">expand_more</span>
+</button>
+<!-- Role Selector Dropdown -->
+<div class="hidden absolute right-0 top-12 w-56 rounded-2xl bg-surface dark:bg-primary neu-floating p-space-sm z-50 border border-outline-variant/30" id="roleDropdownMenu">
+<div class="text-label-sm font-label-sm text-outline px-3 py-1 font-semibold">Seleccionar Perfil Activo</div>
+<button class="w-full text-left px-3 py-2 rounded-lg text-body-sm font-medium hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="setRole('Administrador')">
+<span>Administrador</span>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check">check</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg text-body-sm font-medium hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="setRole('Encargado de Activos')">
+<span>Encargado de Activos</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg text-body-sm font-medium hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="setRole('Supervisor')">
+<span>Supervisor</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg text-body-sm font-medium hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="setRole('Técnico')">
+<span>Técnico</span>
+</button>
+</div>
+</div>
+<!-- Trailing System Icon Actions -->
+<div class="flex items-center gap-space-xs">
+<!-- Theme Switcher -->
+<button aria-label="Cambiar tema claro u oscuro" class="w-9 h-9 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-primary-fixed neu-btn" id="themeToggleBtn">
+<span class="material-symbols-outlined text-lg" data-icon="dark_mode">dark_mode</span>
+</button>
+<!-- Notifications -->
+<div class="relative">
+<button aria-label="Notificaciones del sistema" class="w-9 h-9 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-primary-fixed neu-btn">
+<span class="material-symbols-outlined text-lg" data-icon="notifications">notifications</span>
+</button>
+<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+</div>
+<!-- Help -->
+<button aria-label="Centro de ayuda y manuales" class="w-9 h-9 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-primary-fixed neu-btn">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span>
+</button>
+</div>
+<!-- Active Avatar with Role Chip -->
+<div class="pl-2 border-l border-outline-variant/30 flex items-center">
+<img alt="Avatar de usuario activo con chip de rol de Administrador" class="w-9 h-9 rounded-xl object-cover ring-2 ring-secondary/40 shadow-sm" data-alt="Close-up professional avatar portrait of a Latin American operations director in industrial uniform with sleek eyewear, clean soft studio rim lighting highlighting crisp collar badges, modern institutional technical command environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTPkTEtDAdU2D2UbWbx9oVUoISfNudGIMCR0ivjpLYBylJaTQ3e7_qqROKNzrggHQkVq_88Wp9HGgwHF2DOyKGUSWIFpT0-1iiWEZ8cKa6xCgy9b9t9jrycsdG9tRyu8OimZg1e7qMhFsZQ1GRfLntE3Uy_gvKnwD5WOZkhhHRFIfQWoVvs4ZNdbVKIIZxIO89H5bxQ8C_FCmnokOsvR0E6Pxr0-2z1V7sqpryOcs"/>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= LAYOUT CONTAINER ================= -->
+<div class="flex flex-1 relative overflow-x-hidden">
+<!-- ================= SIDEBAR (Shared Component Specification) ================= -->
+<aside class="fixed top-0 left-0 h-full w-72 bg-surface-container-low dark:bg-primary-container border-r border-outline-variant dark:border-primary shadow-xl dark:shadow-2xl z-50 flex flex-col justify-between p-space-md transform -translate-x-full transition-transform duration-300 ease-in-out" id="sideNavDrawer">
+<!-- Drawer Header -->
+<div>
+<div class="flex items-center justify-between pb-space-md border-b border-outline-variant/30 mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl neu-inset flex items-center justify-center text-secondary font-bold text-headline-sm">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed leading-tight">SIGA Enterprise</h2>
+<p class="text-body-sm font-body-sm text-outline leading-none">Consola de Operaciones</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg neu-raised flex items-center justify-center text-outline hover:text-primary" id="sidebarCloseBtn">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</button>
+</div>
+<!-- Navigation Tabs List -->
+<nav class="space-y-1.5">
+<!-- Active Tab: Dashboard -->
+<a class="text-primary dark:text-primary-fixed bg-surface-container-high dark:bg-primary font-bold rounded-lg px-space-md py-space-sm flex items-center gap-space-sm neu-raised active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined text-secondary" data-icon="dashboard">dashboard</span>
+<span class="text-label-lg font-label-lg">Dashboard</span>
+</a>
+<!-- Inactive Tab: Activos -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-label-lg font-label-lg">Activos</span>
+</a>
+<!-- Inactive Tab: Préstamos -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="text-label-lg font-label-lg">Préstamos</span>
+</a>
+<!-- Inactive Tab: Tickets & Mantenimiento -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="text-label-lg font-label-lg">Tickets &amp; Mantenimiento</span>
+</a>
+<!-- Inactive Tab: Usuarios & Roles -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+<span class="text-label-lg font-label-lg">Usuarios &amp; Roles</span>
+</a>
+<!-- Inactive Tab: Bitácora -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-label-lg font-label-lg">Bitácora</span>
+</a>
+<!-- Inactive Tab: Catálogo Público -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="text-label-lg font-label-lg">Catálogo Público</span>
+</a>
+</nav>
+</div>
+<!-- Drawer Middle CTA -->
+<div class="my-space-md">
+<button class="w-full neu-btn-primary py-2.5 px-space-md rounded-xl font-headline-sm font-semibold flex items-center justify-center gap-space-sm shadow-lg">
+<span class="material-symbols-outlined text-sm" data-icon="assignment_late">assignment_late</span>
+<span>Generar Ticket</span>
+</button>
+</div>
+<!-- Drawer Footer -->
+<div class="border-t border-outline-variant/30 pt-space-sm space-y-1">
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-2 flex items-center gap-space-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span class="text-label-md font-label-md">Configuración</span>
+</a>
+<a class="text-error hover:bg-error-container/40 rounded-lg px-space-md py-2 flex items-center gap-space-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Overlay backdrop for drawer on mobile/expanded -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden transition-opacity" id="drawerBackdrop"></div>
+<!-- ================= MAIN CONTENT CANVAS ================= -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-space-md md:px-space-lg lg:px-margin py-space-lg space-y-space-lg">
+<!-- Breadcrumbs & Tactical Heading Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-2 border-b border-outline-variant/30">
+<div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-outline mb-1">
+<span>SISTEMA CENTRAL</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-secondary font-semibold">PANEL DE OPERACIONES</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary dark:text-primary-fixed">TELEMETRÍA EN VIVO</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary-fixed tracking-tight">
+            Dashboard de Control y Supervisión
+          </h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-0.5">
+            Monitoreo en tiempo real de inventario institucional, asignaciones activas, alertas preventivas y registros de auditoría.
+          </p>
+</div>
+<!-- Quick Action Buttons Array (Neumorphic tactile controls) -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Action: Nuevo Préstamo -->
+<button class="neu-raised neu-btn px-3 py-2 rounded-xl text-primary dark:text-primary-fixed flex items-center gap-1.5 text-label-md font-label-md">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="handshake">handshake</span>
+<span>Nuevo Préstamo</span>
+</button>
+<!-- Action: Registrar Activo -->
+<button class="neu-raised neu-btn px-3 py-2 rounded-xl text-primary dark:text-primary-fixed flex items-center gap-1.5 text-label-md font-label-md">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="add_box">add_box</span>
+<span>Registrar Activo</span>
+</button>
+<!-- Action: Levantar Ticket -->
+<button class="neu-raised neu-btn px-3 py-2 rounded-xl text-primary dark:text-primary-fixed flex items-center gap-1.5 text-label-md font-label-md">
+<span class="material-symbols-outlined text-error text-base" data-icon="report_problem">report_problem</span>
+<span>Levantar Ticket</span>
+</button>
+<!-- Action: Escanear QR / Código -->
+<button class="neu-btn-primary px-3 py-2 rounded-xl flex items-center gap-1.5 text-label-md font-label-md font-semibold">
+<span class="material-symbols-outlined text-base" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span>Escanear Código/QR</span>
+</button>
+</div>
+</div>
+<!-- Quick Search Filter Ribbon (Serial, User, Ticket) -->
+<div class="neu-raised rounded-2xl p-space-sm flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-outline px-space-sm font-semibold">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="filter_alt">filter_alt</span>
+<span>FILTRO RÁPIDO:</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<button class="neu-inset px-3 py-1.5 rounded-lg text-label-sm font-label-sm text-primary dark:text-primary-fixed flex items-center gap-1 font-semibold">
+<span>Serie: SN-LAB-*</span>
+<span class="material-symbols-outlined text-xs hover:text-error" data-icon="close">close</span>
+</button>
+<button class="neu-raised hover:bg-surface-container px-3 py-1.5 rounded-lg text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="person">person</span>
+<span>Usuario / Custodio</span>
+</button>
+<button class="neu-raised hover:bg-surface-container px-3 py-1.5 rounded-lg text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="label">label</span>
+<span>Estado: Crítico</span>
+</button>
+<button class="neu-raised hover:bg-surface-container px-3 py-1.5 rounded-lg text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="apartment">apartment</span>
+<span>Ubicación: Edificio Alfa</span>
+</button>
+</div>
+<div class="text-label-sm font-label-sm text-outline px-space-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Base de datos sincronizada: 14:02:18</span>
+</div>
+</div>
+<!-- ================= SECTION 1: 4 NEUMORPHIC KPI CARDS ================= -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<!-- KPI 1: Activos Totales Registrados -->
+<div class="neu-raised rounded-2xl p-space-lg relative flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="text-label-sm font-label-sm text-outline uppercase font-semibold">Inventario General</span>
+<div class="w-8 h-8 rounded-xl neu-inset flex items-center justify-center text-primary-container dark:text-primary-fixed">
+<span class="material-symbols-outlined text-lg" data-icon="inventory_2">inventory_2</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-primary dark:text-primary-fixed font-bold leading-none">3,428</span>
+<span class="text-label-sm font-label-sm text-emerald-600 font-semibold flex items-center">+4.2%</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-1 font-medium">Activos Totales Registrados</p>
+</div>
+<!-- Desglose estricto -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 grid grid-cols-2 gap-y-2 gap-x-1 text-label-sm font-label-sm">
+<div class="flex items-center justify-between pr-2">
+<span class="text-outline">Disponibles:</span>
+<span class="font-bold text-primary dark:text-primary-fixed">2,110</span>
+</div>
+<div class="flex items-center justify-between pl-2 border-l border-outline-variant/20">
+<span class="text-outline">Asignados:</span>
+<span class="font-bold text-secondary">1,085</span>
+</div>
+<div class="flex items-center justify-between pr-2">
+<span class="text-outline">En Rep.:</span>
+<span class="font-bold text-error">184</span>
+</div>
+<div class="flex items-center justify-between pl-2 border-l border-outline-variant/20">
+<span class="text-outline">Bajas Lóg.:</span>
+<span class="font-bold line-through text-outline">49</span>
+</div>
+</div>
+</div>
+<!-- KPI 2: Préstamos Activos & Vencidos Hoy -->
+<div class="neu-raised rounded-2xl p-space-lg relative flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="text-label-sm font-label-sm text-secondary uppercase font-semibold">Custodia Temporal</span>
+<div class="w-8 h-8 rounded-xl neu-inset flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="handshake">handshake</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-primary dark:text-primary-fixed font-bold leading-none">248</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">92.4% a tiempo</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-1 font-medium">Préstamos Activos en Curso</p>
+</div>
+<!-- Vencidos Hoy Indicator -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30">
+<div class="neu-inset px-2.5 py-1.5 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="text-label-sm font-label-sm text-error font-bold">Vencidos Hoy:</span>
+</div>
+<span class="text-label-md font-label-md font-extrabold text-error">14 equipos</span>
+</div>
+</div>
+</div>
+<!-- KPI 3: Tickets de Mantenimiento por Prioridad -->
+<div class="neu-raised rounded-2xl p-space-lg relative flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="text-label-sm font-label-sm text-error uppercase font-semibold">Soporte Técnico</span>
+<div class="w-8 h-8 rounded-xl neu-inset flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-lg" data-icon="build">build</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-primary dark:text-primary-fixed font-bold leading-none">38</span>
+<span class="text-label-sm font-label-sm text-error font-semibold">+6 este turno</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-1 font-medium">Tickets de Mantenimiento Abiertos</p>
+</div>
+<!-- Prioridades -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 flex items-center justify-between gap-1 text-label-sm font-label-sm">
+<div class="flex flex-col items-center">
+<span class="text-outline text-xs">Crítico</span>
+<span class="font-bold text-error px-1.5 rounded bg-error-container/50">8</span>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="text-outline text-xs">Preventivo</span>
+<span class="font-bold text-secondary px-1.5 rounded bg-secondary-container/30">19</span>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="text-outline text-xs">Correctivo</span>
+<span class="font-bold text-primary dark:text-primary-fixed px-1.5 rounded bg-surface-container-high">11</span>
+</div>
+</div>
+</div>
+<!-- KPI 4: Solicitudes Pendientes de Autorización -->
+<div class="neu-raised rounded-2xl p-space-lg relative flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="text-label-sm font-label-sm text-primary dark:text-primary-fixed uppercase font-semibold">Flujo de Aprobación</span>
+<div class="w-8 h-8 rounded-xl neu-inset flex items-center justify-center text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined text-lg" data-icon="verified_user">verified_user</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-xl font-headline-xl text-primary dark:text-primary-fixed font-bold leading-none">17</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">Requiere Firma</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-1 font-medium">Solicitudes Pendientes Supervisor</p>
+</div>
+<!-- Urgencias pendientes -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline">Esperando dictamen:</span>
+<button class="neu-btn px-2.5 py-1 rounded-lg text-label-sm font-label-sm font-bold text-secondary bg-surface-container-high dark:bg-primary">
+              Revisar 17 →
+            </button>
+</div>
+</div>
+</section>
+<!-- ================= SECTION 2: BENTO GRID (DATA VISUALIZATION, PHYSICAL DISTRIBUTION & EXPIRING LOANS) ================= -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Physical Distribution: Almacén, Labs, Oficinas (Bento 7 cols) -->
+<div class="lg:col-span-7 neu-raised rounded-2xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="hub">hub</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">
+                    Distribución de Equipos por Área y Ubicación Física
+                  </h3>
+<p class="text-body-sm font-body-sm text-outline">Despliegue geo-espacial y balance de carga en sedes institucionales</p>
+</div>
+</div>
+<div class="neu-inset px-2.5 py-1 rounded-xl text-label-sm font-label-sm text-primary dark:text-primary-fixed font-bold">
+                Total: 3,428 uds.
+              </div>
+</div>
+<!-- Visual Bar Distribution -->
+<div class="space-y-space-md my-space-md">
+<!-- Location 1: Almacén Central de Reserva -->
+<div>
+<div class="flex justify-between items-center text-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container dark:text-primary-fixed text-base" data-icon="warehouse">warehouse</span>
+<span class="font-semibold text-primary dark:text-primary-fixed">Almacén Central y Bóveda de Custodia</span>
+<span class="text-label-sm font-label-sm text-outline">(Edificio Central - Nivel -1)</span>
+</div>
+<span class="text-label-md font-label-md font-bold text-primary dark:text-primary-fixed">1,450 uds (42.3%)</span>
+</div>
+<!-- Visual progress bar neumorphic -->
+<div class="neu-inset h-3 w-full rounded-full overflow-hidden p-0.5">
+<div class="bg-primary-container dark:bg-primary-fixed h-full rounded-full" style="width: 42.3%"></div>
+</div>
+</div>
+<!-- Location 2: Complejo de Laboratorios -->
+<div>
+<div class="flex justify-between items-center text-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="science">science</span>
+<span class="font-semibold text-primary dark:text-primary-fixed">Laboratorios Especializados e I+D</span>
+<span class="text-label-sm font-label-sm text-outline">(Pabellón Tecnológico B)</span>
+</div>
+<span class="text-label-md font-label-md font-bold text-secondary">1,210 uds (35.3%)</span>
+</div>
+<div class="neu-inset h-3 w-full rounded-full overflow-hidden p-0.5">
+<div class="bg-secondary-container dark:bg-secondary h-full rounded-full" style="width: 35.3%"></div>
+</div>
+</div>
+<!-- Location 3: Oficinas Administrativas -->
+<div>
+<div class="flex justify-between items-center text-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-base" data-icon="corporate_fare">corporate_fare</span>
+<span class="font-semibold text-primary dark:text-primary-fixed">Oficinas Administrativas y Direcciones</span>
+<span class="text-label-sm font-label-sm text-outline">(Torre Ejecutiva - Pisos 1 al 6)</span>
+</div>
+<span class="text-label-md font-label-md font-bold text-tertiary">580 uds (16.9%)</span>
+</div>
+<div class="neu-inset h-3 w-full rounded-full overflow-hidden p-0.5">
+<div class="bg-tertiary-container dark:bg-tertiary-fixed-dim h-full rounded-full" style="width: 16.9%"></div>
+</div>
+</div>
+<!-- Location 4: Estaciones de Taller y Reparación -->
+<div>
+<div class="flex justify-between items-center text-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-base" data-icon="handyman">handyman</span>
+<span class="font-semibold text-primary dark:text-primary-fixed">Taller de Mantenimiento y Calibración</span>
+<span class="text-label-sm font-label-sm text-outline">(Hangar Sur)</span>
+</div>
+<span class="text-label-md font-label-md font-bold text-error">188 uds (5.5%)</span>
+</div>
+<div class="neu-inset h-3 w-full rounded-full overflow-hidden p-0.5">
+<div class="bg-error h-full rounded-full" style="width: 5.5%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Telemetry Chips -->
+<div class="pt-space-md border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-outline">Capacidad de Bóveda:</span>
+<span class="text-label-sm font-label-sm font-bold text-emerald-600">76% Utilizada (Margen seguro)</span>
+</div>
+<button class="neu-btn px-3 py-1 rounded-xl text-label-sm font-label-sm font-bold text-primary dark:text-primary-fixed flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="map">map</span>
+<span>Abrir Mapa Interactivo</span>
+</button>
+</div>
+</div>
+<!-- Préstamos Próximos a Vencer con Alertas de Tiempo (Bento 5 cols) -->
+<div class="lg:col-span-5 neu-raised rounded-2xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-2xl" data-icon="alarm">alarm</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">
+                    Alertas: Próximos a Vencer
+                  </h3>
+<p class="text-body-sm font-body-sm text-outline">Custodias en cuenta regresiva crítica hoy</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-error-container text-on-error-container font-bold">14 Urgentes</span>
+</div>
+<!-- List of Expiring Equipment Loans -->
+<div class="space-y-space-sm">
+<!-- Item 1: Vence en 38 mins -->
+<div class="neu-inset rounded-xl p-3 flex items-center justify-between">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">Estación Total Trimble C3</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline">SN-TRM-991</span>
+</div>
+<p class="text-body-sm font-body-sm text-outline">Custodio: Dr. Marcos Rivas (Topografía)</p>
+</div>
+<div class="text-right">
+<div class="text-label-md font-label-md font-bold text-error animate-pulse">38m restantes</div>
+<button class="text-label-sm font-label-sm text-secondary hover:underline font-semibold mt-1">Notificar</button>
+</div>
+</div>
+<!-- Item 2: Vence en 2 horas -->
+<div class="neu-inset rounded-xl p-3 flex items-center justify-between">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">Analizador Lógico Saleae Pro</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline">SN-SAL-442</span>
+</div>
+<p class="text-body-sm font-body-sm text-outline">Custodio: Ing. Paulina Gómez (Mecatrónica)</p>
+</div>
+<div class="text-right">
+<div class="text-label-md font-label-md font-bold text-secondary">2h 15m</div>
+<button class="text-label-sm font-label-sm text-secondary hover:underline font-semibold mt-1">Extender</button>
+</div>
+</div>
+<!-- Item 3: Vence en 4 horas -->
+<div class="neu-inset rounded-xl p-3 flex items-center justify-between">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">Kit Multímetro Fluke 87V (x3)</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline">LOT-FLK-102</span>
+</div>
+<p class="text-body-sm font-body-sm text-outline">Custodio: Técnico Javier Ortega (Turno Matutino)</p>
+</div>
+<div class="text-right">
+<div class="text-label-md font-label-md font-bold text-outline">4h 00m</div>
+<button class="text-label-sm font-label-sm text-secondary hover:underline font-semibold mt-1">Check-in</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Return Batch Action -->
+<div class="pt-space-sm mt-space-sm border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline">Tasa de devolución a tiempo: 96.8%</span>
+<button class="neu-btn px-3 py-1.5 rounded-xl text-label-sm font-label-sm font-bold text-secondary">
+              Ver Todos los Préstamos →
+            </button>
+</div>
+</div>
+</section>
+<!-- ================= SECTION 3: AUDITORÍA EN TIEMPO REAL & TABLA DE TICKETS CRÍTICOS ================= -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Real-Time Activity Audit Trail (Bitácora de Movimientos) - 7 cols -->
+<div class="lg:col-span-7 neu-raised rounded-2xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="history">history</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">
+                    Bitácora y Auditoría de Movimientos
+                  </h3>
+<p class="text-body-sm font-body-sm text-outline">Flujo cronológico de ingresos, transferencias y firmas en vivo</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 neu-inset px-2.5 py-1 rounded-xl">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-primary dark:text-primary-fixed font-bold">STREAM ACTIVO</span>
+</div>
+</div>
+<!-- Chronological Event Stream -->
+<div class="space-y-space-sm relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-outline-variant/30">
+<!-- Event 1 -->
+<div class="flex items-start gap-space-md relative pl-1">
+<div class="w-6 h-6 rounded-full bg-primary-container text-white flex items-center justify-center text-xs neu-raised ring-4 ring-surface dark:ring-primary z-10">
+<span class="material-symbols-outlined text-xs" data-icon="login">login</span>
+</div>
+<div class="flex-1 neu-inset p-3 rounded-xl">
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">Devolución Exitosa de Activo</span>
+<span class="text-label-sm font-label-sm text-outline">Hace 4 min</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-0.5">
+                    Generador de Señales Rigol DG4162 reingresado a <strong class="text-primary dark:text-primary-fixed">Estante C-04</strong> por Lic. Andrea Salinas. Inspección física aprobada sin novedades.
+                  </p>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container font-mono">SN-RIG-8821</span>
+<span class="text-label-sm font-label-sm text-emerald-600 font-semibold">✓ Firma Digital #AUTH-841</span>
+</div>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="flex items-start gap-space-md relative pl-1">
+<div class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center text-xs neu-raised ring-4 ring-surface dark:ring-primary z-10">
+<span class="material-symbols-outlined text-xs" data-icon="handshake">handshake</span>
+</div>
+<div class="flex-1 neu-inset p-3 rounded-xl">
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">Check-out de Préstamo en Terreno</span>
+<span class="text-label-sm font-label-sm text-outline">Hace 22 min</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-0.5">
+                    Cámara Termográfica FLIR E8-XT asignada al Supervisor Roberto Méndez para inspección de subestación eléctrica Alfa.
+                  </p>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container font-mono">SN-FLIR-091</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">Devolución estimada: 18:30 hrs</span>
+</div>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="flex items-start gap-space-md relative pl-1">
+<div class="w-6 h-6 rounded-full bg-error text-white flex items-center justify-center text-xs neu-raised ring-4 ring-surface dark:ring-primary z-10">
+<span class="material-symbols-outlined text-xs" data-icon="priority_high">priority_high</span>
+</div>
+<div class="flex-1 neu-inset p-3 rounded-xl">
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-headline-sm font-bold text-error">Bloqueo Preventivo por Alerta de Calibración</span>
+<span class="text-label-sm font-label-sm text-outline">Hace 54 min</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary mt-0.5">
+                    Balanza Analítica OHAUS Explorer (SN-OH-501) colocada en bloqueo operativo tras desvío de precisión en muestra patrón.
+                  </p>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-error-container text-on-error-container font-mono font-bold">TICKET #TK-1094</span>
+<span class="text-label-sm font-label-sm text-outline">Técnico Asignado: Carlos Ruiz</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Footer -->
+<div class="pt-space-md mt-space-sm border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline">Auditoría inmutable SHA-256 activa</span>
+<button class="neu-btn px-3 py-1.5 rounded-xl text-label-sm font-label-sm font-bold text-primary dark:text-primary-fixed">
+              Descargar Reporte de Bitácora (.CSV)
+            </button>
+</div>
+</div>
+<!-- Mantenimiento y Tickets Abiertos - Priority Queue - 5 cols -->
+<div class="lg:col-span-5 neu-raised rounded-2xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-2xl" data-icon="assignment_late">assignment_late</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">
+                    Tickets &amp; Mantenimiento
+                  </h3>
+<p class="text-body-sm font-body-sm text-outline">Cola prioritaria clasificada por severidad</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-primary-fixed neu-btn">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+</button>
+</div>
+<!-- Priority Tickets List -->
+<div class="space-y-space-sm">
+<!-- Ticket 1: Crítico -->
+<div class="neu-inset p-3.5 rounded-xl border-l-4 border-error">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm font-bold px-1.5 py-0.5 rounded bg-error-container text-on-error-container">CRÍTICO</span>
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">TK-1082</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Lab Electrónica</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary">
+                  Fallo crítico en etapa de potencia de Fuente Regulada Sorensen. Olor a sobrecalentamiento.
+                </p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-outline-variant/20 text-label-sm font-label-sm">
+<span class="text-outline">Téc: M. Valenzuela</span>
+<span class="text-error font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span> 1h transcurrida
+                  </span>
+</div>
+</div>
+<!-- Ticket 2: Preventivo -->
+<div class="neu-inset p-3.5 rounded-xl border-l-4 border-secondary">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm font-bold px-1.5 py-0.5 rounded bg-secondary-container/40 text-on-secondary-container">PREVENTIVO</span>
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">TK-1079</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Taller Mecánica</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary">
+                  Calibración semestral obligatoria de micrómetros y torquímetros digitales de precisión.
+                </p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-outline-variant/20 text-label-sm font-label-sm">
+<span class="text-outline">Téc: D. Morales</span>
+<span class="text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span> Programado hoy
+                  </span>
+</div>
+</div>
+<!-- Ticket 3: Correctivo -->
+<div class="neu-inset p-3.5 rounded-xl border-l-4 border-primary">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm font-bold px-1.5 py-0.5 rounded bg-surface-container-high text-primary dark:text-primary-fixed">CORRECTIVO</span>
+<span class="text-body-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">TK-1075</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Piso 3 Oficinas</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary">
+                  Sustitución de cableado HDMI y alimentación de proyector interactivo Epson EB-695.
+                </p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-outline-variant/20 text-label-sm font-label-sm">
+<span class="text-outline">Téc: Soporte TI</span>
+<span class="text-outline font-semibold">Pieza en almacén</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action -->
+<div class="pt-space-md mt-space-sm border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline">Tiempo promedio resolución: 3.4h</span>
+<button class="neu-btn-primary px-3 py-1.5 rounded-xl text-label-sm font-label-sm font-bold flex items-center gap-1">
+<span>Gestionar Tickets</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ================= SECTION 4: INSTITUTIONAL HARDWARE CONSOLE STATS & BARCODE SCAN SIMULATION MODAL ================= -->
+<section class="neu-raised rounded-2xl p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-2xl neu-inset flex items-center justify-center text-primary-container dark:text-primary-fixed">
+<span class="material-symbols-outlined text-3xl" data-icon="memory">memory</span>
+</div>
+<div>
+<h4 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">
+              Nodo Operativo SIGA Core v4.12
+            </h4>
+<p class="text-body-sm font-body-sm text-outline">
+              Terminal de consola física conectada con cifrado de hardware HSM. Registro local activo sin latencia.
+            </p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="neu-inset px-4 py-2 rounded-xl text-center">
+<div class="text-label-sm font-label-sm text-outline">Uptime del Sistema</div>
+<div class="text-label-md font-label-md font-bold text-primary dark:text-primary-fixed">99.98% (42d continuo)</div>
+</div>
+<div class="neu-inset px-4 py-2 rounded-xl text-center">
+<div class="text-label-sm font-label-sm text-outline">Dispositivos Vinculados</div>
+<div class="text-label-md font-label-md font-bold text-secondary">16 Escáneres RF</div>
+</div>
+<button class="neu-btn px-4 py-2 rounded-xl text-primary dark:text-primary-fixed font-bold text-label-sm font-label-sm flex items-center gap-2" onclick="simulateScan()">
+<span class="material-symbols-outlined text-secondary" data-icon="barcode_scanner">barcode_scanner</span>
+<span>Simular Test de Escaneo</span>
+</button>
+</div>
+</section>
+</main>
+</div>
+<!-- Toast Notification element for microinteractions -->
+<div class="fixed bottom-6 right-6 neu-floating bg-surface dark:bg-primary border border-secondary text-primary dark:text-primary-fixed px-space-md py-3 rounded-2xl flex items-center gap-space-sm transform translate-y-24 opacity-0 transition-all duration-300 z-50" id="toastNotification">
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle">check_circle</span>
+<div>
+<div class="text-label-md font-label-md font-bold" id="toastTitle">Operación Completada</div>
+<div class="text-body-sm font-body-sm text-outline" id="toastMsg">Acción registrada en la bitácora institucional.</div>
+</div>
+</div>
+<!-- ================= INLINE SCRIPT FOR TACTILE MICRO-INTERACTIONS ================= -->
+<script>
+    // 1. Theme Toggle Logic (Light / Dark)
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const htmlElement = document.documentElement;
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (htmlElement.classList.contains('dark')) {
+        htmlElement.classList.remove('dark');
+        htmlElement.classList.add('light');
+        themeToggleBtn.querySelector('span').textContent = 'dark_mode';
+        showToast('Modo Claro', 'La interfaz se ha configurado en modo claro con sombras cálidas.');
+      } else {
+        htmlElement.classList.remove('light');
+        htmlElement.classList.add('dark');
+        themeToggleBtn.querySelector('span').textContent = 'light_mode';
+        showToast('Modo Oscuro', 'La interfaz se ha configurado en modo oscuro profundo.');
+      }
+    });
+
+    // 2. Sidebar Drawer Open/Close Logic
+    const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const sideNavDrawer = document.getElementById('sideNavDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+    function openSidebar() {
+      sideNavDrawer.classList.remove('-translate-x-full');
+      drawerBackdrop.classList.remove('hidden');
+    }
+
+    function closeSidebar() {
+      sideNavDrawer.classList.add('-translate-x-full');
+      drawerBackdrop.classList.add('hidden');
+    }
+
+    sidebarToggleBtn.addEventListener('click', openSidebar);
+    sidebarCloseBtn.addEventListener('click', closeSidebar);
+    drawerBackdrop.addEventListener('click', closeSidebar);
+
+    // 3. Smart Search & Ctrl + K Shortcut
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    const searchDropdown = document.getElementById('searchDropdown');
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        globalSearchInput.focus();
+        searchDropdown.classList.remove('hidden');
+      }
+      if (e.key === 'Escape') {
+        searchDropdown.classList.add('hidden');
+        globalSearchInput.blur();
+        document.getElementById('roleDropdownMenu').classList.add('hidden');
+      }
+    });
+
+    globalSearchInput.addEventListener('focus', () => {
+      searchDropdown.classList.remove('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!globalSearchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
+        searchDropdown.classList.add('hidden');
+      }
+      if (!roleDropdownBtn.contains(e.target) && !roleDropdownMenu.contains(e.target)) {
+        roleDropdownMenu.classList.add('hidden');
+      }
+    });
+
+    // 4. Role Selector Dropdown
+    const roleDropdownBtn = document.getElementById('roleDropdownBtn');
+    const roleDropdownMenu = document.getElementById('roleDropdownMenu');
+    const currentRoleText = document.getElementById('currentRoleText');
+
+    roleDropdownBtn.addEventListener('click', () => {
+      roleDropdownMenu.classList.toggle('hidden');
+    });
+
+    function setRole(roleName) {
+      currentRoleText.textContent = roleName;
+      roleDropdownMenu.classList.add('hidden');
+      showToast('Perfil Actualizado', `La vista operativa ahora responde al perfil de ${roleName}.`);
+    }
+
+    // 5. Toast Notification System
+    function showToast(title, msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMsg').textContent = msg;
+      
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3500);
+    }
+
+    // 6. Barcode Scanner Simulation
+    function simulateScan() {
+      showToast('Escáner Activo', 'Lectura óptica exitosa: Activo #SN-RIG-8821 validado.');
+    }
+  </script>
+</body></html>

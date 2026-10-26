@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGA Enterprise - Módulo de Tickets &amp; Mantenimiento</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Space Grotesk, Hanken Grotesk, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "on-primary-container": "#7398b6",
+            "background": "#fff8f7",
+            "surface-bright": "#fff8f7",
+            "surface": "#fff8f7",
+            "secondary-container": "#feb956",
+            "secondary-fixed-dim": "#feb956",
+            "secondary": "#835500",
+            "on-primary-fixed": "#001e2f",
+            "tertiary-fixed-dim": "#d2c888",
+            "surface-container": "#ffe9e7",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-surface-variant": "#42474d",
+            "inverse-primary": "#a5cbea",
+            "on-background": "#410004",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#244a64",
+            "surface-container-high": "#ffe1df",
+            "on-secondary-fixed-variant": "#633f00",
+            "on-surface": "#410004",
+            "primary": "#001a2b",
+            "outline-variant": "#c2c7cd",
+            "inverse-surface": "#5f1415",
+            "inverse-on-surface": "#ffedeb",
+            "surface-variant": "#ffdad7",
+            "primary-fixed-dim": "#a5cbea",
+            "on-tertiary-container": "#47400e",
+            "primary-container": "#003049",
+            "primary-fixed": "#cae6ff",
+            "on-tertiary-fixed": "#201c00",
+            "on-error": "#ffffff",
+            "tertiary": "#675f2b",
+            "on-tertiary-fixed-variant": "#4e4715",
+            "on-secondary-fixed": "#291800",
+            "surface-dim": "#ffcfcb",
+            "secondary-fixed": "#ffddb4",
+            "surface-tint": "#3d627d",
+            "tertiary-fixed": "#efe4a2",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#ffdad7",
+            "tertiary-container": "#b6ac6f",
+            "outline": "#72787e",
+            "surface-container-low": "#fff0ef",
+            "on-secondary-container": "#734a00",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "0.75rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg": ["2.25rem", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "label-lg": ["0.875rem", { lineHeight: "1.3", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-md": ["0.9375rem", { lineHeight: "1.5", letterSpacing: "0", fontWeight: "400" }],
+            "headline-lg-mobile": ["1.625rem", { lineHeight: "1.25", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-xl": ["3rem", { lineHeight: "1.15", letterSpacing: "-0.03em", fontWeight: "700" }],
+            "body-sm": ["0.8125rem", { lineHeight: "1.45", letterSpacing: "0.005em", fontWeight: "400" }],
+            "body-lg": ["1.125rem", { lineHeight: "1.55", letterSpacing: "-0.01em", fontWeight: "400" }],
+            "headline-md": ["1.5rem", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-xl-mobile": ["2rem", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "label-sm": ["0.6875rem", { lineHeight: "1.2", letterSpacing: "0.06em", fontWeight: "600" }],
+            "label-md": ["0.75rem", { lineHeight: "1.3", letterSpacing: "0.04em", fontWeight: "500" }],
+            "headline-sm": ["1.25rem", { lineHeight: "1.4", letterSpacing: "0", fontWeight: "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Tactile Modern Neumorphic Utilities */
+    .tactile-raised {
+      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    .tactile-raised-sm {
+      box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.9), 3px 3px 10px rgba(0, 48, 73, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .tactile-inset {
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 48, 73, 0.06);
+    }
+    .tactile-floating {
+      box-shadow: 0 20px 35px -10px rgba(0, 48, 73, 0.18), 0 1px 4px rgba(0, 48, 73, 0.06);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #fff0ef;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c2c7cd;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md h-full min-h-screen overflow-x-hidden antialiased flex flex-col">
+<!-- TOP NAVIGATION BAR (Shared Component JSON Source) -->
+<header class="bg-surface dark:bg-primary text-primary dark:text-inverse-primary border-b border-outline-variant dark:border-primary-container shadow-sm dark:shadow-none docked full-width top-0 z-40 sticky">
+<div class="flex justify-between items-center w-full px-space-lg py-space-sm h-16">
+<!-- Brand & Drawer Trigger -->
+<div class="flex items-center gap-space-md">
+<button aria-label="Abrir Menú de Navegación" class="tactile-raised-sm p-space-xs rounded-xl text-primary hover:text-secondary active:scale-[0.98] transition-transform duration-100 flex items-center justify-center bg-surface" id="toggleSidebarBtn">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex items-baseline gap-space-xs">
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed tracking-tight">SIGA Enterprise</span>
+<span class="text-label-sm font-label-sm text-secondary bg-surface-container-high px-space-xs py-0.5 rounded border border-secondary-container">v4.2 PRO</span>
+</div>
+</div>
+<!-- Predictive Quick Search Micro-Interactive Bar -->
+<div class="relative hidden lg:block w-96">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-secondary text-lg" data-icon="search">search</span>
+<input class="tactile-inset w-full bg-surface-container-low text-on-surface rounded-xl pl-10 pr-20 py-2 font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-secondary transition-all" id="globalSearchInput" placeholder="Buscar por Ticket #, Serie de Activo o Técnico... (Ctrl + K)" type="text"/>
+<kbd class="absolute right-3 px-1.5 py-0.5 rounded bg-surface border border-outline-variant text-label-sm font-label-sm text-on-surface-variant shadow-xs">Ctrl + K</kbd>
+</div>
+<!-- Predictive Dropdown Menu on Search Focus -->
+<div class="hidden absolute left-0 right-0 mt-2 bg-surface-container-lowest rounded-2xl tactile-floating p-space-sm z-50 border border-outline-variant" id="predictiveDropdown">
+<div class="text-label-sm font-label-sm text-secondary uppercase tracking-wider px-space-sm py-1">Coincidencias Recientes</div>
+<div class="divide-y divide-surface-container-high">
+<button class="w-full text-left p-space-sm hover:bg-surface-container-low rounded-lg transition-colors flex items-center justify-between group">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="build">build</span>
+<div>
+<div class="font-headline-sm text-label-md text-primary group-hover:text-secondary">TK-8942 · Falla Láser CO2</div>
+<div class="text-label-sm text-on-surface-variant font-label-sm">Activo: ACT-9014 · Lab Metrología</div>
+</div>
+</div>
+<span class="text-label-sm font-label-sm bg-surface-container px-2 py-0.5 rounded text-error border border-error">Alta</span>
+</button>
+<button class="w-full text-left p-space-sm hover:bg-surface-container-low rounded-lg transition-colors flex items-center justify-between group">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="inventory_2">inventory_2</span>
+<div>
+<div class="font-headline-sm text-label-md text-primary group-hover:text-secondary">SN: OSC-7721-X9</div>
+<div class="text-label-sm text-on-surface-variant font-label-sm">Osciloscopio Digital Rigol · En Reparación</div>
+</div>
+</div>
+<span class="text-label-sm font-label-sm bg-surface-container-high px-2 py-0.5 rounded text-secondary font-label-sm">REF: REF-881</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Navigation Links (Exact from JSON) -->
+<nav class="hidden md:flex items-center gap-space-lg text-label-md font-label-md">
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150" href="#dashboard">Dashboard</a>
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150" href="#activos">Activos</a>
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150" href="#prestamos">Préstamos</a>
+<!-- ACTIVE STATE: Intent maps to Mantenimiento & Tickets -->
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-secondary-container dark:border-secondary pb-1" href="#mantenimiento">Mantenimiento</a>
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150" href="#bitacora">Bitácora</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-space-sm">
+<button class="tactile-raised bg-primary-container text-on-primary hover:bg-primary px-space-md py-space-xs rounded-xl font-label-md text-label-md flex items-center gap-space-xs active:scale-[0.98] transition-all" id="openModalBtn">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span>Nuevo Registro</span>
+</button>
+<!-- Icon Actions (dark_mode, notifications, help) from JSON -->
+<div class="flex items-center gap-1 border-l border-outline-variant pl-space-sm ml-space-xs">
+<button aria-label="Cambiar tema de color" class="p-2 text-on-surface-variant hover:text-primary rounded-lg transition-colors" id="darkModeToggle">
+<span class="material-symbols-outlined text-xl" data-icon="dark_mode">dark_mode</span>
+</button>
+<button aria-label="Notificaciones del sistema" class="p-2 text-on-surface-variant hover:text-primary rounded-lg relative transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
+</button>
+<button aria-label="Centro de ayuda" class="p-2 text-on-surface-variant hover:text-primary rounded-lg transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="help">help</span>
+</button>
+</div>
+<!-- User Profile Avatar with Admin badge -->
+<div class="flex items-center gap-space-xs pl-space-xs">
+<div class="relative">
+<img alt="Avatar de usuario activo con chip de rol de Administrador" class="w-9 h-9 rounded-full object-cover border-2 border-secondary-container tactile-raised-sm" data-alt="Institutional profile portrait of an engineering supervisor wearing cleanroom technician apparel and credentials inside a state of the art electronics and avionics maintenance laboratory with high tech diagnostics equipment in warm neutral lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbyJazhosF-qJXWPoW0f8g3xdXgWXnymjrhiYHVQcUjQyGXc7Lbow5cT5NTfYC-waN-f8xqJaj3ItqUq2G4H_1aYk0xsrb4N_kVnKfa6fKet8J4PkyK9WneB1TJCL9dNbSM-iN8VpJPYbCPishR6BiqNWslEIa9Q3r0KGvIWK2f_hun2uKTkoiVph1nGgZWV9DX-nOzkDQMm_egWCHKpp-vh__DHDWN8QSzZPSxyI"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-secondary rounded-full border-2 border-surface"></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- SIDE NAVIGATION DRAWER (Shared Component JSON Source) -->
+<aside class="fixed top-0 left-0 h-full w-72 flex flex-col justify-between p-space-md bg-surface-container-low dark:bg-primary-container text-primary dark:text-inverse-primary border-r border-outline-variant dark:border-primary shadow-xl dark:shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out" id="sideNavDrawer">
+<!-- Drawer Header -->
+<div>
+<div class="flex items-center justify-between mb-space-lg pb-space-sm border-b border-surface-container-high">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-primary text-secondary flex items-center justify-center font-headline-md font-bold tactile-raised-sm">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<h2 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed leading-tight">SIGA Enterprise</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary">Consola de Operaciones</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary p-1 rounded-lg" id="closeSidebarBtn">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Quick Action CTA -->
+<button class="w-full mb-space-lg tactile-raised bg-secondary text-on-secondary font-label-md text-label-md py-space-sm px-space-md rounded-xl flex items-center justify-center gap-space-sm active:scale-[0.98] transition-transform" id="sidebarTicketCTA">
+<span class="material-symbols-outlined text-lg" data-icon="confirmation_number">confirmation_number</span>
+<span>Generar Ticket</span>
+</button>
+<!-- Navigation Tabs (Exact 7 Tabs from JSON) -->
+<nav class="space-y-1">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#dashboard">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. Activos -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#activos">
+<span class="material-symbols-outlined text-lg" data-icon="inventory_2">inventory_2</span>
+<span>Activos</span>
+</a>
+<!-- 3. Préstamos -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#prestamos">
+<span class="material-symbols-outlined text-lg" data-icon="handshake">handshake</span>
+<span>Préstamos</span>
+</a>
+<!-- 4. Tickets & Mantenimiento (ACTIVE) -->
+<a class="text-primary dark:text-primary-fixed bg-surface-container-high dark:bg-primary font-bold rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors shadow-xs" href="#tickets">
+<span class="material-symbols-outlined text-lg text-secondary" data-icon="build">build</span>
+<span>Tickets &amp; Mantenimiento</span>
+</a>
+<!-- 5. Usuarios & Roles -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#usuarios">
+<span class="material-symbols-outlined text-lg" data-icon="manage_accounts">manage_accounts</span>
+<span>Usuarios &amp; Roles</span>
+</a>
+<!-- 6. Bitácora -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#bitacora">
+<span class="material-symbols-outlined text-lg" data-icon="history">history</span>
+<span>Bitácora</span>
+</a>
+<!-- 7. Catálogo Público -->
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#catalogo">
+<span class="material-symbols-outlined text-lg" data-icon="menu_book">menu_book</span>
+<span>Catálogo Público</span>
+</a>
+</nav>
+</div>
+<!-- Drawer Footer Tabs -->
+<div class="pt-space-md border-t border-surface-container-high space-y-1">
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#configuracion">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span>Configuración</span>
+</a>
+<a class="text-error hover:bg-error-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg transition-colors" href="#logout">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- BACKDROP OVERLAY FOR SIDEBAR -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden transition-opacity duration-300" id="drawerBackdrop"></div>
+<!-- MAIN OPERATIONAL WORKSPACE -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 md:px-space-lg py-space-md space-y-space-lg">
+<!-- SUBHEADER / STATUS TELEMETRY STRIP -->
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md pb-space-sm border-b border-surface-container">
+<div>
+<div class="flex items-center gap-space-xs text-label-md font-label-md text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-base" data-icon="home_repair_service">home_repair_service</span>
+<span>Centro de Soporte Técnico</span>
+<span>/</span>
+<span class="text-secondary font-bold">Relational Dispatch Engine</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">Levantamiento y Seguimiento de Tickets de Mantenimiento</h1>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="tactile-raised px-space-md py-space-xs rounded-xl bg-surface flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-on-surface">Queue Activa: <strong class="text-primary font-headline-sm">18 Tickets</strong></span>
+</div>
+<div class="tactile-raised px-space-md py-space-xs rounded-xl bg-surface flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="inventory">inventory</span>
+<span class="text-label-sm font-label-sm text-on-surface">Stock Refacciones: <strong class="text-primary font-headline-sm">94.2%</strong></span>
+</div>
+<button class="tactile-raised bg-secondary text-on-secondary px-space-md py-space-xs rounded-xl font-label-md text-label-md flex items-center gap-space-xs active:scale-[0.98] transition-all" id="openModalBtn2">
+<span class="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
+<span>Levantar Nuevo Ticket</span>
+</button>
+</div>
+</div>
+<!-- RELATIONAL SUMMARY & WARRANTY ALERT BANNER -->
+<div class="tactile-raised rounded-2xl bg-surface-container-low p-space-md border-l-4 border-l-secondary flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="p-2 rounded-xl bg-secondary-container/40 text-secondary tactile-raised-sm">
+<span class="material-symbols-outlined text-2xl" data-icon="warning">warning</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-primary flex items-center gap-space-xs">
+            Alerta de Garantía por Expirar &amp; Dependencia Relacional
+            <span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed">Atención Inmediata</span>
+</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+            El activo <span class="font-label-sm font-bold text-primary">ACT-4402 (Espectrómetro UV-VIS)</span> tiene garantía de fabricante con vencimiento en <strong>7 días hábiles</strong>. El ticket asociado <strong>#TK-8930</strong> requiere autorización para reemplazo de módulo óptico antes del cierre de póliza.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs shrink-0">
+<button class="tactile-raised-sm bg-surface hover:bg-surface-container px-space-sm py-1.5 rounded-lg text-label-sm font-label-sm text-primary transition-colors">
+          Ver Póliza
+        </button>
+<button class="tactile-raised-sm bg-primary text-surface px-space-sm py-1.5 rounded-lg text-label-sm font-label-sm transition-colors">
+          Priorizar Ticket
+        </button>
+</div>
+</div>
+<!-- MAIN DASHBOARD BENTO GRID: TICKETS WORKBENCH -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- LEFT COLUMN: ACTIVE TICKETS DATA TABLE & FILTERS (Col 7) -->
+<section class="lg:col-span-7 space-y-space-md">
+<!-- Filter Ribbon & Search Filter -->
+<div class="tactile-raised rounded-2xl p-space-md bg-surface space-y-space-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm">
+<h2 class="text-headline-sm font-headline-sm text-primary flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary" data-icon="assignment">assignment</span>
+<span>Tickets Activos en Taller</span>
+</h2>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Tabla: <code class="bg-surface-container-high px-1 rounded">Ticket / Servicio</code></span>
+</div>
+<!-- Status Pill Ribbon -->
+<div class="flex flex-wrap gap-1.5 pt-1">
+<button class="px-3 py-1 rounded-full text-label-sm font-label-sm bg-primary text-surface shadow-xs">Todos (5)</button>
+<button class="px-3 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low hover:bg-surface-container text-on-surface-variant border border-outline-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Abierto (1)
+            </button>
+<button class="px-3 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low hover:bg-surface-container text-on-surface-variant border border-outline-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> En Diagnóstico (1)
+            </button>
+<button class="px-3 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low hover:bg-surface-container text-on-surface-variant border border-outline-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Esperando Refacción (2)
+            </button>
+<button class="px-3 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low hover:bg-surface-container text-on-surface-variant border border-outline-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span> En Reparación (1)
+            </button>
+</div>
+</div>
+<!-- Interactive Tickets List Cards -->
+<div class="space-y-space-sm">
+<!-- Card 1 (Selected Detail Model) -->
+<article class="tactile-raised rounded-2xl p-space-md bg-surface border-2 border-secondary-container transition-all hover:translate-y-[-2px] cursor-pointer" onclick="selectTicket('TK-8942')">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="tactile-inset px-2.5 py-1 rounded-lg text-label-md font-label-md font-bold text-primary bg-surface-container-low">TK-8942</span>
+<span class="rounded-full px-2.5 py-0.5 text-label-sm font-label-sm border border-secondary text-secondary bg-secondary-fixed/40 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                  Esperando Refacción
+                </span>
+<span class="rounded-full px-2 py-0.5 text-label-sm font-label-sm bg-error-container text-on-error-container font-bold">
+                  Crítica
+                </span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Hace 2 horas</span>
+</div>
+<div class="mt-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary">Falla de enfriador peltier en Cámara Térmica</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                El sensor de temperatura se apaga intermitentemente al superar los 45°C. Requiere reemplazo del disipador térmico y ventilador centrífugo de 12V.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container flex flex-wrap items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="inventory_2">inventory_2</span>
+                  ACT-9014 (FLIR E8-XT)
+                </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="engineering">engineering</span>
+                  Ing. Marcos V.
+                </span>
+</div>
+<span class="text-label-xs bg-surface-container-high px-2 py-0.5 rounded font-label-sm text-primary">Tipo: Correctivo</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="tactile-raised rounded-2xl p-space-md bg-surface hover:translate-y-[-2px] transition-all cursor-pointer" onclick="selectTicket('TK-8941')">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="tactile-inset px-2.5 py-1 rounded-lg text-label-md font-label-md font-bold text-primary bg-surface-container-low">TK-8941</span>
+<span class="rounded-full px-2.5 py-0.5 text-label-sm font-label-sm border border-primary text-primary bg-primary-fixed/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  En Diagnóstico
+                </span>
+<span class="rounded-full px-2 py-0.5 text-label-sm font-label-sm bg-secondary-fixed text-on-secondary-fixed font-bold">
+                  Media
+                </span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Ayer, 16:30</span>
+</div>
+<div class="mt-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary">Calibración Anual y Ajuste de Cero</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Plan preventivo según norma ISO/IEC 17025. Balanza Analítica de precisión 0.0001g requiere masas patrón clase E2.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container flex flex-wrap items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="inventory_2">inventory_2</span>
+                  ACT-1188 (Mettler Toledo)
+                </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="engineering">engineering</span>
+                  Tec. Clara Méndez
+                </span>
+</div>
+<span class="text-label-xs bg-surface-container-high px-2 py-0.5 rounded font-label-sm text-primary">Tipo: Calibración</span>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="tactile-raised rounded-2xl p-space-md bg-surface hover:translate-y-[-2px] transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="tactile-inset px-2.5 py-1 rounded-lg text-label-md font-label-md font-bold text-primary bg-surface-container-low">TK-8939</span>
+<span class="rounded-full px-2.5 py-0.5 text-label-sm font-label-sm border border-error text-error bg-error-container/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                  En Reparación
+                </span>
+<span class="rounded-full px-2 py-0.5 text-label-sm font-label-sm bg-error-container text-on-error-container font-bold">
+                  Alta
+                </span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Hace 1 día</span>
+</div>
+<div class="mt-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary">Reemplazo de Tubo de Rayos X Desgastado</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Fluorescencia de Rayos X (XRF). El conteo de fotones cayó un 40%. Se instaló refacción nueva REF-2044 bajo supervisión radiológica.
+              </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container flex flex-wrap items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="inventory_2">inventory_2</span>
+                  ACT-6031 (Shimadzu EDX)
+                </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="engineering">engineering</span>
+                  Dr. Sergio Rosales
+                </span>
+</div>
+<span class="text-label-xs bg-surface-container-high px-2 py-0.5 rounded font-label-sm text-primary">Tipo: Correctivo</span>
+</div>
+</article>
+</div>
+<!-- RELATIONAL NOTICE: EMPTY QUEUE / UNASSIGNED FALLBACK STATE -->
+<div class="tactile-raised rounded-2xl p-space-md bg-surface border border-outline-variant/50 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="task_alt">task_alt</span>
+<div>
+<div class="font-headline-sm text-label-lg text-primary">Sin tickets pendientes de asignación de técnico</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">La tabla relacional <code class="bg-surface-container px-1 rounded">Asignacion_ticket</code> se encuentra al 100% equilibrada.</p>
+</div>
+</div>
+<button class="tactile-inset px-space-sm py-1 rounded-lg text-label-sm font-label-sm text-secondary bg-surface-container-low hover:bg-surface-container transition-colors">
+            Revisar Cargas
+          </button>
+</div>
+</section>
+<!-- RIGHT COLUMN: DETAILED TICKET AUDIT WORKBENCH (Col 5) -->
+<!-- Representing Relational entities: Ticket, Historial, Bitacora, Refacciones, Comentarios_ticket -->
+<section class="lg:col-span-5 space-y-space-md">
+<div class="tactile-raised rounded-2xl bg-surface p-space-lg space-y-space-md">
+<!-- Detailed Header -->
+<div class="border-b border-surface-container pb-space-sm flex items-start justify-between">
+<div>
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="flag">flag</span>
+<span>Ficha Operativa de Ticket #TK-8942</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm text-primary mt-1">Cámara Térmica FLIR E8-XT</h2>
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm text-on-surface-variant mt-0.5">
+<span>Serie: <code class="font-bold text-primary">SN-FLIR-99201</code></span>
+<span>•</span>
+<span>Ubicación: Edificio B-102</span>
+</div>
+</div>
+<button class="tactile-raised-sm p-2 rounded-xl text-on-surface-variant hover:text-primary bg-surface" title="Imprimir Orden de Servicio">
+<span class="material-symbols-outlined text-base" data-icon="print">print</span>
+</button>
+</div>
+<!-- Relational Asignacion_ticket Panel -->
+<div class="tactile-inset rounded-xl p-space-sm bg-surface-container-low flex items-center justify-between text-label-sm font-label-sm">
+<div>
+<div class="text-on-surface-variant text-[11px] uppercase">Técnico Asignado</div>
+<div class="font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary" data-icon="person">person</span>
+                Marcos Valenzuela (Niv. III)
+              </div>
+</div>
+<div class="border-l border-outline-variant/40 pl-space-sm">
+<div class="text-on-surface-variant text-[11px] uppercase">Supervisor en Turno</div>
+<div class="font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-tertiary" data-icon="verified_user">verified_user</span>
+                Ing. Roberto Saldaña
+              </div>
+</div>
+</div>
+<!-- Refacciones & Movimientos_refacciones Consumidas -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-label-md text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="extension">extension</span>
+<span>Refacciones Requeridas / Consumidas</span>
+</h3>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Stock Almacén</span>
+</div>
+<div class="space-y-1.5 text-body-sm">
+<div class="tactile-raised-sm p-space-xs rounded-xl bg-surface-container-low flex items-center justify-between">
+<div>
+<div class="font-label-sm font-bold text-primary">REF-9022 · Disipador Peltier 40x40mm</div>
+<div class="text-label-sm text-on-surface-variant">Lote: L-2024-X • 1 pza solicitada</div>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-error-container text-on-error-container">Por Recibir</span>
+</div>
+<div class="tactile-raised-sm p-space-xs rounded-xl bg-surface-container-low flex items-center justify-between">
+<div>
+<div class="font-label-sm font-bold text-primary">REF-1044 · Pasta Térmica Silver 3.5g</div>
+<div class="text-label-sm text-on-surface-variant">Lote: L-2023-A • 1 tubo consumido</div>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-secondary-fixed text-on-secondary-fixed">Consumido</span>
+</div>
+</div>
+</div>
+<!-- Historial de Estados & Bitácora de Cambios (Línea de Tiempo) -->
+<div class="space-y-space-xs pt-1">
+<h3 class="font-headline-sm text-label-md text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="timeline">timeline</span>
+<span>Línea de Tiempo: Historial &amp; Bitácora</span>
+</h3>
+<div class="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-outline-variant">
+<!-- Event 1 -->
+<div class="relative">
+<span class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-secondary border-2 border-surface"></span>
+<div class="text-label-sm font-label-sm font-bold text-primary">Cambio de Estado: Esperando Refacción</div>
+<p class="text-body-sm text-on-surface-variant">Solicitud enviada al almacén central para disipador peltier compatible.</p>
+<div class="text-label-sm font-label-sm text-secondary">Hoy, 10:15 AM · Técnico Marcos V.</div>
+</div>
+<!-- Event 2 -->
+<div class="relative">
+<span class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-primary border-2 border-surface"></span>
+<div class="text-label-sm font-label-sm font-bold text-primary">Diagnóstico Inicial Concluido</div>
+<p class="text-body-sm text-on-surface-variant">Se detectó fallo en ventilador centrífugo y sobrecalentamiento del bloque térmico.</p>
+<div class="text-label-sm font-label-sm text-on-surface-variant">Ayer, 04:30 PM · Técnico Marcos V.</div>
+</div>
+<!-- Event 3 -->
+<div class="relative">
+<span class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-outline-variant border-2 border-surface"></span>
+<div class="text-label-sm font-label-sm font-bold text-primary">Ticket Creado (Levantamiento)</div>
+<p class="text-body-sm text-on-surface-variant">Reporte generado vía consola por alerta de error térmico #E-09.</p>
+<div class="text-label-sm font-label-sm text-on-surface-variant">Ayer, 02:00 PM · Ing. Roberto Saldaña</div>
+</div>
+</div>
+</div>
+<!-- Comentarios del Ticket (Hilo Cronológico: Técnico vs Supervisor) -->
+<div class="space-y-space-xs pt-space-xs border-t border-surface-container">
+<h3 class="font-headline-sm text-label-md text-primary flex items-center justify-between">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="forum">forum</span>
+<span>Comentarios &amp; Coordinación</span>
+</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">2 intervenciones</span>
+</h3>
+<!-- Comment Stream -->
+<div class="space-y-2 max-h-56 overflow-y-auto custom-scrollbar pr-1">
+<!-- Comment 1: Supervisor -->
+<div class="tactile-raised-sm p-space-xs rounded-xl bg-surface-container-high/40 border border-outline-variant/30">
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-1">
+<span class="font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-tertiary" data-icon="supervisor_account">supervisor_account</span>
+                    Ing. Roberto S. (Supervisor)
+                  </span>
+<span class="text-on-surface-variant">10:45 AM</span>
+</div>
+<p class="text-body-sm text-on-surface">
+                  ¿El módulo óptico sufrió alguna distorsión por la temperatura o solo fue el disipador exterior?
+                </p>
+</div>
+<!-- Comment 2: Technician -->
+<div class="tactile-raised-sm p-space-xs rounded-xl bg-surface-container-low border border-secondary-container/40 ml-2">
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-1">
+<span class="font-bold text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="engineering">engineering</span>
+                    Marcos Valenzuela (Técnico)
+                  </span>
+<span class="text-on-surface-variant">11:10 AM</span>
+</div>
+<p class="text-body-sm text-on-surface">
+                  Lente intacto y calibrado. Solo el peltier exterior se abrió por ciclo térmico. Tan pronto llegue REF-9022 cerramos la orden.
+                </p>
+</div>
+</div>
+<!-- Quick Add Comment Input -->
+<div class="relative pt-2">
+<input class="tactile-inset w-full bg-surface-container-low text-on-surface rounded-xl pl-3 pr-12 py-2 font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="Escribir nota o actualización de bitácora..." type="text"/>
+<button class="absolute right-1.5 bottom-1.5 p-1.5 rounded-lg bg-secondary text-on-secondary hover:bg-secondary/90 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- MODAL / VISTA: LEVANTAR NUEVO TICKET DE SERVICIO -->
+<!-- Direct relational mapping: Ticket, Servicio, Tipo_servicio, Activos, Refacciones, Asignacion_ticket -->
+<div class="fixed inset-0 bg-primary/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" id="newTicketModal">
+<div class="tactile-floating bg-surface w-full max-w-3xl max-h-[942px] rounded-2xl flex flex-col overflow-hidden border border-outline-variant animate-in fade-in zoom-in-95 duration-150">
+<!-- Modal Header -->
+<div class="px-space-lg py-space-md bg-surface-container-low border-b border-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-primary text-secondary flex items-center justify-center tactile-raised-sm">
+<span class="material-symbols-outlined" data-icon="note_add">note_add</span>
+</div>
+<div>
+<h2 class="text-headline-md font-headline-md font-bold text-primary">Levantar Nuevo Ticket de Servicio</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Registro estructurado en esquema relacional SIGA v4.2</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error p-1.5 rounded-xl tactile-raised-sm bg-surface transition-colors" id="closeModalBtn">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body (Form Fields) -->
+<form class="p-space-lg overflow-y-auto custom-scrollbar space-y-space-md flex-1" id="newTicketForm">
+<!-- Step 1: Activo Afectado (Búsqueda por Serie) -->
+<div>
+<label class="block text-label-md font-label-md text-primary mb-1">
+            1. Activo Institucional Afectado <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-secondary text-base" data-icon="qr_code_scanner">qr_code_scanner</span>
+<input class="tactile-inset w-full bg-surface-container-low rounded-xl pl-10 pr-4 py-2.5 font-body-md text-on-surface text-body-md focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="Buscar por Número de Serie (ej. SN-FLIR-99201, OSC-7721, o código de activo...)" required="" type="text"/>
+</div>
+<div class="flex items-center gap-2 mt-1.5 text-label-sm font-label-sm text-on-surface-variant">
+<span>Sugerencias activas:</span>
+<button class="underline hover:text-secondary" type="button">ACT-9014 (Cámara FLIR)</button>
+<span>•</span>
+<button class="underline hover:text-secondary" type="button">ACT-1188 (Balanza Toledo)</button>
+<span>•</span>
+<button class="underline hover:text-secondary" type="button">ACT-4402 (Espectrómetro UV)</button>
+</div>
+</div>
+<!-- Step 2: Tipo de Servicio & Nivel de Urgencia (Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Tipo de Servicio (Relación Tipo_servicio) -->
+<div>
+<label class="block text-label-md font-label-md text-primary mb-1">
+              2. Tipo de Servicio <span class="text-error">*</span>
+</label>
+<select class="tactile-inset w-full bg-surface-container-low rounded-xl px-3 py-2.5 font-body-md text-on-surface text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+<option value="preventivo">Preventivo (Programado)</option>
+<option selected="" value="correctivo">Correctivo (Reparación de Falla)</option>
+<option value="diagnostico">Diagnóstico Técnico Especializado</option>
+<option value="calibracion">Calibración y Metrología</option>
+<option value="limpieza">Limpieza de Cámara Limpia / Descontaminación</option>
+</select>
+</div>
+<!-- Nivel de Urgencia / Prioridad -->
+<div>
+<label class="block text-label-md font-label-md text-primary mb-1">
+              3. Nivel de Urgencia / Prioridad <span class="text-error">*</span>
+</label>
+<div class="grid grid-cols-4 gap-1.5">
+<label class="tactile-raised-sm p-2 rounded-xl text-center cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:bg-surface-container-high has-[:checked]:border-outline">
+<input class="sr-only" name="urgencia" type="radio" value="baja"/>
+<span class="block text-label-sm font-label-sm text-on-surface-variant">Baja</span>
+</label>
+<label class="tactile-raised-sm p-2 rounded-xl text-center cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:bg-secondary-fixed has-[:checked]:text-on-secondary-fixed">
+<input checked="" class="sr-only" name="urgencia" type="radio" value="media"/>
+<span class="block text-label-sm font-label-sm font-bold">Media</span>
+</label>
+<label class="tactile-raised-sm p-2 rounded-xl text-center cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:bg-secondary-container has-[:checked]:text-on-secondary-container">
+<input class="sr-only" name="urgencia" type="radio" value="alta"/>
+<span class="block text-label-sm font-label-sm font-bold">Alta</span>
+</label>
+<label class="tactile-raised-sm p-2 rounded-xl text-center cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:bg-error-container has-[:checked]:text-on-error-container">
+<input class="sr-only" name="urgencia" type="radio" value="critica"/>
+<span class="block text-label-sm font-label-sm font-bold">Crítica</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Step 3: Asignacion_ticket (Técnico Asignado y Supervisor a Cargo) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block text-label-md font-label-md text-primary mb-1">
+              4. Técnico de Campo Asignado <span class="text-error">*</span>
+</label>
+<select class="tactile-inset w-full bg-surface-container-low rounded-xl px-3 py-2.5 font-body-md text-on-surface text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+<option value="tech-1">Marcos Valenzuela (Instrumentación Láser)</option>
+<option value="tech-2">Clara Méndez (Metrología Química)</option>
+<option value="tech-3">Dr. Sergio Rosales (Sistemas XRF)</option>
+<option value="tech-4">Ing. Gabriel Ortiz (Electrónica de Potencia)</option>
+</select>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-primary mb-1">
+              5. Supervisor a Cargo <span class="text-error">*</span>
+</label>
+<select class="tactile-inset w-full bg-surface-container-low rounded-xl px-3 py-2.5 font-body-md text-on-surface text-body-md focus:outline-none focus:ring-1 focus:ring-secondary">
+<option value="sup-1">Ing. Roberto Saldaña (Jefe de Taller)</option>
+<option value="sup-2">Mtra. Elena Bustos (Control de Calidad)</option>
+</select>
+</div>
+</div>
+<!-- Step 4: Solicitud de Refacciones requeridas con control de inventario -->
+<div class="tactile-raised-sm p-space-md rounded-xl bg-surface-container-low space-y-space-sm border border-outline-variant/40">
+<div class="flex items-center justify-between">
+<label class="text-label-md font-label-md text-primary flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-base text-secondary" data-icon="inventory">inventory</span>
+<span>6. Refacciones Requeridas (Control de Stock Almacén)</span>
+</label>
+<span class="text-label-sm font-label-sm text-secondary bg-surface px-2 py-0.5 rounded border border-secondary/30">Módulo Relacional: Refacciones</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+<div class="sm:col-span-2">
+<select class="tactile-inset w-full bg-surface rounded-lg px-3 py-2 text-body-sm font-body-sm text-on-surface">
+<option>REF-9022 · Disipador Peltier 40x40mm (Stock: 4 unidades)</option>
+<option>REF-1044 · Pasta Térmica Silver 3.5g (Stock: 18 unidades)</option>
+<option>REF-3301 · Fusible Cerámico Rápido 5A (Stock: 50 unidades)</option>
+<option>REF-8809 · Cable Sensor Blindado RG-58 (Stock: 12 metros)</option>
+</select>
+</div>
+<div>
+<input class="tactile-inset w-full bg-surface rounded-lg px-3 py-2 text-body-sm font-body-sm text-on-surface" min="1" placeholder="Cantidad" type="number" value="1"/>
+</div>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">
+            Las piezas seleccionadas se reservarán de la tabla <code class="bg-surface-container px-1 rounded">Movimientos_refacciones</code> al autorizar el ticket.
+          </p>
+</div>
+<!-- Step 5: Descripción de la avería o plan de mantenimiento -->
+<div>
+<label class="block text-label-md font-label-md text-primary mb-1">
+            7. Descripción de la Avería o Plan de Intervención <span class="text-error">*</span>
+</label>
+<textarea class="tactile-inset w-full bg-surface-container-low rounded-xl p-3 font-body-md text-on-surface text-body-md focus:outline-none focus:ring-1 focus:ring-secondary" placeholder="Describa el síntoma de falla, código de error registrado en bitácora, pruebas preliminares o alcance del mantenimiento preventivo..." required="" rows="3"></textarea>
+</div>
+</form>
+<!-- Modal Footer -->
+<div class="px-space-lg py-space-sm bg-surface-container-low border-t border-surface-container flex items-center justify-between">
+<button class="tactile-raised-sm bg-surface hover:bg-surface-container px-space-md py-space-xs rounded-xl font-label-md text-label-md text-on-surface-variant transition-colors" id="cancelModalBtn" type="button">
+          Cancelar
+        </button>
+<button class="tactile-raised bg-primary text-surface hover:bg-primary-container px-space-lg py-space-xs rounded-xl font-label-md text-label-md flex items-center gap-space-xs active:scale-[0.98] transition-transform" id="saveTicketBtn" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="save">save</span>
+<span>Registrar y Emitir Orden</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER (Lightweight Feedback) -->
+<div class="fixed bottom-6 right-6 bg-primary text-surface px-space-md py-space-sm rounded-xl tactile-floating hidden items-center gap-space-sm z-50 border border-secondary-container" id="toastNotification">
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle">check_circle</span>
+<div>
+<div class="text-label-md font-label-md font-bold" id="toastTitle">Operación Exitosa</div>
+<div class="text-body-sm font-body-sm text-surface-variant" id="toastDesc">Ticket creado y registrado en la bitácora relacional.</div>
+</div>
+</div>
+<!-- SCRIPT FOR CLIENT INTERACTIVITY & MICRO-INTERACTIONS -->
+<script>
+    // Elements
+    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+    const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+    const sideNavDrawer = document.getElementById('sideNavDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    const predictiveDropdown = document.getElementById('predictiveDropdown');
+    
+    const openModalBtn = document.getElementById('openModalBtn');
+    const openModalBtn2 = document.getElementById('openModalBtn2');
+    const sidebarTicketCTA = document.getElementById('sidebarTicketCTA');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const newTicketModal = document.getElementById('newTicketModal');
+    const saveTicketBtn = document.getElementById('saveTicketBtn');
+    const toastNotification = document.getElementById('toastNotification');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    // Sidebar Drawer Toggle
+    function toggleDrawer(open) {
+      if (open) {
+        sideNavDrawer.classList.remove('-translate-x-full');
+        drawerBackdrop.classList.remove('hidden');
+      } else {
+        sideNavDrawer.classList.add('-translate-x-full');
+        drawerBackdrop.classList.add('hidden');
+      }
+    }
+
+    if (toggleSidebarBtn) toggleSidebarBtn.addEventListener('click', () => toggleDrawer(true));
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', () => toggleDrawer(false));
+    if (drawerBackdrop) drawerBackdrop.addEventListener('click', () => toggleDrawer(false));
+
+    // Predictive Search Micro-interaction
+    if (globalSearchInput && predictiveDropdown) {
+      globalSearchInput.addEventListener('focus', () => predictiveDropdown.classList.remove('hidden'));
+      globalSearchInput.addEventListener('blur', () => {
+        // Slight delay to allow clicking options
+        setTimeout(() => predictiveDropdown.classList.add('hidden'), 200);
+      });
+      // Keyboard shortcut Ctrl+K
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault();
+          globalSearchInput.focus();
+        }
+      });
+    }
+
+    // Modal Opening & Closing
+    function openModal() {
+      newTicketModal.classList.remove('hidden');
+      toggleDrawer(false);
+    }
+    function closeModal() {
+      newTicketModal.classList.add('hidden');
+    }
+
+    if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+    if (openModalBtn2) openModalBtn2.addEventListener('click', openModal);
+    if (sidebarTicketCTA) sidebarTicketCTA.addEventListener('click', openModal);
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+
+    // Save Action Feedback
+    if (saveTicketBtn) {
+      saveTicketBtn.addEventListener('click', () => {
+        closeModal();
+        showToast('Ticket #TK-8943 Registrado', 'Se guardó en las tablas Servicio, Ticket y Bitacora.');
+      });
+    }
+
+    function showToast(title, desc) {
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastDesc').textContent = desc;
+      toastNotification.classList.remove('hidden');
+      toastNotification.classList.add('flex');
+      setTimeout(() => {
+        toastNotification.classList.add('hidden');
+        toastNotification.classList.remove('flex');
+      }, 3500);
+    }
+
+    // Dark Mode Toggle simulation for testing
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+    }
+
+    function selectTicket(id) {
+      showToast(`Ticket ${id} seleccionado`, 'Sincronizando bitácora y asignaciones correspondientes.');
+    }
+  </script>
+</body></html>
