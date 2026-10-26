@@ -6,6 +6,189 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  /* Tipografías del Sistema Tactile Enterprise */
+  --font-headline: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Paleta Cromática y Tokens Oficiales */
+  --color-primary: #001A2B;
+  --color-primary-container: #003049;
+  --color-on-primary: #FFFFFF;
+  --color-on-primary-container: #7398B6;
+  --color-inverse-primary: #A5CBEA;
+
+  --color-secondary: #835500;
+  --color-secondary-container: #FEB956;
+  --color-on-secondary: #FFFFFF;
+  --color-on-secondary-container: #734A00;
+
+  --color-tertiary: #675F2B;
+  --color-tertiary-container: #B6AC6F;
+
+  --color-surface: #FFF8F7;
+  --color-surface-dim: #FFCFCB;
+  --color-surface-bright: #FFF8F7;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #FFF0EF;
+  --color-surface-container: #FFE9E7;
+  --color-surface-container-high: #FFE1DF;
+  --color-surface-container-highest: #FFDAD7;
+  --color-on-surface: #410004;
+  --color-on-surface-variant: #42474D;
+  --color-outline: #72787E;
+  --color-outline-variant: #C2C7CD;
+
+  --color-error: #BA1A1A;
+  --color-error-container: #FFDAD6;
+  --color-on-error: #FFFFFF;
+  --color-on-error-container: #93000A;
+
+  /* Espaciado del Sistema */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+}
+
+/* ==========================================================================
+   MODELO DE ILUMINACIÓN DUAL NEUMÓRFICA (Luz 315° Superior-Izquierda)
+   ========================================================================== */
+
+/* Superficie Elevada / Extruida */
+.neu-raised {
+  background: #FFF8F7;
+  box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.dark .neu-raised {
+  background: #001A2B;
+  box-shadow: -4px -4px 12px rgba(255, 243, 176, 0.04), 6px 6px 18px rgba(0, 10, 18, 0.75);
+  border: 1px solid rgba(224, 159, 62, 0.15);
+}
+
+/* Superficie Rehundida / Cavidad (Inputs, Buscadores, Toggles) */
+.neu-inset {
+  background: #FFF0EF;
+  box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 48, 73, 0.06);
+}
+
+.dark .neu-inset {
+  background: #001524;
+  box-shadow: inset 3px 3px 6px rgba(0, 10, 18, 0.85), inset -2px -2px 5px rgba(255, 243, 176, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+/* Botón Mecánico Táctil Base */
+.neu-btn {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.95), 4px 4px 12px rgba(0, 48, 73, 0.1);
+}
+
+.neu-btn:active {
+  transform: scale(0.98);
+  box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.18), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+}
+
+/* Botón Primario (Azul Institucional) */
+.neu-btn-primary {
+  background: #003049;
+  color: #FFFFFF;
+  box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.6), 4px 5px 12px rgba(0, 48, 73, 0.25);
+  border: 1px solid rgba(255, 243, 176, 0.2);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neu-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: -4px -4px 12px rgba(255, 255, 255, 0.8), 6px 8px 16px rgba(0, 48, 73, 0.32);
+}
+
+.neu-btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: inset 3px 3px 6px rgba(0, 10, 20, 0.6), inset -2px -2px 5px rgba(255, 243, 176, 0.2);
+}
+
+/* Botón Secundario (Superficie Táctil Neutra) */
+.neu-btn-secondary {
+  background: #FFF8F7;
+  color: #001A2B;
+  box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.95), 4px 4px 10px rgba(0, 48, 73, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: all 0.15s ease-in-out;
+}
+
+.neu-btn-secondary:active {
+  transform: scale(0.98);
+  box-shadow: inset 2px 2px 4px rgba(0, 48, 73, 0.12), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.dark .neu-btn-secondary {
+  background: #002238;
+  color: #CAE6FF;
+  box-shadow: -3px -3px 8px rgba(255, 243, 176, 0.04), 4px 4px 10px rgba(0, 10, 18, 0.6);
+  border: 1px solid rgba(224, 159, 62, 0.15);
+}
+
+/* Superficie Flotante (Menús contextuales, modales, drawers) */
+.neu-floating {
+  box-shadow: 0 20px 35px -10px rgba(0, 48, 73, 0.18), 0 1px 4px rgba(0, 48, 73, 0.06);
+}
+
+.dark .neu-floating {
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(224, 159, 62, 0.2);
+}
+
+/* Tarjeta Interactiva con Hover Dinámico */
+.neu-card-interactive {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neu-card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: -8px -8px 18px rgba(255, 255, 255, 1), 8px 8px 20px rgba(0, 48, 73, 0.12);
+}
+
+/* Animación de Pulso en Vivo (Punto de estado activo) */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.15); }
+}
+
+.animate-live-dot {
+  animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Estilo para Bajas Lógicas / Soft Delete */
+.row-soft-deleted {
+  background-color: #FFF0EF !important;
+  opacity: 0.78;
+}
+
+.row-soft-deleted .serial-strike {
+  text-decoration: line-through;
+  color: #9E2A2B;
+}
+
+/* Scrollbars Táctiles Personalizados */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C2C7CD;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #003049;
 }
