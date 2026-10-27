@@ -25,6 +25,9 @@ class Loan extends Model
         'expected_return_date',
         'actual_return_date',
         'status',
+        'requires_supervisor_approval',
+        'supervisor_approved_by_id',
+        'supervisor_approved_at',
         'rejection_reason',
         'observations',
     ];
@@ -36,6 +39,8 @@ class Loan extends Model
             'loan_date' => 'datetime',
             'expected_return_date' => 'datetime',
             'actual_return_date' => 'datetime',
+            'supervisor_approved_at' => 'datetime',
+            'requires_supervisor_approval' => 'boolean',
         ];
     }
 
@@ -47,6 +52,11 @@ class Loan extends Model
     public function authorizedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'authorized_by_id');
+    }
+
+    public function supervisorApprovedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'supervisor_approved_by_id');
     }
 
     public function dispatchedBy(): BelongsTo
@@ -69,6 +79,11 @@ class Loan extends Model
         return $this->hasMany(Sanction::class);
     }
 
+    public function paymentTickets(): HasMany
+    {
+        return $this->hasMany(PaymentTicket::class);
+    }
+
     public function isPending(): bool
     {
         return $this->status === 'solicitado';
@@ -76,7 +91,7 @@ class Loan extends Model
 
     public function isOverdue(): bool
     {
-        return in_array($this->status, ['aprobado', 'entregado']) &&
+        return in_array($this->status, ['aprobado', 'entregado', 'vencido']) &&
                now()->greaterThan($this->expected_return_date);
     }
 
@@ -92,7 +107,7 @@ class Loan extends Model
 
     public function scopeOverdue(Builder $query): Builder
     {
-        return $query->where('status', 'entregado')
+        return $query->whereIn('status', ['entregado', 'vencido'])
                      ->where('expected_return_date', '<', now());
     }
 }

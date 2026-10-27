@@ -66,6 +66,11 @@ class Incident extends Model
         return $this->hasMany(IncidentLog::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(IncidentComment::class);
+    }
+
     public function sanctions(): HasMany
     {
         return $this->hasMany(Sanction::class);

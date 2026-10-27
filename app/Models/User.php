@@ -115,7 +115,13 @@ class User extends Authenticatable
 
     public function canBorrow(): bool
     {
-        return $this->status === 'activo' && !$this->hasActiveSanctions();
+        return $this->status === 'activo'
+            && $this->sanctions()->where('status', '!=', 'cancelada')->count() <= 4
+            && !$this->sanctions()
+                ->where('sanction_type', 'bloqueo_definitivo')
+                ->where('status', 'activa')
+                ->exists()
+            && !$this->paymentTickets()->where('status', 'pendiente')->exists();
     }
 
     public function hasActiveSanctions(): bool
@@ -169,5 +175,15 @@ class User extends Authenticatable
     public function appliedSanctions(): HasMany
     {
         return $this->hasMany(Sanction::class, 'applied_by_id');
+    }
+
+    public function paymentTickets(): HasMany
+    {
+        return $this->hasMany(PaymentTicket::class);
+    }
+
+    public function activityLogs(): HasMany
+    {
+        return $this->hasMany(ActivityLog::class);
     }
 }

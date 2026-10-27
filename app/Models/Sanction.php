@@ -14,8 +14,10 @@ class Sanction extends Model
     protected $fillable = [
         'user_id',
         'loan_id',
+        'loan_item_id',
         'incident_id',
         'applied_by_id',
+        'is_automatic',
         'sanction_type',
         'reason',
         'start_date',
@@ -33,6 +35,7 @@ class Sanction extends Model
             'end_date' => 'date',
             'amount_to_pay' => 'decimal:2',
             'is_paid' => 'boolean',
+            'is_automatic' => 'boolean',
         ];
     }
 
@@ -49,6 +52,11 @@ class Sanction extends Model
     public function loan(): BelongsTo
     {
         return $this->belongsTo(Loan::class);
+    }
+
+    public function loanItem(): BelongsTo
+    {
+        return $this->belongsTo(LoanItem::class);
     }
 
     public function incident(): BelongsTo

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LoanItem extends Model
 {
@@ -42,5 +43,10 @@ class LoanItem extends Model
     public function incidents(): HasMany
     {
         return $this->hasMany(Incident::class, 'loan_item_id');
+    }
+
+    public function paymentTicket(): HasOne
+    {
+        return $this->hasOne(PaymentTicket::class);
     }
 }

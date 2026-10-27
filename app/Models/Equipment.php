@@ -23,9 +23,12 @@ class Equipment extends Model
         'model',
         'specifications',
         'status',
+        'functional_status',
         'physical_condition',
         'location',
         'acquisition_date',
+        'warranty_until',
+        'warranty_details',
         'notes',
     ];
 
@@ -33,6 +36,7 @@ class Equipment extends Model
     {
         return [
             'acquisition_date' => 'date',
+            'warranty_until' => 'date',
         ];
     }
 
@@ -73,6 +77,6 @@ class Equipment extends Model
 
     public function scopeInMaintenance(Builder $query): Builder
     {
-        return $query->where('status', 'en_mantenimiento');
+        return $query->whereIn('status', ['mantenimiento', 'en_mantenimiento']);
     }
 }
