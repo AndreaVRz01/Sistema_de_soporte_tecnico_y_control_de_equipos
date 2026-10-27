@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGA Enterprise | Control Detallado de Préstamos y Devoluciones</title>
+<!-- Material Symbols Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Space Grotesk, Hanken Grotesk, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&amp;family=Space+Grotesk:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration Script -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#fff0ef",
+            "on-tertiary-fixed": "#201c00",
+            "outline-variant": "#c2c7cd",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#cae6ff",
+            "inverse-on-surface": "#ffedeb",
+            "on-primary-fixed": "#001e2f",
+            "on-error": "#ffffff",
+            "secondary-container": "#feb956",
+            "secondary-fixed": "#ffddb4",
+            "surface-container": "#ffe9e7",
+            "error": "#ba1a1a",
+            "on-secondary-container": "#734a00",
+            "error-container": "#ffdad6",
+            "on-surface-variant": "#42474d",
+            "on-primary-container": "#7398b6",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#633f00",
+            "on-tertiary-fixed-variant": "#4e4715",
+            "surface-bright": "#fff8f7",
+            "tertiary-fixed-dim": "#d2c888",
+            "surface-container-highest": "#ffdad7",
+            "tertiary-container": "#b6ac6f",
+            "inverse-surface": "#5f1415",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#47400e",
+            "tertiary-fixed": "#efe4a2",
+            "primary-fixed-dim": "#a5cbea",
+            "on-secondary-fixed": "#291800",
+            "secondary-fixed-dim": "#feb956",
+            "on-background": "#410004",
+            "inverse-primary": "#a5cbea",
+            "primary": "#001a2b",
+            "surface-container-high": "#ffe1df",
+            "surface-variant": "#ffdad7",
+            "secondary": "#835500",
+            "outline": "#72787e",
+            "on-tertiary": "#ffffff",
+            "surface": "#fff8f7",
+            "primary-container": "#003049",
+            "surface-tint": "#3d627d",
+            "surface-dim": "#ffcfcb",
+            "on-primary-fixed-variant": "#244a64",
+            "on-error-container": "#93000a",
+            "on-surface": "#410004",
+            "background": "#fff8f7",
+            "tertiary": "#675f2b"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "gutter-mobile": "0.75rem",
+            "margin-mobile": "1rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Space Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Hanken Grotesk"],
+            "label-md": ["JetBrains Mono"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "headline-sm": ["Space Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "headline-lg": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["1.625rem", { "lineHeight": "1.25", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["1.5rem", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["1.125rem", { "lineHeight": "1.55", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-xl": ["3rem", { "lineHeight": "1.15", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "label-lg": ["0.875rem", { "lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-md": ["0.9375rem", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+            "label-md": ["0.75rem", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "1.2", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["2rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["1.25rem", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+            "body-sm": ["0.8125rem", { "lineHeight": "1.45", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "headline-lg": ["2.25rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Neumorphic Lighting Dual-Models */
+    .neu-raised {
+      background: #fff8f7;
+      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .dark .neu-raised {
+      background: #001a2b;
+      box-shadow: -4px -4px 12px rgba(255, 243, 176, 0.04), 6px 6px 18px rgba(0, 10, 18, 0.7);
+      border: 1px solid rgba(224, 159, 62, 0.15);
+    }
+
+    .neu-inset {
+      background: #fff0ef;
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 48, 73, 0.06);
+    }
+    .dark .neu-inset {
+      background: #00121e;
+      box-shadow: inset 3px 3px 6px rgba(0, 10, 18, 0.85), inset -2px -2px 5px rgba(255, 243, 176, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    .neu-btn-primary {
+      background: #003049;
+      color: #ffffff;
+      box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.6), 4px 4px 12px rgba(0, 48, 73, 0.25);
+      transition: all 0.15s ease-in-out;
+    }
+    .neu-btn-primary:active {
+      transform: scale(0.98);
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(255, 255, 255, 0.1);
+    }
+
+    .neu-btn-secondary {
+      background: #fff8f7;
+      color: #001a2b;
+      box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.9), 4px 4px 10px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      transition: all 0.15s ease-in-out;
+    }
+    .neu-btn-secondary:active {
+      transform: scale(0.98);
+      box-shadow: inset 2px 2px 4px rgba(0, 48, 73, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(114, 120, 126, 0.3);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col transition-colors duration-200">
+<!-- ================= TOPNAVBAR SHARED COMPONENT ================= -->
+<header class="bg-surface dark:bg-primary border-b border-outline-variant dark:border-primary-container shadow-sm dark:shadow-none docked full-width top-0 z-40 sticky">
+<div class="flex justify-between items-center w-full px-space-lg py-space-sm h-16">
+<!-- Brand & Mobile Trigger -->
+<div class="flex items-center gap-space-md">
+<button aria-label="Abrir Menú de Navegación" class="neu-btn-secondary p-space-sm rounded-xl flex items-center justify-center text-primary dark:text-primary-fixed cursor-pointer" id="toggleDrawerBtn" type="button">
+<span class="material-symbols-outlined text-headline-sm">menu</span>
+</button>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary font-bold text-headline-sm" style="font-variation-settings: 'FILL' 1;">terminal</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed tracking-tight">SIGA Enterprise</span>
+<span class="hidden md:inline-block px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container">v4.8 Ops</span>
+</div>
+</div>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden lg:flex items-center gap-space-lg">
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 text-label-md font-label-md" href="#dashboard">Dashboard</a>
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 text-label-md font-label-md" href="#activos">Activos</a>
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-secondary-container dark:border-secondary pb-1 text-label-md font-label-md" href="#prestamos">Préstamos</a>
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 text-label-md font-label-md" href="#mantenimiento">Mantenimiento</a>
+<a class="text-on-surface-variant dark:text-inverse-primary pb-1 hover:text-primary dark:hover:text-primary-fixed transition-colors duration-150 text-label-md font-label-md" href="#bitacora">Bitácora</a>
+</nav>
+<!-- Search & Trailing Actions -->
+<div class="flex items-center gap-space-md">
+<!-- Debossed Search Input with Ctrl + K -->
+<div class="relative hidden sm:block w-72">
+<div class="neu-inset rounded-xl flex items-center px-space-md py-1.5 gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-body-lg">search</span>
+<input class="bg-transparent border-none p-0 text-body-sm font-body-sm text-on-surface focus:ring-0 w-full placeholder-outline" id="globalSearchInput" placeholder="Buscar folio, custodio..." type="text"/>
+<kbd class="neu-raised px-1.5 py-0.5 rounded text-label-sm font-label-sm text-outline border border-outline-variant">Ctrl + K</kbd>
+</div>
+<!-- Predictive Dropdown (Interactive Prototype) -->
+<div class="hidden absolute top-12 left-0 w-full neu-raised rounded-xl p-space-sm shadow-xl z-50" id="predictiveDropdown">
+<p class="text-label-sm font-label-sm text-outline px-2 py-1 uppercase tracking-wider">Resultados Rápidos</p>
+<div class="flex flex-col gap-1">
+<button class="text-left px-2 py-1.5 rounded-lg hover:bg-surface-container flex items-center justify-between text-body-sm" type="button">
+<span>PR-2024-0891 · <span class="font-bold">Osciloscopio Digital</span></span>
+<span class="font-label-sm text-label-sm text-secondary">Activo</span>
+</button>
+<button class="text-left px-2 py-1.5 rounded-lg hover:bg-surface-container flex items-center justify-between text-body-sm" type="button">
+<span>Dr. Alejandro Ruiz · <span class="text-outline">Mecatrónica</span></span>
+<span class="font-label-sm text-label-sm text-outline">Custodio</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Trailing Actions & Icons -->
+<div class="flex items-center gap-space-xs">
+<!-- Dark Mode Toggle -->
+<button aria-label="Cambiar Tema" class="neu-btn-secondary p-space-sm rounded-xl text-primary dark:text-primary-fixed active:scale-[0.98] transition-transform" id="themeToggleBtn" type="button">
+<span class="material-symbols-outlined text-headline-sm" id="themeIcon">dark_mode</span>
+</button>
+<!-- Notifications -->
+<button aria-label="Notificaciones" class="relative neu-btn-secondary p-space-sm rounded-xl text-primary dark:text-primary-fixed active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-headline-sm">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-surface"></span>
+</button>
+<!-- Help -->
+<button aria-label="Ayuda del Sistema" class="neu-btn-secondary p-space-sm rounded-xl text-primary dark:text-primary-fixed hidden md:flex active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-headline-sm">help</span>
+</button>
+</div>
+<!-- Primary Action -->
+<button class="neu-btn-primary px-space-md py-space-sm rounded-xl text-label-lg font-label-lg font-bold flex items-center gap-space-xs" id="btnOpenNewLoan" type="button">
+<span class="material-symbols-outlined text-headline-sm">add_circle</span>
+<span class="hidden sm:inline">Nuevo Registro</span>
+</button>
+<!-- Profile Chip -->
+<div class="flex items-center gap-space-sm pl-space-xs border-l border-outline-variant dark:border-primary-container">
+<div class="w-10 h-10 rounded-xl neu-inset p-0.5 overflow-hidden flex items-center justify-center bg-primary-container text-surface">
+<span class="font-headline-sm font-bold text-label-lg">EP</span>
+</div>
+<div class="hidden xl:flex flex-col">
+<span class="text-body-sm font-bold text-primary dark:text-primary-fixed leading-tight">Ing. Mariana Soto</span>
+<span class="text-label-sm font-label-sm text-secondary leading-tight">Encargado de Préstamos</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= LATERAL NAVIGATION DRAWER (OFF-CANVAS) ================= -->
+<aside class="fixed inset-y-0 left-0 w-72 bg-surface-container-low dark:bg-primary-container border-r border-outline-variant dark:border-primary shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between p-space-md" id="sideNavDrawer">
+<!-- Drawer Header -->
+<div>
+<div class="flex items-center justify-between pb-space-md border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-headline-md" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">SIGA Enterprise</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-inverse-primary">Consola de Operaciones</p>
+</div>
+</div>
+<button aria-label="Cerrar panel" class="p-1 rounded-lg text-outline hover:text-primary" id="closeDrawerBtn" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex flex-col gap-1.5 mt-space-md">
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#dashboard">
+<span class="material-symbols-outlined text-body-lg">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#activos">
+<span class="material-symbols-outlined text-body-lg">inventory_2</span>
+<span>Activos</span>
+</a>
+<a class="text-primary dark:text-primary-fixed bg-surface-container-high dark:bg-primary font-bold rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg shadow-sm" href="#prestamos">
+<span class="material-symbols-outlined text-body-lg" style="font-variation-settings: 'FILL' 1;">handshake</span>
+<span>Préstamos</span>
+</a>
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#tickets">
+<span class="material-symbols-outlined text-body-lg">build</span>
+<span>Tickets &amp; Mantenimiento</span>
+</a>
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#usuarios">
+<span class="material-symbols-outlined text-body-lg">manage_accounts</span>
+<span>Usuarios &amp; Roles</span>
+</a>
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#bitacora">
+<span class="material-symbols-outlined text-body-lg">history</span>
+<span>Bitácora</span>
+</a>
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#catalogo">
+<span class="material-symbols-outlined text-body-lg">menu_book</span>
+<span>Catálogo Público</span>
+</a>
+</nav>
+<!-- Fast Action CTA in Drawer -->
+<div class="mt-space-lg px-space-xs">
+<button class="w-full neu-btn-primary py-space-sm rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-headline-sm">confirmation_number</span>
+<span>Generar Ticket</span>
+</button>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="pt-space-md border-t border-outline-variant dark:border-outline flex flex-col gap-1">
+<a class="text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#config">
+<span class="material-symbols-outlined text-body-lg">settings</span>
+<span>Configuración</span>
+</a>
+<a class="text-error hover:bg-error-container rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-label-lg font-label-lg" href="#logout">
+<span class="material-symbols-outlined text-body-lg">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Drawer Backdrop Overlay -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-40 hidden transition-opacity" id="drawerOverlay"></div>
+<!-- ================= MAIN CONTENT WORKSPACE ================= -->
+<main class="flex-1 max-w-7xl w-full mx-auto p-space-md md:p-space-lg lg:p-space-xl flex flex-col gap-space-lg">
+<!-- Screen Title & Operational Context Breadcrumbs -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-sm border-b border-outline-variant/40">
+<div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-outline mb-1">
+<span>OPERACIONES</span>
+<span>/</span>
+<span class="text-secondary font-bold">GESTIÓN DE PRÉSTAMOS</span>
+<span>/</span>
+<span class="neu-inset px-2 py-0.5 rounded text-outline font-label-sm">SCHEMA: PRESTAMO_DETALLE_V3</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary-fixed tracking-tight">
+          Control Detallado de Préstamos y Devoluciones
+        </h1>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-inverse-primary mt-1">
+          Monitoreo de cadena de custodia, actas digitales con SHA-256 e inspección física de hardware en préstamo.
+        </p>
+</div>
+<!-- Quick Context Controls -->
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="neu-btn-secondary px-space-md py-space-sm rounded-xl text-label-md font-label-md font-bold flex items-center gap-space-xs text-primary dark:text-primary-fixed" id="btnCheckinReturnTrigger" type="button">
+<span class="material-symbols-outlined text-headline-sm text-secondary">assignment_return</span>
+<span>Recepción &amp; Check-in</span>
+</button>
+<button class="neu-btn-secondary p-space-sm rounded-xl text-outline hover:text-primary" type="button">
+<span class="material-symbols-outlined text-headline-sm">print</span>
+</button>
+</div>
+</section>
+<!-- ================= 4 OPERATIONAL KPI WIDGETS ================= -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1: Préstamos Activos -->
+<div class="neu-raised rounded-2xl p-space-lg flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-outline">PRÉSTAMOS ACTIVOS</span>
+<span class="text-headline-xl font-headline-xl font-bold text-primary dark:text-primary-fixed tracking-tight mt-1">42</span>
+</div>
+<div class="w-12 h-12 rounded-xl neu-inset flex items-center justify-center text-primary-container dark:text-primary-fixed">
+<span class="material-symbols-outlined text-headline-sm" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/30 flex items-center justify-between text-body-sm font-body-sm">
+<span class="flex items-center gap-1 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Promedio 4.2 días en campo
+          </span>
+<span class="font-label-sm font-bold text-secondary">85 Activos</span>
+</div>
+</div>
+<!-- KPI 2: Préstamos Vencidos (Alerta Crítica) -->
+<div class="neu-raised rounded-2xl p-space-lg flex flex-col justify-between border-l-4 border-error relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-label-md">warning</span>
+              VENCIDOS / DEMORA
+            </span>
+<span class="text-headline-xl font-headline-xl font-bold text-error tracking-tight mt-1">07</span>
+</div>
+<div class="w-12 h-12 rounded-xl neu-inset flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-headline-sm" style="font-variation-settings: 'FILL' 1;">crisis_alert</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/30 flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-error font-medium">Requieren notificación</span>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-error-container text-on-error-container font-bold">+2 Críticos</span>
+</div>
+</div>
+<!-- KPI 3: Pendientes de Aprobación -->
+<div class="neu-raised rounded-2xl p-space-lg flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-outline">SOLICITUDES EN ESPERA</span>
+<span class="text-headline-xl font-headline-xl font-bold text-secondary tracking-tight mt-1">11</span>
+</div>
+<div class="w-12 h-12 rounded-xl neu-inset flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-headline-sm" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/30 flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Pendiente visto bueno de Jefe</span>
+<span class="text-label-sm font-label-sm text-outline">Turno Mañana</span>
+</div>
+</div>
+<!-- KPI 4: Entregas Programadas Hoy -->
+<div class="neu-raised rounded-2xl p-space-lg flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="text-label-md font-label-md text-outline">DEVOLUCIONES PARA HOY</span>
+<span class="text-headline-xl font-headline-xl font-bold text-primary dark:text-primary-fixed tracking-tight mt-1">19</span>
+</div>
+<div class="w-12 h-12 rounded-xl neu-inset flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-headline-sm" style="font-variation-settings: 'FILL' 1;">schedule</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/30 flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">4 ya recibidas en muelle</span>
+<span class="font-label-sm font-bold text-primary dark:text-primary-fixed">15 en tránsito</span>
+</div>
+</div>
+</section>
+<!-- ================= CONTROLS, SEARCH & FILTER RIBBON ================= -->
+<section class="neu-raised rounded-2xl p-space-md flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Multi-filter Selectors -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm flex-1">
+<!-- State Filter -->
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">ESTADO</label>
+<div class="neu-inset rounded-xl px-2 py-1.5 flex items-center">
+<select class="bg-transparent border-none text-body-sm font-body-sm text-on-surface w-full p-0 focus:ring-0" id="filterStatus">
+<option value="todos">Todos los Estados</option>
+<option selected="" value="activo">Activos (En curso)</option>
+<option value="vencido">Vencidos / Mora</option>
+<option value="devuelto">Devueltos / Cerrados</option>
+<option value="revision">En Revisión Técnica</option>
+</select>
+</div>
+</div>
+<!-- Custodian Filter -->
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">USUARIO / CUSTODIO</label>
+<div class="neu-inset rounded-xl px-2 py-1.5 flex items-center">
+<select class="bg-transparent border-none text-body-sm font-body-sm text-on-surface w-full p-0 focus:ring-0" id="filterUser">
+<option value="todos">Cualquier Custodio</option>
+<option value="investigadores">Investigadores Senior</option>
+<option value="docentes">Cuerpo Docente</option>
+<option value="laboratoristas">Laboratoristas</option>
+</select>
+</div>
+</div>
+<!-- Area / Location Filter -->
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">ÁREA DE ADSCRIPCIÓN</label>
+<div class="neu-inset rounded-xl px-2 py-1.5 flex items-center">
+<select class="bg-transparent border-none text-body-sm font-body-sm text-on-surface w-full p-0 focus:ring-0" id="filterArea">
+<option value="todas">Todas las Áreas</option>
+<option value="telecom">Telecomunicaciones &amp; RF</option>
+<option value="robotica">Robótica &amp; Sistemas</option>
+<option value="quimica">Laboratorio Central Bio</option>
+<option value="posgrado">Edificio de Posgrados</option>
+</select>
+</div>
+</div>
+<!-- Date Range Filter -->
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">RANGO TEMPORAL</label>
+<div class="neu-inset rounded-xl px-2 py-1.5 flex items-center">
+<select class="bg-transparent border-none text-body-sm font-body-sm text-on-surface w-full p-0 focus:ring-0" id="filterDate">
+<option value="semana">Últimos 7 días</option>
+<option selected="" value="mes">Mes en curso</option>
+<option value="trimestre">Trimestre Actual</option>
+<option value="historico">Histórico Completo</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Filter Reset & Column View Controls -->
+<div class="flex items-center gap-space-sm self-end lg:self-center">
+<button class="neu-btn-secondary px-space-md py-2 rounded-xl text-label-sm font-label-sm text-outline hover:text-primary flex items-center gap-1" id="btnResetFilters" type="button">
+<span class="material-symbols-outlined text-body-md">filter_alt_off</span>
+<span>Restablecer</span>
+</button>
+<button class="neu-btn-secondary p-2 rounded-xl text-outline hover:text-primary" title="Exportar CSV de Auditoría" type="button">
+<span class="material-symbols-outlined text-headline-sm">download</span>
+</button>
+</div>
+</div>
+<!-- Quick Pills Status Bar -->
+<div class="flex items-center gap-space-xs overflow-x-auto custom-scroll pt-space-xs border-t border-outline-variant/30 text-label-sm font-label-sm">
+<span class="text-outline mr-2">Vistas Rápidas:</span>
+<button class="px-3 py-1 rounded-full neu-inset text-primary dark:text-primary-fixed font-bold border border-secondary/40" type="button">
+          Urgencia Alta (7)
+        </button>
+<button class="px-3 py-1 rounded-full neu-raised text-on-surface-variant hover:text-primary" type="button">
+          Laboratorio de Telecom (14)
+        </button>
+<button class="px-3 py-1 rounded-full neu-raised text-on-surface-variant hover:text-primary" type="button">
+          Préstamos de Larga Duración (9)
+        </button>
+<button class="px-3 py-1 rounded-full neu-raised text-on-surface-variant hover:text-primary" type="button">
+          Con Acta Firmada SHA-256 (38)
+        </button>
+</div>
+</section>
+<!-- ================= DATA TABLE CONTAINER ================= -->
+<section class="neu-raised rounded-2xl overflow-hidden flex flex-col">
+<!-- Table Header Status Bar -->
+<div class="px-space-lg py-space-md border-b border-outline-variant/30 flex items-center justify-between bg-surface-bright/50">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-headline-sm">table_rows</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">Registro Maestro de Préstamos</span>
+<span class="neu-inset px-2.5 py-0.5 rounded-full text-label-sm font-label-sm font-bold text-outline">Mostrando 4 de 42 registros</span>
+</div>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-body-md text-tertiary">verified_user</span>
+<span>Integridad de Bitácora Activa</span>
+</div>
+</div>
+<!-- Responsive Table View -->
+<div class="overflow-x-auto custom-scroll">
+<table class="w-full text-left border-collapse" id="loansMasterTable">
+<thead>
+<tr class="neu-inset text-label-md font-label-md text-outline border-b border-outline-variant/30">
+<th class="py-3 px-4">FOLIO / ACTA</th>
+<th class="py-3 px-4">CUSTODIO (USUARIO)</th>
+<th class="py-3 px-4">ÁREA / DESTINO</th>
+<th class="py-3 px-4">ITEMS VINCULADOS</th>
+<th class="py-3 px-4">FECHA ENTREGA</th>
+<th class="py-3 px-4">FECHA VENCIMIENTO</th>
+<th class="py-3 px-4">ESTADO</th>
+<th class="py-3 px-4 text-right">ACCIONES</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body-sm font-body-sm">
+<!-- Row 1: Vencido (Urgent) -->
+<tr class="hover:bg-surface-container/60 transition-colors group cursor-pointer" onclick="openDetailDrawer('PR-2024-0104')">
+<td class="py-3.5 px-4 font-label-md font-bold text-primary dark:text-primary-fixed">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-error text-body-md">error</span>
+<span>PR-2024-0104</span>
+</div>
+<span class="text-label-sm font-normal text-outline font-label-sm">SHA: 7a8f...9d21</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-bold text-on-surface">Dr. Ricardo Salinas Mendoza</div>
+<div class="text-label-sm text-outline font-label-sm">ID: USR-8832 · Investigador Titular</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-medium text-on-surface">Lab. Alta Tensión &amp; RF</span>
+<span class="block text-label-sm text-outline">Edificio Gamma - Nivel 2</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded-md neu-inset font-label-sm font-bold text-primary">3 Activos</span>
+<span class="text-label-sm text-outline font-label-sm">(Osciloscopio, Fuente, Multímetro)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 font-label-sm text-outline">12 Oct 2024</td>
+<td class="py-3.5 px-4 font-label-sm font-bold text-error">
+                19 Oct 2024
+                <span class="block text-label-sm font-normal text-error">(Hace 3 días)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-bold bg-error-container text-on-error-container border border-error">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                  Vencido / Mora
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1" onclick="event.stopPropagation()">
+<button class="neu-btn-secondary px-2.5 py-1 rounded-lg text-label-sm font-label-sm font-bold text-primary hover:text-secondary flex items-center gap-1" onclick="openDetailDrawer('PR-2024-0104')" title="Ver Acta" type="button">
+<span class="material-symbols-outlined text-body-md">visibility</span>
+<span>Inspección</span>
+</button>
+<button class="neu-btn-secondary p-1 rounded-lg text-outline hover:text-error" title="Emitir Alerta a Correo" type="button">
+<span class="material-symbols-outlined text-body-md">mail</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Activo (En Curso) -->
+<tr class="hover:bg-surface-container/60 transition-colors group cursor-pointer" onclick="openDetailDrawer('PR-2024-0118')">
+<td class="py-3.5 px-4 font-label-md font-bold text-primary dark:text-primary-fixed">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-body-md">verified</span>
+<span>PR-2024-0118</span>
+</div>
+<span class="text-label-sm font-normal text-outline font-label-sm">SHA: c412...3e01</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-bold text-on-surface">Mtra. Elena Villalobos</div>
+<div class="text-label-sm text-outline font-label-sm">ID: USR-4910 · Docente Mecatrónica</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-medium text-on-surface">Taller de Microcontroladores</span>
+<span class="block text-label-sm text-outline">Aula T-104</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded-md neu-inset font-label-sm font-bold text-primary">2 Activos</span>
+<span class="text-label-sm text-outline font-label-sm">(Kit FPGA, Analizador Lógico)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 font-label-sm text-outline">21 Oct 2024</td>
+<td class="py-3.5 px-4 font-label-sm font-bold text-secondary">
+                25 Oct 2024
+                <span class="block text-label-sm font-normal text-secondary">(Quedan 3 días)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-bold bg-secondary-fixed text-on-secondary-fixed border border-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  En Préstamo
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1" onclick="event.stopPropagation()">
+<button class="neu-btn-secondary px-2.5 py-1 rounded-lg text-label-sm font-label-sm font-bold text-primary hover:text-secondary flex items-center gap-1" onclick="openDetailDrawer('PR-2024-0118')" type="button">
+<span class="material-symbols-outlined text-body-md">visibility</span>
+<span>Inspección</span>
+</button>
+<button class="neu-btn-secondary p-1 rounded-lg text-outline hover:text-primary" title="Extender Plazo" type="button">
+<span class="material-symbols-outlined text-body-md">update</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Activo (En Curso) -->
+<tr class="hover:bg-surface-container/60 transition-colors group cursor-pointer" onclick="openDetailDrawer('PR-2024-0122')">
+<td class="py-3.5 px-4 font-label-md font-bold text-primary dark:text-primary-fixed">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-body-md">verified</span>
+<span>PR-2024-0122</span>
+</div>
+<span class="text-label-sm font-normal text-outline font-label-sm">SHA: e890...41b2</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-bold text-on-surface">Ing. Carlos Morales Peña</div>
+<div class="text-label-sm text-outline font-label-sm">ID: USR-1029 · Técnico de Soporte</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-medium text-on-surface">Infraestructura de Servidores</span>
+<span class="block text-label-sm text-outline">Data Center Principal</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded-md neu-inset font-label-sm font-bold text-primary">1 Activo</span>
+<span class="text-label-sm text-outline font-label-sm">(Fusionadora de Fibra Óptica)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 font-label-sm text-outline">22 Oct 2024</td>
+<td class="py-3.5 px-4 font-label-sm font-bold text-secondary">
+                22 Oct 2024
+                <span class="block text-label-sm font-normal text-tertiary">(Devuelve Hoy 18:00)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-bold bg-secondary-fixed text-on-secondary-fixed border border-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Entrega Hoy
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1" onclick="event.stopPropagation()">
+<button class="neu-btn-secondary px-2.5 py-1 rounded-lg text-label-sm font-label-sm font-bold text-primary hover:text-secondary flex items-center gap-1" onclick="openDetailDrawer('PR-2024-0122')" type="button">
+<span class="material-symbols-outlined text-body-md">visibility</span>
+<span>Inspección</span>
+</button>
+<button class="neu-btn-secondary p-1 rounded-lg text-outline hover:text-secondary" title="Check-in Express" type="button">
+<span class="material-symbols-outlined text-body-md">task_alt</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Devuelto con Observación -->
+<tr class="hover:bg-surface-container/60 transition-colors group cursor-pointer opacity-90" onclick="openDetailDrawer('PR-2024-0099')">
+<td class="py-3.5 px-4 font-label-md font-bold text-primary dark:text-primary-fixed">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-body-md">check_circle</span>
+<span>PR-2024-0099</span>
+</div>
+<span class="text-label-sm font-normal text-outline font-label-sm">SHA: 11a0...ff34</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-bold text-on-surface">Biol. Patricia Zúñiga</div>
+<div class="text-label-sm text-outline font-label-sm">ID: USR-6712 · Investigadora Bio</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-medium text-on-surface">Laboratorio Central Bioquímica</span>
+<span class="block text-label-sm text-outline">Edificio Beta - Lab 4</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded-md neu-inset font-label-sm font-bold text-outline">1 Activo</span>
+<span class="text-label-sm text-outline font-label-sm">(Microscopio Trinocular)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 font-label-sm text-outline">05 Oct 2024</td>
+<td class="py-3.5 px-4 font-label-sm text-outline">15 Oct 2024</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-bold bg-surface-container-high text-on-surface-variant border border-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  Devuelto (Check-in OK)
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1" onclick="event.stopPropagation()">
+<button class="neu-btn-secondary px-2.5 py-1 rounded-lg text-label-sm font-label-sm text-outline hover:text-primary flex items-center gap-1" onclick="openDetailDrawer('PR-2024-0099')" type="button">
+<span class="material-symbols-outlined text-body-md">inventory</span>
+<span>Acta Cerrada</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination and Record Footer -->
+<div class="p-space-md border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-sm bg-surface">
+<div class="text-label-sm font-label-sm text-outline">
+          Página 1 de 11 · Registros auditados mediante tabla <span class="font-bold text-primary dark:text-primary-fixed">Bitacora</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="neu-btn-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm text-outline disabled:opacity-40" disabled="" type="button">
+            Anterior
+          </button>
+<button class="neu-btn-primary px-3 py-1 rounded-lg text-label-sm font-label-sm font-bold" type="button">
+            1
+          </button>
+<button class="neu-btn-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm text-on-surface hover:text-primary" type="button">
+            2
+          </button>
+<button class="neu-btn-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm text-on-surface hover:text-primary" type="button">
+            3
+          </button>
+<span class="px-2 text-outline">...</span>
+<button class="neu-btn-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm text-on-surface hover:text-primary" type="button">
+            11
+          </button>
+<button class="neu-btn-secondary px-3 py-1 rounded-lg text-label-sm font-label-sm text-on-surface hover:text-primary" type="button">
+            Siguiente
+          </button>
+</div>
+</div>
+</section>
+<!-- ================= NEUMORPHIC EMPTY STATE / NO RESULTS COMPONENT ================= -->
+<section class="neu-raised rounded-2xl p-space-xl flex flex-col items-center justify-center text-center" id="emptyStateSection">
+<div class="w-20 h-20 rounded-2xl neu-inset flex items-center justify-center text-secondary mb-space-md">
+<span class="material-symbols-outlined text-headline-xl">content_paste_search</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">
+        Control de Entidades &amp; Auditoría ER
+      </h3>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-lg mt-1 mb-space-lg">
+        El flujo sincroniza en tiempo real las entidades relacionales <span class="font-label-sm text-secondary font-bold">Prestamos</span>, <span class="font-label-sm text-secondary font-bold">Detalle_prestamo</span>, <span class="font-label-sm text-secondary font-bold">Activos</span> y <span class="font-label-sm text-secondary font-bold">Bitacora</span>. Si un filtro no produce registros, utilice el restablecedor.
+      </p>
+<div class="flex items-center gap-space-md">
+<button class="neu-btn-secondary px-space-lg py-space-sm rounded-xl font-label-md text-label-md font-bold text-primary" onclick="document.getElementById('filterStatus').value='todos';" type="button">
+          Restablecer Criterios
+        </button>
+<button class="neu-btn-primary px-space-lg py-space-sm rounded-xl font-label-md text-label-md font-bold flex items-center gap-space-xs" onclick="openNewLoanModal()" type="button">
+<span class="material-symbols-outlined text-headline-sm">add</span>
+<span>Registrar Préstamo Directo</span>
+</button>
+</div>
+</section>
+</main>
+<!-- ================= LATERAL DRAWER: DETALLE DE PRÉSTAMO Y ACTA DE DEVOLUCIÓN ================= -->
+<aside class="fixed inset-y-0 right-0 w-full sm:w-[540px] lg:w-[620px] bg-surface-bright dark:bg-primary-container border-l border-outline-variant dark:border-primary shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-hidden" id="loanDetailDrawer">
+<!-- Drawer Header -->
+<div class="p-space-lg border-b border-outline-variant/40 flex items-center justify-between neu-raised">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl neu-inset flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-headline-sm">receipt_long</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed" id="drawerFolioTitle">Acta Folio PR-2024-0104</h3>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-error-container text-on-error-container font-bold">VENCIDO</span>
+</div>
+<p class="text-label-sm font-label-sm text-outline">Entidad Relacional: Prestamos &amp; Detalle_prestamo</p>
+</div>
+</div>
+<button class="p-2 rounded-xl neu-btn-secondary text-outline hover:text-primary" id="closeDetailDrawerBtn" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<!-- Drawer Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scroll p-space-lg space-y-space-lg">
+<!-- Custodian & Loan Telemetry Card -->
+<div class="neu-raised rounded-2xl p-space-md space-y-space-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/20 pb-2">
+<span class="text-label-md font-label-md font-bold text-primary dark:text-primary-fixed flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-secondary">person</span>
+            INFORMACIÓN DEL CUSTODIO (USUARIO)
+          </span>
+<span class="text-label-sm font-label-sm text-secondary font-bold">USR-8832</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm text-body-sm">
+<div>
+<span class="text-label-sm font-label-sm text-outline block">Nombre Titular</span>
+<span class="font-bold text-on-surface">Dr. Ricardo Salinas Mendoza</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-outline block">Área de Adscripción</span>
+<span class="font-medium text-on-surface">Lab. Alta Tensión &amp; RF</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-outline block">Fecha Autorización</span>
+<span class="font-label-sm text-on-surface">12/10/2024 09:30 hrs</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-outline block">Fecha Comprometida</span>
+<span class="font-label-sm text-error font-bold">19/10/2024 17:00 hrs</span>
+</div>
+</div>
+</div>
+<!-- Linked Assets Table (Detalle_prestamo) -->
+<div class="neu-raised rounded-2xl p-space-md space-y-space-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/20 pb-2">
+<span class="text-label-md font-label-md font-bold text-primary dark:text-primary-fixed flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-secondary">devices</span>
+            ACTIVOS ASOCIADOS (DETALLE_PRESTAMO)
+          </span>
+<span class="text-label-sm font-label-sm text-outline">3 Unidades</span>
+</div>
+<!-- Asset Item 1 -->
+<div class="neu-inset rounded-xl p-space-sm space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-body-lg">memory</span>
+<span class="font-bold text-body-sm text-on-surface">Osciloscopio Digital Rigol DS1054Z</span>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container font-bold text-primary">ID: ACT-00912</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-label-sm font-label-sm">
+<div>
+<span class="text-outline">Número de Serie:</span>
+<span class="block font-bold">SN-DS1ZA2021004</span>
+</div>
+<div>
+<span class="text-outline">Condición Entrega:</span>
+<span class="block text-secondary font-bold">Óptima / Calibrado</span>
+</div>
+</div>
+<!-- Inspection Return Checkbox -->
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between">
+<label class="flex items-center gap-2 cursor-pointer text-body-sm">
+<input checked="" class="rounded text-primary focus:ring-secondary border-outline" type="checkbox"/>
+<span>Verificación de Sondas &amp; Accesorios</span>
+</label>
+<span class="text-label-sm font-label-sm text-tertiary font-bold">Recepción OK</span>
+</div>
+</div>
+<!-- Asset Item 2 -->
+<div class="neu-inset rounded-xl p-space-sm space-y-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-body-lg">power</span>
+<span class="font-bold text-body-sm text-on-surface">Fuente de Poder DC Triple Canal Korad</span>
+</div>
+<span class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container font-bold text-primary">ID: ACT-00445</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-label-sm font-label-sm">
+<div>
+<span class="text-outline">Número de Serie:</span>
+<span class="block font-bold">SN-KD3005P-991</span>
+</div>
+<div>
+<span class="text-outline">Condición Entrega:</span>
+<span class="block text-secondary font-bold">Excelente</span>
+</div>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between">
+<label class="flex items-center gap-2 cursor-pointer text-body-sm">
+<input class="rounded text-primary focus:ring-secondary border-outline" type="checkbox"/>
+<span>Cableado de Alimentación Completo</span>
+</label>
+<span class="text-label-sm font-label-sm text-secondary font-bold">Pendiente Inspección</span>
+</div>
+</div>
+</div>
+<!-- Physical Inspection Checklist & Observations Form -->
+<div class="neu-raised rounded-2xl p-space-md space-y-space-sm">
+<span class="text-label-md font-label-md font-bold text-primary dark:text-primary-fixed flex items-center gap-1.5">
+<span class="material-symbols-outlined text-body-md text-secondary">fact_check</span>
+          CHECKLIST DE INSPECCIÓN FÍSICA Y RETORNO
+        </span>
+<div class="space-y-2 text-body-sm">
+<label class="flex items-center gap-2 p-2 neu-inset rounded-xl cursor-pointer">
+<input checked="" class="rounded text-primary focus:ring-secondary border-outline" type="checkbox"/>
+<span>Sin golpes estructurales o daños por sobretensión visibles</span>
+</label>
+<label class="flex items-center gap-2 p-2 neu-inset rounded-xl cursor-pointer">
+<input checked="" class="rounded text-primary focus:ring-secondary border-outline" type="checkbox"/>
+<span>Sellos de garantía y hologramas de calibración intactos</span>
+</label>
+<label class="flex items-center gap-2 p-2 neu-inset rounded-xl cursor-pointer">
+<input class="rounded text-primary focus:ring-secondary border-outline" type="checkbox"/>
+<span>Limpieza y purga de consumibles efectuada</span>
+</label>
+</div>
+<div class="pt-space-xs">
+<label class="text-label-sm font-label-sm text-outline block mb-1">OBSERVACIONES DE DEVOLUCIÓN</label>
+<textarea class="neu-inset w-full rounded-xl p-space-sm text-body-sm font-body-sm text-on-surface border-none focus:ring-1 focus:ring-secondary resize-none" placeholder="Detalle cualquier descalibración o incidente ocurrido durante el préstamo..." rows="3">El equipo retornó con etiqueta de calibración ligeramente desgastada. Prueba de encendido y test de autodiagnóstico superado exitosamente.</textarea>
+</div>
+</div>
+<!-- Audit Security & SHA-256 Token Signature -->
+<div class="neu-inset rounded-2xl p-space-md space-y-2 border border-outline-variant/30">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-body-md text-tertiary">fingerprint</span>
+            FIRMA DIGITAL &amp; INTEGRIDAD REFERENCIAL
+          </span>
+<span class="text-secondary font-bold">Bitácora SHA-256</span>
+</div>
+<div class="bg-surface p-2 rounded-lg font-label-sm text-label-sm text-outline break-all border border-outline-variant/20 select-all">
+          7a8f902bca4810e7b89d21c33f4019a842de1950d8a6e431f298642a8b98124f
+        </div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-outline">
+<span>Firmado por: Encargado de Préstamos</span>
+<span>Timestamp: 2024-10-12T09:30:14Z</span>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-space-lg border-t border-outline-variant/40 neu-raised flex items-center justify-between gap-space-md">
+<button class="neu-btn-secondary px-space-md py-space-sm rounded-xl font-label-md text-label-md font-bold text-outline hover:text-primary" onclick="closeDetailDrawer()" type="button">
+        Cancelar
+      </button>
+<div class="flex items-center gap-space-sm">
+<button class="neu-btn-secondary px-space-md py-space-sm rounded-xl font-label-md text-label-md font-bold text-error hover:bg-error-container flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-body-md">report_problem</span>
+<span>Reportar Daño</span>
+</button>
+<button class="neu-btn-primary px-space-lg py-space-sm rounded-xl font-label-md text-label-md font-bold flex items-center gap-space-xs" onclick="confirmReturnCheckin()" type="button">
+<span class="material-symbols-outlined text-headline-sm text-secondary-fixed">how_to_reg</span>
+<span>Confirmar Devolución</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ================= MODAL: NUEVO REGISTRO DE PRÉSTAMO ================= -->
+<div class="fixed inset-0 z-50 bg-primary/40 backdrop-blur-sm hidden flex items-center justify-center p-space-md" id="newLoanModal">
+<div class="neu-raised rounded-2xl max-w-2xl w-full p-space-lg space-y-space-md border border-outline-variant shadow-2xl">
+<div class="flex items-center justify-between border-b border-outline-variant/30 pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-headline-md">add_circle</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed">Registrar Nuevo Préstamo de Activos</h3>
+<p class="text-body-sm font-body-sm text-outline">Creación de Acta y Asignación de Custodio</p>
+</div>
+</div>
+<button class="p-1 rounded-lg text-outline hover:text-primary" onclick="closeNewLoanModal()" type="button">
+<span class="material-symbols-outlined text-headline-sm">close</span>
+</button>
+</div>
+<div class="space-y-space-md">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">SELECCIONAR CUSTODIO (USUARIO)</label>
+<div class="neu-inset rounded-xl p-2">
+<select class="bg-transparent border-none text-body-sm w-full p-0 focus:ring-0">
+<option>Dr. Ricardo Salinas Mendoza (Investigador)</option>
+<option>Mtra. Elena Villalobos (Docente)</option>
+<option>Ing. Carlos Morales Peña (Soporte)</option>
+<option>Biol. Patricia Zúñiga (Investigadora)</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">ÁREA DE DESTINO (UBICACIÓN)</label>
+<div class="neu-inset rounded-xl p-2">
+<select class="bg-transparent border-none text-body-sm w-full p-0 focus:ring-0">
+<option>Laboratorio de Alta Tensión &amp; RF</option>
+<option>Taller de Robótica &amp; Microcontroladores</option>
+<option>Laboratorio Central de Bioquímica</option>
+<option>Aulas Edificio Gamma</option>
+</select>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">FECHA Y HORA DE RETORNO PROGRAMADO</label>
+<div class="neu-inset rounded-xl p-2">
+<input class="bg-transparent border-none text-body-sm w-full p-0 focus:ring-0 text-on-surface" type="datetime-local"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">TIPO DE SOLICITUD / PRIORIDAD</label>
+<div class="neu-inset rounded-xl p-2">
+<select class="bg-transparent border-none text-body-sm w-full p-0 focus:ring-0">
+<option>Normal (Proyecto Académico)</option>
+<option>Urgente (Soporte en Campo)</option>
+<option>Investigación Convocatoria</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Add Items Picker -->
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-label-sm text-outline">AGREGAR ACTIVOS POR SERIAL O CÓDIGO QR</label>
+<div class="neu-inset rounded-xl px-space-md py-2 flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-body-md">qr_code_scanner</span>
+<input class="bg-transparent border-none p-0 text-body-sm w-full focus:ring-0" placeholder="Escanear activo o teclear ID (ej: ACT-00912)..." type="text"/>
+<button class="neu-btn-primary px-3 py-1 rounded-lg text-label-sm font-label-sm font-bold" type="button">Vincular</button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-md border-t border-outline-variant/30 pt-space-md">
+<button class="neu-btn-secondary px-space-md py-space-sm rounded-xl font-label-md text-label-md font-bold text-outline" onclick="closeNewLoanModal()" type="button">
+          Cancelar
+        </button>
+<button class="neu-btn-primary px-space-lg py-space-sm rounded-xl font-label-md text-label-md font-bold flex items-center gap-space-xs" onclick="closeNewLoanModal()" type="button">
+<span class="material-symbols-outlined text-headline-sm">check</span>
+<span>Generar Acta &amp; Prestar</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= NOTIFICATION TOAST ================= -->
+<div class="fixed bottom-6 right-6 neu-raised border border-secondary px-space-lg py-space-md rounded-2xl shadow-2xl flex items-center gap-space-sm z-50 transform translate-y-32 transition-transform duration-300" id="toastNotification">
+<span class="material-symbols-outlined text-secondary text-headline-sm" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<div>
+<h4 class="font-bold text-body-sm text-primary dark:text-primary-fixed">Operación Registrada</h4>
+<p class="text-label-sm font-label-sm text-outline">El folio ha sido actualizado e indexado en Bitácora con éxito.</p>
+</div>
+</div>
+<!-- ================= INLINE SCRIPT LOGIC ================= -->
+<script>
+    // Theme Switcher (Dark / Light Mode)
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElem = document.documentElement;
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (htmlElem.classList.contains('dark')) {
+        htmlElem.classList.remove('dark');
+        htmlElem.classList.add('light');
+        themeIcon.textContent = 'dark_mode';
+      } else {
+        htmlElem.classList.remove('light');
+        htmlElem.classList.add('dark');
+        themeIcon.textContent = 'light_mode';
+      }
+    });
+
+    // SideNav Drawer Controls
+    const toggleDrawerBtn = document.getElementById('toggleDrawerBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const sideNavDrawer = document.getElementById('sideNavDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    function openDrawer() {
+      sideNavDrawer.classList.remove('-translate-x-full');
+      drawerOverlay.classList.remove('hidden');
+    }
+
+    function closeDrawer() {
+      sideNavDrawer.classList.add('-translate-x-full');
+      drawerOverlay.classList.add('hidden');
+    }
+
+    toggleDrawerBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', () => {
+      closeDrawer();
+      closeDetailDrawer();
+    });
+
+    // Loan Detail Drawer
+    const loanDetailDrawer = document.getElementById('loanDetailDrawer');
+    const closeDetailDrawerBtn = document.getElementById('closeDetailDrawerBtn');
+    const drawerFolioTitle = document.getElementById('drawerFolioTitle');
+
+    function openDetailDrawer(folio) {
+      if (folio) {
+        drawerFolioTitle.textContent = 'Acta Folio ' + folio;
+      }
+      loanDetailDrawer.classList.remove('translate-x-full');
+      drawerOverlay.classList.remove('hidden');
+    }
+
+    function closeDetailDrawer() {
+      loanDetailDrawer.classList.add('translate-x-full');
+      if (sideNavDrawer.classList.contains('-translate-x-full')) {
+        drawerOverlay.classList.add('hidden');
+      }
+    }
+
+    closeDetailDrawerBtn.addEventListener('click', closeDetailDrawer);
+
+    // Check-in return trigger header button
+    document.getElementById('btnCheckinReturnTrigger').addEventListener('click', () => {
+      openDetailDrawer('PR-2024-0122');
+    });
+
+    // New Loan Modal
+    const newLoanModal = document.getElementById('newLoanModal');
+    const btnOpenNewLoan = document.getElementById('btnOpenNewLoan');
+
+    function openNewLoanModal() {
+      newLoanModal.classList.remove('hidden');
+    }
+
+    function closeNewLoanModal() {
+      newLoanModal.classList.add('hidden');
+    }
+
+    btnOpenNewLoan.addEventListener('click', openNewLoanModal);
+
+    // Global Search Predictive Dropdown Interaction
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    const predictiveDropdown = document.getElementById('predictiveDropdown');
+
+    globalSearchInput.addEventListener('focus', () => {
+      predictiveDropdown.classList.remove('hidden');
+    });
+    globalSearchInput.addEventListener('blur', () => {
+      setTimeout(() => predictiveDropdown.classList.add('hidden'), 200);
+    });
+
+    // Hotkey Ctrl + K
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        globalSearchInput.focus();
+      }
+    });
+
+    // Confirmation Toast
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      toast.classList.remove('translate-y-32');
+      setTimeout(() => {
+        toast.classList.add('translate-y-32');
+      }, 3500);
+    }
+
+    function confirmReturnCheckin() {
+      closeDetailDrawer();
+      showToast('Devolución confirmada con éxito. Acta cerrada.');
+    }
+
+    // Reset filters interaction
+    document.getElementById('btnResetFilters').addEventListener('click', () => {
+      document.getElementById('filterStatus').value = 'todos';
+      document.getElementById('filterUser').value = 'todos';
+      document.getElementById('filterArea').value = 'todas';
+      document.getElementById('filterDate').value = 'mes';
+      showToast('Filtros restablecidos a la vista general.');
+    });
+  </script>
+</body></html>

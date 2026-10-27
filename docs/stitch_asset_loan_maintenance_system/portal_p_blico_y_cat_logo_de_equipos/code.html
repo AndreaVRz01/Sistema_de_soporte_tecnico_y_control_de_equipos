@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGA Enterprise | Sistema Institucional de Gestión de Activos y Préstamos</title>
+<!-- Material Symbols Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Brand Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim from Instructions -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "on-primary-container": "#7398b6",
+            "background": "#fff8f7",
+            "surface-bright": "#fff8f7",
+            "surface": "#fff8f7",
+            "secondary-container": "#feb956",
+            "secondary-fixed-dim": "#feb956",
+            "secondary": "#835500",
+            "on-primary-fixed": "#001e2f",
+            "tertiary-fixed-dim": "#d2c888",
+            "surface-container": "#ffe9e7",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-surface-variant": "#42474d",
+            "inverse-primary": "#a5cbea",
+            "on-background": "#410004",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#244a64",
+            "surface-container-high": "#ffe1df",
+            "on-secondary-fixed-variant": "#633f00",
+            "on-surface": "#410004",
+            "primary": "#001a2b",
+            "outline-variant": "#c2c7cd",
+            "inverse-surface": "#5f1415",
+            "inverse-on-surface": "#ffedeb",
+            "surface-variant": "#ffdad7",
+            "primary-fixed-dim": "#a5cbea",
+            "on-tertiary-container": "#47400e",
+            "primary-container": "#003049",
+            "primary-fixed": "#cae6ff",
+            "on-tertiary-fixed": "#201c00",
+            "on-error": "#ffffff",
+            "tertiary": "#675f2b",
+            "on-tertiary-fixed-variant": "#4e4715",
+            "on-secondary-fixed": "#291800",
+            "surface-dim": "#ffcfcb",
+            "secondary-fixed": "#ffddb4",
+            "surface-tint": "#3d627d",
+            "tertiary-fixed": "#efe4a2",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#ffdad7",
+            "tertiary-container": "#b6ac6f",
+            "outline": "#72787e",
+            "surface-container-low": "#fff0ef",
+            "on-secondary-container": "#734a00",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "0.75rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "body-sm": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "headline-lg": ["2.25rem", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+            "label-lg": ["0.875rem", { lineHeight: "1.3", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-md": ["0.9375rem", { lineHeight: "1.5", letterSpacing: "0", fontWeight: "400" }],
+            "headline-lg-mobile": ["1.625rem", { lineHeight: "1.25", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-xl": ["3rem", { lineHeight: "1.15", letterSpacing: "-0.03em", fontWeight: "700" }],
+            "body-sm": ["0.8125rem", { lineHeight: "1.45", letterSpacing: "0.005em", fontWeight: "400" }],
+            "body-lg": ["1.125rem", { lineHeight: "1.55", letterSpacing: "-0.01em", fontWeight: "400" }],
+            "headline-md": ["1.5rem", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "headline-xl-mobile": ["2rem", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "label-sm": ["0.6875rem", { lineHeight: "1.2", letterSpacing: "0.06em", fontWeight: "600" }],
+            "label-md": ["0.75rem", { lineHeight: "1.3", letterSpacing: "0.04em", fontWeight: "500" }],
+            "headline-sm": ["1.25rem", { lineHeight: "1.4", letterSpacing: "0", fontWeight: "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    
+    /* Neumorphic Dual-Lighting Extrusions */
+    .tactile-raised {
+      box-shadow: -5px -5px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    .dark .tactile-raised {
+      box-shadow: -4px -4px 12px rgba(255, 243, 176, 0.03), 6px 6px 18px rgba(0, 10, 18, 0.7);
+      border: 1px solid rgba(224, 159, 62, 0.15);
+    }
+
+    .tactile-inset {
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 48, 73, 0.06);
+    }
+    .dark .tactile-inset {
+      box-shadow: inset 3px 3px 7px rgba(0, 10, 18, 0.85), inset -2px -2px 5px rgba(255, 243, 176, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    /* Subdued overlay shadows */
+    .overlay-shadow {
+      box-shadow: 0 20px 35px -10px rgba(0, 48, 73, 0.18), 0 1px 3px rgba(0, 48, 73, 0.05);
+    }
+    .dark .overlay-shadow {
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.85);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased transition-colors duration-200">
+<!-- TOP APP BAR / BRAND HEADER -->
+<header class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant dark:border-primary-container shadow-sm dark:shadow-none transition-colors duration-200">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<!-- Brand & Hamburger Trigger -->
+<div class="flex items-center gap-space-md">
+<button aria-label="Abrir menú de navegación" class="p-2 rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary-container tactile-raised transition-all active:scale-95 flex items-center justify-center" id="hamburger-btn" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+</button>
+<a class="flex items-center gap-2 group" href="#">
+<div class="w-9 h-9 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center font-headline-md text-headline-sm font-bold shadow-inner">
+<span class="material-symbols-outlined text-xl" data-icon="inventory_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed tracking-tight leading-none">SIGA Enterprise</span>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim uppercase tracking-wider">Gestión &amp; Préstamos</span>
+</div>
+</a>
+</div>
+<!-- Quick Desk Navigation Links -->
+<nav class="hidden lg:flex items-center space-x-6">
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed font-bold border-b-2 border-secondary-container pb-1 transition-colors" href="#hero">Inicio</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary hover:text-primary dark:hover:text-primary-fixed pb-1 transition-colors" href="#que-hacemos">Qué Hacemos</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary hover:text-primary dark:hover:text-primary-fixed pb-1 transition-colors" href="#catalogo">Catálogo Público</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary hover:text-primary dark:hover:text-primary-fixed pb-1 transition-colors" href="#horarios">Horarios de Préstamo</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary hover:text-primary dark:hover:text-primary-fixed pb-1 transition-colors" href="#contacto">Contacto</a>
+</nav>
+<!-- Action Utilities: Dark Mode Toggle & Staff Access CTA -->
+<div class="flex items-center gap-space-sm sm:gap-space-md">
+<!-- Dark Mode Toggle Button -->
+<button aria-label="Cambiar modo visual" class="p-2 rounded-xl text-primary dark:text-secondary-container tactile-raised hover:bg-surface-container dark:hover:bg-primary-container transition-transform active:scale-95 flex items-center justify-center" id="theme-toggle" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="dark_mode" id="theme-icon">dark_mode</span>
+</button>
+<!-- Terms / Resguardo Modal Trigger -->
+<button class="hidden sm:inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary hover:text-primary px-3 py-1.5 rounded-lg border border-outline-variant dark:border-primary-container transition-all" id="open-terms-header" type="button">
+<span class="material-symbols-outlined text-base" data-icon="verified_user">verified_user</span>
+<span>Términos</span>
+</button>
+<!-- Primary Staff CTA Button -->
+<a class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest font-label-md text-label-md font-bold px-4 py-2 rounded-xl tactile-raised active:scale-95 transition-all shadow-md" href="#login-modal" id="login-modal-trigger">
+<span class="material-symbols-outlined text-lg" data-icon="lock_open">lock_open</span>
+<span class="hidden md:inline">Acceso al Sistema</span>
+<span class="md:hidden">Acceso</span>
+</a>
+</div>
+</div>
+</header>
+<!-- OFFCANVAS SIDE DRAWER NAVIGATION -->
+<aside aria-label="Menú principal de navegación" class="fixed inset-y-0 left-0 z-50 w-80 bg-surface-container-low dark:bg-primary-container border-r border-outline-variant dark:border-primary shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between p-space-md overflow-y-auto" id="side-drawer">
+<div>
+<!-- Drawer Header with Institutional Identity -->
+<div class="flex items-center justify-between pb-space-md border-b border-outline-variant dark:border-primary">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary text-secondary-container flex items-center justify-center tactile-raised">
+<span class="material-symbols-outlined text-2xl" data-icon="hub">hub</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">SIGA Enterprise</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Consola de Operaciones &amp; Préstamos</p>
+</div>
+</div>
+<button aria-label="Cerrar panel" class="p-2 rounded-lg text-on-surface-variant hover:text-primary dark:text-inverse-primary dark:hover:text-primary-fixed" id="close-drawer-btn" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Navigation Tabs corresponding to Enterprise Blueprint -->
+<nav class="mt-6 flex flex-col gap-1.5">
+<a class="nav-drawer-link text-primary dark:text-primary-fixed bg-surface-container-high dark:bg-primary font-bold rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-all active:scale-[0.98]" href="#hero">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">Inicio &amp; Telemetría</span>
+</a>
+<a class="nav-drawer-link text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-all active:scale-[0.98]" href="#que-hacemos">
+<span class="material-symbols-outlined text-xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-label-lg text-label-lg">Qué Hacemos</span>
+</a>
+<a class="nav-drawer-link text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-all active:scale-[0.98]" href="#catalogo">
+<span class="material-symbols-outlined text-xl" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-lg text-label-lg">Catálogo Público</span>
+</a>
+<a class="nav-drawer-link text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-all active:scale-[0.98]" href="#horarios">
+<span class="material-symbols-outlined text-xl" data-icon="schedule">schedule</span>
+<span class="font-label-lg text-label-lg">Horarios de Préstamo</span>
+</a>
+<a class="nav-drawer-link text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-all active:scale-[0.98]" href="#contacto">
+<span class="material-symbols-outlined text-xl" data-icon="support_agent">support_agent</span>
+<span class="font-label-lg text-label-lg">Contacto &amp; Tickets</span>
+</a>
+<a class="nav-drawer-link text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary/50 rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-all active:scale-[0.98]" href="#resguardo-terms" id="terms-drawer-trigger">
+<span class="material-symbols-outlined text-xl" data-icon="policy">policy</span>
+<span class="font-label-lg text-label-lg">Políticas de Resguardo</span>
+</a>
+</nav>
+<!-- Operational Call to Action Inside Drawer -->
+<div class="mt-8 p-4 rounded-xl bg-surface dark:bg-primary/40 border border-outline-variant/60 dark:border-primary tactile-raised">
+<div class="flex items-center gap-2 mb-2 text-secondary font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-base" data-icon="crisis_alert">crisis_alert</span>
+<span>Soporte Inmediato</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary mb-3">
+          ¿Problemas con un activo en préstamo o bloqueo de hardware crítico?
+        </p>
+<a class="w-full inline-flex items-center justify-center gap-2 bg-secondary-container hover:bg-secondary text-on-secondary-container hover:text-on-secondary font-label-md text-label-md font-bold py-2 px-3 rounded-lg transition-colors" href="#contacto">
+<span class="material-symbols-outlined text-base" data-icon="add_task">add_task</span>
+<span>Generar Ticket de Soporte</span>
+</a>
+</div>
+</div>
+<!-- Drawer Footer System Identity -->
+<div class="pt-6 border-t border-outline-variant dark:border-primary">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm text-outline dark:text-outline-variant">SIGA Enterprise v4.8.2</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-label-sm font-semibold bg-surface-container-high text-secondary">PROD NODE-01</span>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-surface-container-lowest hover:bg-primary-container dark:bg-surface dark:text-primary font-label-md text-label-md py-2.5 rounded-xl transition-all font-bold" id="drawer-login-btn" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="login">login</span>
+<span>Acceso al Sistema Empleados</span>
+</button>
+</div>
+</aside>
+<!-- DRAWER BACKDROP -->
+<div aria-hidden="true" class="fixed inset-0 z-40 bg-primary/60 backdrop-blur-sm hidden transition-opacity opacity-0" id="drawer-backdrop"></div>
+<!-- HERO SECTION -->
+<section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-outline-variant/40 dark:border-primary-container" id="hero">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Column: Copy & High Authority Directives -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<div class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-surface-container dark:bg-primary-container border border-secondary-container/40">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary dark:text-primary-fixed uppercase tracking-wider font-semibold">Plataforma Oficial de Préstamos Corporativos</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary dark:text-surface-bright tracking-tight">
+            Control preciso, resguardo seguro y trazabilidad de <span class="text-secondary dark:text-secondary-fixed">activos empresariales</span>.
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant dark:text-inverse-primary max-w-2xl leading-relaxed">
+            SIGA Enterprise orquesta la disponibilidad y custodia de laptops de ingeniería, proyectores de salas de consejo, equipamiento audiovisual, switches de conectividad y herramientas de taller para todo el personal corporativo y técnico.
+          </p>
+<!-- Metrics Bento Badges -->
+<div class="grid grid-cols-3 gap-3 sm:gap-4 py-2">
+<div class="p-3 sm:p-4 rounded-xl bg-surface-container-low dark:bg-primary-container/70 tactile-raised">
+<span class="font-label-lg text-label-lg font-bold text-primary dark:text-primary-fixed block">4,850+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Activos Registrados</span>
+</div>
+<div class="p-3 sm:p-4 rounded-xl bg-surface-container-low dark:bg-primary-container/70 tactile-raised">
+<span class="font-label-lg text-label-lg font-bold text-secondary dark:text-secondary-fixed block">99.8%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Tasa de Devolución</span>
+</div>
+<div class="p-3 sm:p-4 rounded-xl bg-surface-container-low dark:bg-primary-container/70 tactile-raised">
+<span class="font-label-lg text-label-lg font-bold text-primary dark:text-primary-fixed block">&lt; 15 min</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Entrega en Mostrador</span>
+</div>
+</div>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<a class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest font-label-md text-label-md font-bold px-6 py-3.5 rounded-xl tactile-raised active:scale-95 transition-all" href="#catalogo">
+<span class="material-symbols-outlined text-xl" data-icon="search">search</span>
+<span>Explorar Catálogo de Equipos</span>
+</a>
+<a class="inline-flex items-center gap-2 bg-surface hover:bg-surface-container text-primary dark:bg-primary-container dark:hover:bg-primary dark:text-inverse-primary font-label-md text-label-md font-semibold px-5 py-3.5 rounded-xl tactile-raised active:scale-95 transition-all" href="#horarios">
+<span class="material-symbols-outlined text-xl" data-icon="schedule">schedule</span>
+<span>Horarios de Ventanilla</span>
+</a>
+</div>
+<!-- Trust Subtext -->
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-outline dark:text-outline-variant pt-2">
+<span class="material-symbols-outlined text-lg text-secondary" data-icon="lock" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span>Acceso estricto mediante credencial corporativa RFID y ficha de resguardo digital.</span>
+</div>
+</div>
+<!-- Right Column: Visual Console Graphic & Live Asset Monitor Preview -->
+<div class="lg:col-span-5">
+<div class="relative rounded-2xl p-6 bg-surface-container-low dark:bg-primary-container tactile-raised overflow-hidden">
+<!-- Atmospheric Accent Badge -->
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/60 dark:border-primary">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed uppercase tracking-wider">Monitor de Almacén Principal</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline dark:text-outline-variant">ACTIVOS DISPONIBLES</span>
+</div>
+<!-- Bento Mini-Card Flow -->
+<div class="mt-5 space-y-3">
+<!-- Item 1 -->
+<div class="p-3.5 rounded-xl bg-surface-container dark:bg-primary/50 flex items-center justify-between border border-white/50 dark:border-primary-container">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-primary-container text-secondary-container">
+<span class="material-symbols-outlined text-xl" data-icon="laptop_mac">laptop_mac</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Workstations Portátiles Dell XPS 15</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">Ser: DE-XPS-4091 • Lote TI-2</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-xs font-label-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                  14 Libres
+                </span>
+</div>
+<!-- Item 2 -->
+<div class="p-3.5 rounded-xl bg-surface-container dark:bg-primary/50 flex items-center justify-between border border-white/50 dark:border-primary-container">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-primary-container text-secondary-container">
+<span class="material-symbols-outlined text-xl" data-icon="videocam">videocam</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Kit Proyector Láser Epson 4K 5000L</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">Ser: EP-L5K-092 • Sala Conferencias</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-xs font-label-sm font-semibold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                  3 En Reserva
+                </span>
+</div>
+<!-- Item 3 -->
+<div class="p-3.5 rounded-xl bg-surface-container dark:bg-primary/50 flex items-center justify-between border border-white/50 dark:border-primary-container">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-primary-container text-secondary-container">
+<span class="material-symbols-outlined text-xl" data-icon="wifi_tethering">wifi_tethering</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Switch de Campo Cisco Catalyst 24P</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">Ser: CS-CAT-773 • Redes Externas</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-xs font-label-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                  8 Libres
+                </span>
+</div>
+</div>
+<!-- Mini Live Status Box -->
+<div class="mt-5 p-4 rounded-xl bg-surface dark:bg-primary/80 tactile-inset">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-on-surface-variant dark:text-inverse-primary">Estado de Ventanilla:</span>
+<span class="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  OPERANDO NORMALMENTE
+                </span>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-outline dark:text-outline-variant">
+                Tiempo promedio de validación de folio de préstamo: 3 minutos con gafete corporativo activo.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- QUÉ HACEMOS SECTION (BENTO GRID HIGH OPERATIONAL CLARITY) -->
+<section class="py-20 bg-surface-container-low/50 dark:bg-primary/20" id="que-hacemos">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-widest block mb-2">Infraestructura &amp; Gobernanza</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary dark:text-surface-bright">
+          Cómo gestionamos y custodiamos las herramientas de trabajo corporativas
+        </h2>
+<p class="mt-4 font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary">
+          SIGA Enterprise suprime la pérdida de hardware, optimiza el ciclo de vida de los equipos y asegura que cada colaborador disponga del equipamiento necesario con rigurosidad documental.
+        </p>
+</div>
+<!-- Bento Grid (3 Columns) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Bento Card 1: Control Centralizado -->
+<div class="rounded-2xl p-7 bg-surface dark:bg-primary-container tactile-raised flex flex-col justify-between transition-transform hover:-translate-y-1">
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center mb-5">
+<span class="material-symbols-outlined text-2xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-3">Trazabilidad por Serial &amp; Tag RFID</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary leading-relaxed">
+              Cada equipo cuenta con un identificador único imborrable y placa de inventario. El sistema registra fecha, hora, responsable directo, ubicación y bitácora de retorno en tiempo real.
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/40 dark:border-primary font-label-sm text-label-sm text-secondary font-semibold flex items-center gap-1">
+<span>Cero discrepancias en inventario físico</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Bento Card 2: Préstamos Temporales y de Proyecto -->
+<div class="rounded-2xl p-7 bg-surface dark:bg-primary-container tactile-raised flex flex-col justify-between transition-transform hover:-translate-y-1">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary text-surface-container-lowest flex items-center justify-center mb-5">
+<span class="material-symbols-outlined text-2xl" data-icon="handshake">handshake</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-3">Préstamos Temporales &amp; Emergentes</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary leading-relaxed">
+              Respaldo inmediato para presentaciones en juntas directivas, viajes de trabajo, pruebas de conectividad de campo o contingencias por daño imprevisto de equipo asignado.
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/40 dark:border-primary font-label-sm text-label-sm text-secondary font-semibold flex items-center gap-1">
+<span>Reserva previa garantizada hasta 72h</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Bento Card 3: Mantenimiento Preventivo y Fichas -->
+<div class="rounded-2xl p-7 bg-surface dark:bg-primary-container tactile-raised flex flex-col justify-between transition-transform hover:-translate-y-1">
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary text-secondary-container flex items-center justify-center mb-5">
+<span class="material-symbols-outlined text-2xl" data-icon="build_circle">build_circle</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-3">Revisión Técnica y Mantenimiento</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary leading-relaxed">
+              Todo activo retornado ingresa a una inspección de integridad de 5 puntos: limpieza, desinfección, chequeo de batería, eliminación de datos locales y pruebas de funcionalidad técnica.
+            </p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/40 dark:border-primary font-label-sm text-label-sm text-secondary font-semibold flex items-center gap-1">
+<span>Garantía de operatividad continua</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CATÁLOGO PÚBLICO DE EQUIPOS Y PRODUCTOS -->
+<section class="py-20 border-t border-outline-variant/40 dark:border-primary-container" id="catalogo">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-widest block mb-2">Disponibilidad en Almacén</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary dark:text-surface-bright">
+            Catálogo de Equipos para Solicitud de Préstamo
+          </h2>
+<p class="mt-2 font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary max-w-2xl">
+            Consulte la disponibilidad en tiempo real antes de presentarse en ventanilla o registre su apartado a través de su credencial corporativa.
+          </p>
+</div>
+<!-- Dynamic Category Filter Buttons -->
+<div class="flex flex-wrap gap-2" id="catalog-filters">
+<button class="filter-btn active font-label-sm text-label-sm px-4 py-2 rounded-xl bg-primary-container text-surface-container-lowest font-bold transition-all tactile-raised" data-filter="all" type="button">
+            Todos los Equipos
+          </button>
+<button class="filter-btn font-label-sm text-label-sm px-4 py-2 rounded-xl bg-surface dark:bg-primary-container text-on-surface-variant dark:text-inverse-primary hover:text-primary transition-all tactile-raised" data-filter="computo" type="button">
+            Cómputo
+          </button>
+<button class="filter-btn font-label-sm text-label-sm px-4 py-2 rounded-xl bg-surface dark:bg-primary-container text-on-surface-variant dark:text-inverse-primary hover:text-primary transition-all tactile-raised" data-filter="audiovisual" type="button">
+            Audiovisual
+          </button>
+<button class="filter-btn font-label-sm text-label-sm px-4 py-2 rounded-xl bg-surface dark:bg-primary-container text-on-surface-variant dark:text-inverse-primary hover:text-primary transition-all tactile-raised" data-filter="redes" type="button">
+            Redes
+          </button>
+<button class="filter-btn font-label-sm text-label-sm px-4 py-2 rounded-xl bg-surface dark:bg-primary-container text-on-surface-variant dark:text-inverse-primary hover:text-primary transition-all tactile-raised" data-filter="herramientas" type="button">
+            Herramientas
+          </button>
+</div>
+</div>
+<!-- Search in Catalog Input Bar -->
+<div class="mb-10 max-w-xl">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-secondary text-xl" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-3 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright font-body-md text-body-md tactile-inset focus:ring-2 focus:ring-secondary-container focus:outline-none border-none" id="catalog-search" placeholder="Buscar por modelo, procesador, serial o código de activo..." type="text"/>
+</div>
+</div>
+<!-- Equipment Grid Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="catalog-grid">
+<!-- Card 1: Cómputo -->
+<div class="catalog-card rounded-2xl bg-surface dark:bg-primary-container p-6 tactile-raised flex flex-col justify-between transition-all hover:-translate-y-1" data-category="computo">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase px-2.5 py-1 rounded-md bg-surface-container dark:bg-primary font-bold text-primary dark:text-primary-fixed">CÓMPUTO</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                9 Disponibles
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-1">Laptop ThinkPad P1 Gen 6</h3>
+<p class="font-label-sm text-label-sm text-outline dark:text-outline-variant mb-4">CÓD: SIGA-CMP-8812</p>
+<!-- Technical Sheet -->
+<ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary border-t border-b border-outline-variant/30 py-3">
+<li class="flex justify-between"><span>Procesador:</span> <strong class="text-primary dark:text-surface-bright">Intel Core i7-13800H</strong></li>
+<li class="flex justify-between"><span>Memoria / Disco:</span> <strong class="text-primary dark:text-surface-bright">32GB RAM / 1TB SSD</strong></li>
+<li class="flex justify-between"><span>Gráficos:</span> <strong class="text-primary dark:text-surface-bright">NVIDIA RTX 2000 Ada</strong></li>
+<li class="flex justify-between"><span>Tiempo Máx:</span> <strong class="text-secondary dark:text-secondary-fixed">15 Días Laborales</strong></li>
+</ul>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Piso 2 • Almacén A</span>
+<button class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-surface-container-lowest font-label-sm text-label-sm px-4 py-2 rounded-lg tactile-raised transition-all" onclick="showLoanRequest('Laptop ThinkPad P1 Gen 6', 'SIGA-CMP-8812')" type="button">
+<span class="material-symbols-outlined text-base" data-icon="post_add">post_add</span>
+<span>Solicitar Folio</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Audiovisual -->
+<div class="catalog-card rounded-2xl bg-surface dark:bg-primary-container p-6 tactile-raised flex flex-col justify-between transition-all hover:-translate-y-1" data-category="audiovisual">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase px-2.5 py-1 rounded-md bg-surface-container dark:bg-primary font-bold text-secondary dark:text-secondary-fixed">AUDIOVISUAL</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                4 Disponibles
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-1">Sistema Proyector Epson Pro L1070U</h3>
+<p class="font-label-sm text-label-sm text-outline dark:text-outline-variant mb-4">CÓD: SIGA-AV-3041</p>
+<ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary border-t border-b border-outline-variant/30 py-3">
+<li class="flex justify-between"><span>Resolución:</span> <strong class="text-primary dark:text-surface-bright">WUXGA 4K Enhancement</strong></li>
+<li class="flex justify-between"><span>Brillo:</span> <strong class="text-primary dark:text-surface-bright">7,000 Lúmenes Láser</strong></li>
+<li class="flex justify-between"><span>Accesorios:</span> <strong class="text-primary dark:text-surface-bright">HDMI Fibra 15m + Control</strong></li>
+<li class="flex justify-between"><span>Tiempo Máx:</span> <strong class="text-secondary dark:text-secondary-fixed">3 Días Laborales</strong></li>
+</ul>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Piso 1 • Cabina A/V</span>
+<button class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-surface-container-lowest font-label-sm text-label-sm px-4 py-2 rounded-lg tactile-raised transition-all" onclick="showLoanRequest('Sistema Proyector Epson Pro L1070U', 'SIGA-AV-3041')" type="button">
+<span class="material-symbols-outlined text-base" data-icon="post_add">post_add</span>
+<span>Solicitar Folio</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Audiovisual -->
+<div class="catalog-card rounded-2xl bg-surface dark:bg-primary-container p-6 tactile-raised flex flex-col justify-between transition-all hover:-translate-y-1" data-category="audiovisual">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase px-2.5 py-1 rounded-md bg-surface-container dark:bg-primary font-bold text-secondary dark:text-secondary-fixed">AUDIOVISUAL</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                1 En Reserva
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-1">Barra All-in-One Poly Studio X50</h3>
+<p class="font-label-sm text-label-sm text-outline dark:text-outline-variant mb-4">CÓD: SIGA-AV-5590</p>
+<ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary border-t border-b border-outline-variant/30 py-3">
+<li class="flex justify-between"><span>Cámara:</span> <strong class="text-primary dark:text-surface-bright">4K con Auto-Framing</strong></li>
+<li class="flex justify-between"><span>Micrófonos:</span> <strong class="text-primary dark:text-surface-bright">Arreglo Beamforming</strong></li>
+<li class="flex justify-between"><span>Compatibilidad:</span> <strong class="text-primary dark:text-surface-bright">Teams, Zoom Nativo</strong></li>
+<li class="flex justify-between"><span>Tiempo Máx:</span> <strong class="text-secondary dark:text-secondary-fixed">5 Días Laborales</strong></li>
+</ul>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Piso 1 • Cabina A/V</span>
+<button class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-surface-container-lowest font-label-sm text-label-sm px-4 py-2 rounded-lg tactile-raised transition-all" onclick="showLoanRequest('Barra All-in-One Poly Studio X50', 'SIGA-AV-5590')" type="button">
+<span class="material-symbols-outlined text-base" data-icon="post_add">post_add</span>
+<span>Solicitar Folio</span>
+</button>
+</div>
+</div>
+<!-- Card 4: Redes -->
+<div class="catalog-card rounded-2xl bg-surface dark:bg-primary-container p-6 tactile-raised flex flex-col justify-between transition-all hover:-translate-y-1" data-category="redes">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase px-2.5 py-1 rounded-md bg-surface-container dark:bg-primary font-bold text-primary dark:text-primary-fixed">REDES</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                6 Disponibles
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-1">Kit Analizador Fluke Networks DSX-602</h3>
+<p class="font-label-sm text-label-sm text-outline dark:text-outline-variant mb-4">CÓD: SIGA-NET-1099</p>
+<ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary border-t border-b border-outline-variant/30 py-3">
+<li class="flex justify-between"><span>Certificación:</span> <strong class="text-primary dark:text-surface-bright">Cat 6A / Clase EA</strong></li>
+<li class="flex justify-between"><span>Tiempo Prueba:</span> <strong class="text-primary dark:text-surface-bright">9 Segundos Cat 6A</strong></li>
+<li class="flex justify-between"><span>Incluye:</span> <strong class="text-primary dark:text-surface-bright">Maletín Rígido + Adaptadores</strong></li>
+<li class="flex justify-between"><span>Tiempo Máx:</span> <strong class="text-secondary dark:text-secondary-fixed">2 Días Laborales</strong></li>
+</ul>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Sótano 1 • Taller Telecom</span>
+<button class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-surface-container-lowest font-label-sm text-label-sm px-4 py-2 rounded-lg tactile-raised transition-all" onclick="showLoanRequest('Kit Analizador Fluke DSX-602', 'SIGA-NET-1099')" type="button">
+<span class="material-symbols-outlined text-base" data-icon="post_add">post_add</span>
+<span>Solicitar Folio</span>
+</button>
+</div>
+</div>
+<!-- Card 5: Herramientas -->
+<div class="catalog-card rounded-2xl bg-surface dark:bg-primary-container p-6 tactile-raised flex flex-col justify-between transition-all hover:-translate-y-1" data-category="herramientas">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase px-2.5 py-1 rounded-md bg-surface-container dark:bg-primary font-bold text-on-surface-variant dark:text-inverse-primary">HERRAMIENTAS</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                12 Disponibles
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-1">Maletín Técnico ESD Klein Tools 42P</h3>
+<p class="font-label-sm text-label-sm text-outline dark:text-outline-variant mb-4">CÓD: SIGA-HER-2244</p>
+<ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary border-t border-b border-outline-variant/30 py-3">
+<li class="flex justify-between"><span>Aislamiento:</span> <strong class="text-primary dark:text-surface-bright">1000V Certificado</strong></li>
+<li class="flex justify-between"><span>Instrumental:</span> <strong class="text-primary dark:text-surface-bright">Ponchadoras, Pinzas, Torx</strong></li>
+<li class="flex justify-between"><span>Protección:</span> <strong class="text-primary dark:text-surface-bright">Pulsera Antiestática</strong></li>
+<li class="flex justify-between"><span>Tiempo Máx:</span> <strong class="text-secondary dark:text-secondary-fixed">7 Días Laborales</strong></li>
+</ul>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Sótano 1 • Cuarto de Control</span>
+<button class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-surface-container-lowest font-label-sm text-label-sm px-4 py-2 rounded-lg tactile-raised transition-all" onclick="showLoanRequest('Maletín Técnico ESD Klein Tools', 'SIGA-HER-2244')" type="button">
+<span class="material-symbols-outlined text-base" data-icon="post_add">post_add</span>
+<span>Solicitar Folio</span>
+</button>
+</div>
+</div>
+<!-- Card 6: Cómputo -->
+<div class="catalog-card rounded-2xl bg-surface dark:bg-primary-container p-6 tactile-raised flex flex-col justify-between transition-all hover:-translate-y-1" data-category="computo">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase px-2.5 py-1 rounded-md bg-surface-container dark:bg-primary font-bold text-primary dark:text-primary-fixed">CÓMPUTO</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300 border border-rose-300">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                Agotado Temporalmente
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-1">MacBook Pro 16" Apple M2 Max</h3>
+<p class="font-label-sm text-label-sm text-outline dark:text-outline-variant mb-4">CÓD: SIGA-CMP-9003</p>
+<ul class="space-y-2 mb-6 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary border-t border-b border-outline-variant/30 py-3">
+<li class="flex justify-between"><span>Configuración:</span> <strong class="text-primary dark:text-surface-bright">38-Core GPU / 64GB RAM</strong></li>
+<li class="flex justify-between"><span>Uso Exclusivo:</span> <strong class="text-primary dark:text-surface-bright">Diseño &amp; Animación 3D</strong></li>
+<li class="flex justify-between"><span>Retorno Est.:</span> <strong class="text-primary dark:text-surface-bright">Viernes Próximo</strong></li>
+<li class="flex justify-between"><span>Tiempo Máx:</span> <strong class="text-secondary dark:text-secondary-fixed">10 Días Laborales</strong></li>
+</ul>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Piso 2 • Almacén A</span>
+<button class="inline-flex items-center gap-1.5 bg-outline-variant text-on-surface-variant font-label-sm text-label-sm px-4 py-2 rounded-lg cursor-not-allowed opacity-60" type="button">
+<span class="material-symbols-outlined text-base" data-icon="event_busy">event_busy</span>
+<span>En Cola de Espera</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- HORARIOS DE PRÉSTAMO, TIEMPOS Y POLÍTICAS -->
+<section class="py-20 bg-surface-container-low/40 dark:bg-primary/30 border-t border-outline-variant/40 dark:border-primary-container" id="horarios">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left: Operating Window Schedules -->
+<div class="lg:col-span-6 flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-widest block mb-2">Ventanilla &amp; Bodega Central</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary dark:text-surface-bright mb-6">
+              Horarios de Atención y Entrega de Equipamiento
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary mb-8">
+              Para garantizar la calibración técnica de cada activo, las recepciones y despachos se ejecutan exclusivamente en los siguientes bloques autorizados.
+            </p>
+<div class="space-y-4">
+<!-- Shift 1 -->
+<div class="p-4 rounded-xl bg-surface dark:bg-primary-container tactile-raised flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-lg bg-surface-container dark:bg-primary text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined text-xl" data-icon="wb_sunny">wb_sunny</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Turno Matutino (Despacho Principal)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Lunes a Viernes</p>
+</div>
+</div>
+<span class="font-label-md text-label-md font-bold text-secondary dark:text-secondary-fixed px-3 py-1 rounded-md bg-surface-container-high dark:bg-primary">
+                  07:30 - 13:00 hrs
+                </span>
+</div>
+<!-- Shift 2 -->
+<div class="p-4 rounded-xl bg-surface dark:bg-primary-container tactile-raised flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-lg bg-surface-container dark:bg-primary text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined text-xl" data-icon="wb_twilight">wb_twilight</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Turno Vespertino (Devoluciones &amp; Cierre)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Lunes a Viernes</p>
+</div>
+</div>
+<span class="font-label-md text-label-md font-bold text-secondary dark:text-secondary-fixed px-3 py-1 rounded-md bg-surface-container-high dark:bg-primary">
+                  14:30 - 18:30 hrs
+                </span>
+</div>
+<!-- Shift 3 -->
+<div class="p-4 rounded-xl bg-surface dark:bg-primary-container tactile-raised flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-lg bg-surface-container dark:bg-primary text-secondary">
+<span class="material-symbols-outlined text-xl" data-icon="notification_important">notification_important</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Guardia Sabatina (Solo Urgencias TI)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Sábados con Ticket Aprobado</p>
+</div>
+</div>
+<span class="font-label-md text-label-md font-bold text-primary dark:text-primary-fixed px-3 py-1 rounded-md bg-surface-container-high dark:bg-primary">
+                  09:00 - 13:00 hrs
+                </span>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 rounded-xl bg-surface-container-high/60 dark:bg-primary/40 border border-outline-variant/60 font-body-sm text-body-sm text-on-surface">
+<span class="font-bold">Ubicación de Despacho:</span> Edificio Central Corporativo, Planta Baja, Módulo C-12 (Acceso junto al Elevador de Carga).
+          </div>
+</div>
+<!-- Right: Loan Policies & SLA Timing Cards -->
+<div class="lg:col-span-6">
+<div class="p-8 rounded-2xl bg-surface dark:bg-primary-container tactile-raised">
+<h3 class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="rule">rule</span>
+<span>Reglas y Políticas de Custodia de Equipos</span>
+</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container text-secondary-container flex items-center justify-center font-label-md font-bold shrink-0">1</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Identificación Obligatoria</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                    La liberación física requiere lectura de gafete RFID y firma digital en el pad táctil del almacén. No se admiten solicitudes de terceros sin autorización de gerencia.
+                  </p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container text-secondary-container flex items-center justify-center font-label-md font-bold shrink-0">2</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Tiempos Máximos de Devolución</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                    Laptops y proyectores: máximo 15 días con posibilidad de prórroga única de 5 días. Herramientas técnicas: devolución al término de la jornada laboral o proyecto específico.
+                  </p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container text-secondary-container flex items-center justify-center font-label-md font-bold shrink-0">3</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Protocolo de Retorno e Inspección</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                    El técnico del almacén verifica integridad física de pantallas, bisagras, cargadores y cables. Cualquier daño imprevisto debe ser reportado mediante ticket antes del retorno.
+                  </p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container text-secondary-container flex items-center justify-center font-label-md font-bold shrink-0">4</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed">Responsabilidad y Términos de Resguardo</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                    El colaborador asume la custodia del bien corporativo según las cláusulas de seguridad informática institucional y resguardo patrimonial de la empresa.
+                  </p>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/40 dark:border-primary flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">Código Normativo INT-SIGA-2024</span>
+<button class="font-label-sm text-label-sm text-secondary hover:text-primary font-bold underline transition-colors" id="open-terms-policy-btn" type="button">
+                Leer Términos Completos
+              </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FORMULARIO DE CONTACTO Y SOPORTE INTERNO -->
+<section class="py-20 border-t border-outline-variant/40 dark:border-primary-container" id="contacto">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Info Column -->
+<div class="lg:col-span-5">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-widest block mb-2">Mesa de Ayuda &amp; Préstamos</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary dark:text-surface-bright mb-4">
+            Contacto Directo &amp; Tickets de Orientación
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary mb-8 leading-relaxed">
+            ¿Requiere un lote especial de equipos para un evento corporativo, renovación de resguardo, o soporte técnico para una herramienta prestada? Envíe su mensaje al equipo de administración de activos.
+          </p>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="p-3 rounded-xl bg-surface-container dark:bg-primary-container text-primary dark:text-primary-fixed tactile-raised">
+<span class="material-symbols-outlined text-2xl" data-icon="call">call</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline dark:text-outline-variant block">Conmutador Interno:</span>
+<span class="font-label-md text-label-md font-bold text-primary dark:text-surface-bright">Ext. 4080 / 4082 (Almacén Central)</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-3 rounded-xl bg-surface-container dark:bg-primary-container text-primary dark:text-primary-fixed tactile-raised">
+<span class="material-symbols-outlined text-2xl" data-icon="mail">mail</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline dark:text-outline-variant block">Correo de Mesa de Ayuda:</span>
+<span class="font-label-md text-label-md font-bold text-primary dark:text-surface-bright">activos.prestamos@empresa.siga.corp</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-3 rounded-xl bg-surface-container dark:bg-primary-container text-primary dark:text-primary-fixed tactile-raised">
+<span class="material-symbols-outlined text-2xl" data-icon="location_on">location_on</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline dark:text-outline-variant block">Dirección Corporativa:</span>
+<span class="font-label-md text-label-md font-bold text-primary dark:text-surface-bright">Pabellón Tecnológico Empresarial, Nivel 1</span>
+</div>
+</div>
+</div>
+<!-- Fast SLA Info Box -->
+<div class="mt-8 p-5 rounded-2xl bg-surface-container-low dark:bg-primary-container tactile-inset">
+<div class="flex items-center gap-2 text-secondary font-label-md text-label-md font-bold mb-1">
+<span class="material-symbols-outlined text-lg" data-icon="timer">timer</span>
+<span>Compromiso de Respuesta</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+              Los tickets de orientación para préstamos de emergencia son atendidos en un lapso no mayor a 30 minutos hábiles por los coordinadores de inventario.
+            </p>
+</div>
+</div>
+<!-- Interactive Ticket / Contact Form -->
+<div class="lg:col-span-7">
+<form class="p-8 rounded-2xl bg-surface dark:bg-primary-container tactile-raised space-y-6" id="contact-form">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-2" for="contact-name">Nombre y Apellido</label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="contact-name" placeholder="Ej. Ing. Carlos Mendoza" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-2" for="contact-id">No. de Empleado / Gafete</label>
+<input class="w-full px-4 py-3 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="contact-id" placeholder="Ej. EMP-89410" required="" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-2" for="contact-dept">Departamento / Área</label>
+<select class="w-full px-4 py-3 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="contact-dept">
+<option value="ti">Tecnologías de Información (TI)</option>
+<option value="ingenieria">Ingeniería &amp; Proyectos</option>
+<option value="operaciones">Operaciones y Logística</option>
+<option value="corporativo">Dirección &amp; Finanzas</option>
+<option value="mantenimiento">Infraestructura y Mantenimiento</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-2" for="contact-category">Tipo de Solicitud</label>
+<select class="w-full px-4 py-3 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="contact-category">
+<option value="prestamo_especial">Préstamo por Proyecto Especial</option>
+<option value="reporte_dano">Reporte de Falla en Equipo Prestado</option>
+<option value="prorroga">Solicitud de Extensión / Prórroga</option>
+<option value="duda_resguardo">Dudas sobre Resguardo y Fianza</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-2" for="contact-message">Detalle del Requerimiento o Falla</label>
+<textarea class="w-full px-4 py-3 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="contact-message" placeholder="Especifique el código de activo, fechas estimadas o el motivo técnico de la solicitud..." required="" rows="4"></textarea>
+</div>
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 rounded text-primary-container focus:ring-secondary-container border-outline-variant" id="contact-accept" required="" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary" for="contact-accept">
+                Confirmo que la información corresponde a mi rol activo en la compañía y he leído los términos de resguardo.
+              </label>
+</div>
+<button class="w-full inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest font-label-md text-label-md font-bold py-3.5 px-6 rounded-xl tactile-raised active:scale-[0.99] transition-all" type="submit">
+<span class="material-symbols-outlined text-xl" data-icon="send">send</span>
+<span>Enviar Ticket a Almacén Central</span>
+</button>
+<!-- Success Notice (Hidden Initially) -->
+<div class="hidden p-4 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200 border border-emerald-300 font-body-sm text-body-sm flex items-center gap-2" id="form-success-msg">
+<span class="material-symbols-outlined text-lg" data-icon="check_circle">check_circle</span>
+<span>¡Ticket generado con éxito! El almacén ha recibido su solicitud con folio <strong>#TK-9921</strong>.</span>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- MODAL: AVISO DE PRIVACIDAD Y TÉRMINOS DE RESGUARDO DE ACTIVOS -->
+<div aria-labelledby="terms-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/70 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="terms-modal" role="dialog">
+<div class="relative w-full max-w-3xl max-h-[85vh] bg-surface dark:bg-primary-container rounded-2xl tactile-raised overlay-shadow flex flex-col overflow-hidden">
+<!-- Modal Header -->
+<div class="flex items-center justify-between p-6 border-b border-outline-variant/60 dark:border-primary">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-primary-container text-secondary-container">
+<span class="material-symbols-outlined text-2xl" data-icon="policy">policy</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed" id="terms-title">Términos de Resguardo de Activos y Privacidad</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Políticas de Uso Aceptable e Inventario Corporativo</p>
+</div>
+</div>
+<button aria-label="Cerrar modal de términos" class="p-2 rounded-lg text-on-surface-variant hover:text-primary dark:text-inverse-primary dark:hover:text-primary-fixed" id="close-terms-btn" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="p-6 overflow-y-auto space-y-5 font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary leading-relaxed">
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-surface-bright mb-1">1. Objeto y Propiedad Institucional</h4>
+<p>
+            Todos los dispositivos electrónicos, equipos de cómputo portátil, periféricos, herramientas técnicas y accesorios disponibles en SIGA Enterprise son propiedad exclusiva de la empresa. El préstamo concede una custodia temporal estrictamente para actividades laborales inherentes al cargo del empleado.
+          </p>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-surface-bright mb-1">2. Custodia, Cuidado y Pérdida</h4>
+<p>
+            El usuario solicitante es el único responsable legal y administrativo del resguardo físico del activo desde su retiro de ventanilla hasta su recepción formal en almacén. En caso de robo con violencia o extravío fuera de las instalaciones, se deberá tramitar de inmediato el acta judicial correspondiente y notificar a la mesa de control dentro de las primeras 12 horas.
+          </p>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-surface-bright mb-1">3. Seguridad Informática y Datos Corporativos</h4>
+<p>
+            Queda prohibida la instalación de software no homologado, la desactivación de agentes de telemetría y antivirus, así como la transferencia de datos confidenciales a dispositivos de almacenamiento externos no encriptados. El área de Seguridad Informática se reserva el derecho de borrado remoto preventivo en casos de alerta de extravío.
+          </p>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-surface-bright mb-1">4. Retorno y Sanciones por Incumplimiento</h4>
+<p>
+            La falta de devolución en la fecha estipulada derivará en el bloqueo de solicitudes posteriores y reporte automático a la Gerencia de Recursos Humanos y Auditoría Interna. Los daños ocasionados por dolo o negligencia comprobable podrán ser sujetos a deducción conforme a la legislación laboral aplicable.
+          </p>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-surface-bright mb-1">5. Privacidad y Protección de Datos Personales</h4>
+<p>
+            Los datos recabados en los formularios (número de empleado, departamento, firmas biométricas) se almacenan bajo rigurosos protocolos de cifrado y se emplean exclusivamente para la trazabilidad operativa y el control patrimonial de la institución.
+          </p>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 border-t border-outline-variant/60 dark:border-primary bg-surface-container-low dark:bg-primary/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+<span class="font-label-sm text-label-sm text-outline dark:text-outline-variant">Aprobado por Dirección Jurídica y TI</span>
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest font-label-md text-label-md font-bold px-6 py-2.5 rounded-xl tactile-raised transition-all" id="close-terms-confirm" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="check">check</span>
+<span>Entendido y de Acuerdo</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MODAL: LOGIN / ACCESO A PLATAFORMA (EMPLEADOS & TÉCNICOS) -->
+<div aria-labelledby="login-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/75 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="login-modal" role="dialog">
+<div class="relative w-full max-w-md bg-surface dark:bg-primary-container rounded-2xl tactile-raised overlay-shadow flex flex-col overflow-hidden p-6 sm:p-8">
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/40 dark:border-primary">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-secondary-container flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-lg" data-icon="lock">lock</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed" id="login-title">Acceso a Plataforma</h3>
+</div>
+<button aria-label="Cerrar ventana de acceso" class="p-1 rounded-lg text-on-surface-variant hover:text-primary dark:text-inverse-primary" id="close-login-btn" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="close">close</span>
+</button>
+</div>
+<p class="mt-4 font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+        Ingreso para administradores de inventario, técnicos de almacén y colaboradores corporativos.
+      </p>
+<form class="mt-6 space-y-4" id="login-form">
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-1.5" for="login-user">Usuario Corporativo o No. Empleado</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg" data-icon="badge">badge</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="login-user" placeholder="ej. jrodriguez o EMP-1049" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm font-semibold text-primary dark:text-surface-bright mb-1.5" for="login-pass">Contraseña de Dominio</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg" data-icon="key">key</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-container-low dark:bg-primary/60 text-primary dark:text-surface-bright tactile-inset focus:ring-2 focus:ring-secondary-container border-none font-body-md text-body-md" id="login-pass" placeholder="••••••••••••" required="" type="password"/>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs font-body-sm">
+<label class="flex items-center gap-1.5 cursor-pointer text-on-surface-variant dark:text-inverse-primary">
+<input class="w-3.5 h-3.5 rounded text-primary-container" type="checkbox"/>
+<span>Recordar en este equipo</span>
+</label>
+<a class="text-secondary hover:underline" href="#contacto">¿Olvidó su clave?</a>
+</div>
+<button class="w-full inline-flex items-center justify-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest font-label-md text-label-md font-bold py-3 rounded-xl tactile-raised active:scale-[0.98] transition-all mt-2" type="submit">
+<span class="material-symbols-outlined text-lg" data-icon="login">login</span>
+<span>Validar Credenciales</span>
+</button>
+<div class="pt-3 text-center border-t border-outline-variant/30 text-xs font-body-sm text-outline dark:text-outline-variant">
+          Protegido con autenticación SAML 2.0 y cifrado TLS 1.3
+        </div>
+</form>
+</div>
+</div>
+<!-- TOAST / MODAL DE SOLICITUD DE FOLIO DE EQUIPO -->
+<div class="fixed bottom-6 right-6 z-50 max-w-md bg-surface dark:bg-primary-container border border-secondary-container rounded-2xl tactile-raised p-4 hidden shadow-2xl transition-all" id="loan-toast">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-xl bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-xl" data-icon="task_alt">task_alt</span>
+</div>
+<div class="flex-1">
+<h4 class="font-headline-sm text-body-md font-bold text-primary dark:text-primary-fixed" id="toast-title">Equipo Seleccionado</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary" id="toast-desc">Presente su gafete corporativo en Ventanilla C-12 indicando el código seleccionado.</p>
+</div>
+<button class="p-1 text-on-surface-variant hover:text-primary" onclick="hideLoanToast()" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<!-- CORPORATE FOOTER -->
+<footer class="bg-primary text-surface-container-lowest border-t border-primary-container">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+<!-- Brand Summary -->
+<div class="lg:col-span-2 space-y-4">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-xl bg-surface-container text-primary flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-xl" data-icon="inventory_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<span class="font-headline-md text-headline-sm font-bold text-primary-fixed tracking-tight">SIGA Enterprise</span>
+</div>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim/90 max-w-sm leading-relaxed">
+            Plataforma institucional de gestión de activos, custodia de herramientas, préstamos temporales y trazabilidad tecnológica para empresas de alta demanda operativa.
+          </p>
+<div class="flex items-center gap-3 pt-2">
+<span class="font-label-sm text-label-sm text-secondary-container flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+              Servidor Certificado ISO 27001
+            </span>
+</div>
+</div>
+<!-- Links Column 1: Navegación -->
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary-fixed mb-4">Navegación</h4>
+<ul class="space-y-2.5 font-body-sm text-body-sm text-primary-fixed-dim/80">
+<li><a class="hover:text-secondary-fixed transition-colors" href="#hero">Inicio &amp; Visión General</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#que-hacemos">Infraestructura y Procesos</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#catalogo">Catálogo de Activos</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#horarios">Horarios de Almacén</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#contacto">Mesa de Soporte</a></li>
+</ul>
+</div>
+<!-- Links Column 2: Categorías -->
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary-fixed mb-4">Familias de Equipos</h4>
+<ul class="space-y-2.5 font-body-sm text-body-sm text-primary-fixed-dim/80">
+<li><a class="hover:text-secondary-fixed transition-colors" href="#catalogo">Laptops y Workstations</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#catalogo">Proyectores y Salas A/V</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#catalogo">Herramientas Especializadas</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#catalogo">Switches y Medidores de Red</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#catalogo">Cámaras y Streaming</a></li>
+</ul>
+</div>
+<!-- Links Column 3: Legal & Cumplimiento -->
+<div>
+<h4 class="font-headline-sm text-body-md font-bold text-primary-fixed mb-4">Gobernanza</h4>
+<ul class="space-y-2.5 font-body-sm text-body-sm text-primary-fixed-dim/80">
+<li><button class="hover:text-secondary-fixed transition-colors text-left" onclick="openTermsModal()" type="button">Aviso de Privacidad</button></li>
+<li><button class="hover:text-secondary-fixed transition-colors text-left" onclick="openTermsModal()" type="button">Términos de Resguardo</button></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#horarios">Sanciones por Retraso</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#contacto">Reporte de Robo / Extravío</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-primary-container/80 flex flex-col sm:flex-row items-center justify-between gap-4 font-label-sm text-label-sm text-primary-fixed-dim/70">
+<div>
+          © 2024 SIGA Enterprise. Todos los derechos reservados. Uso exclusivo empresarial.
+        </div>
+<div class="flex items-center gap-4">
+<span class="inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Sistemas Operativos 100%
+          </span>
+<span>Latencia de Almacén: 12ms</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- JAVASCRIPT LOGIC: MENU, THEME, FILTERING, MODALS -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. DARK / LIGHT MODE CONTROLLER
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const htmlEl = document.documentElement;
+
+      // Check saved theme or default light
+      const savedTheme = localStorage.getItem('siga-theme');
+      if (savedTheme === 'dark') {
+        htmlEl.classList.add('dark');
+        themeIcon.innerText = 'light_mode';
+      } else {
+        htmlEl.classList.remove('dark');
+        themeIcon.innerText = 'dark_mode';
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = htmlEl.classList.toggle('dark');
+        if (isDark) {
+          localStorage.setItem('siga-theme', 'dark');
+          themeIcon.innerText = 'light_mode';
+        } else {
+          localStorage.setItem('siga-theme', 'light');
+          themeIcon.innerText = 'dark_mode';
+        }
+      });
+
+      // 2. HAMBURGER MENU DRAWER CONTROLLER
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const closeDrawerBtn = document.getElementById('close-drawer-btn');
+      const sideDrawer = document.getElementById('side-drawer');
+      const drawerBackdrop = document.getElementById('drawer-backdrop');
+      const drawerLinks = document.querySelectorAll('.nav-drawer-link');
+
+      function openDrawer() {
+        sideDrawer.classList.remove('-translate-x-full');
+        drawerBackdrop.classList.remove('hidden');
+        setTimeout(() => {
+          drawerBackdrop.classList.add('opacity-100');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeDrawer() {
+        sideDrawer.classList.add('-translate-x-full');
+        drawerBackdrop.classList.remove('opacity-100');
+        setTimeout(() => {
+          drawerBackdrop.classList.add('hidden');
+        }, 200);
+        document.body.style.overflow = '';
+      }
+
+      hamburgerBtn.addEventListener('click', openDrawer);
+      closeDrawerBtn.addEventListener('click', closeDrawer);
+      drawerBackdrop.addEventListener('click', closeDrawer);
+
+      drawerLinks.forEach(link => {
+        link.addEventListener('click', closeDrawer);
+      });
+
+      // 3. CATALOG CATEGORY FILTERING & LIVE SEARCH
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const catalogCards = document.querySelectorAll('.catalog-card');
+      const catalogSearch = document.getElementById('catalog-search');
+
+      function filterCatalog() {
+        const activeBtn = document.querySelector('.filter-btn.active');
+        const filterVal = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+        const searchVal = catalogSearch.value.toLowerCase().trim();
+
+        catalogCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          const textContent = card.innerText.toLowerCase();
+
+          const matchesCategory = (filterVal === 'all' || category === filterVal);
+          const matchesSearch = textContent.includes(searchVal);
+
+          if (matchesCategory && matchesSearch) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('active', 'bg-primary-container', 'text-surface-container-lowest', 'font-bold');
+            b.classList.add('bg-surface', 'dark:bg-primary-container', 'text-on-surface-variant', 'dark:text-inverse-primary');
+          });
+          btn.classList.add('active', 'bg-primary-container', 'text-surface-container-lowest', 'font-bold');
+          btn.classList.remove('bg-surface', 'text-on-surface-variant');
+          filterCatalog();
+        });
+      });
+
+      catalogSearch.addEventListener('input', filterCatalog);
+
+      // 4. TERMS & RESGUARDO MODAL
+      const termsModal = document.getElementById('terms-modal');
+      const openTermsHeader = document.getElementById('open-terms-header');
+      const openTermsPolicyBtn = document.getElementById('open-terms-policy-btn');
+      const termsDrawerTrigger = document.getElementById('terms-drawer-trigger');
+      const closeTermsBtn = document.getElementById('close-terms-btn');
+      const closeTermsConfirm = document.getElementById('close-terms-confirm');
+
+      window.openTermsModal = function() {
+        termsModal.classList.remove('hidden');
+        setTimeout(() => termsModal.classList.add('opacity-100'), 10);
+        document.body.style.overflow = 'hidden';
+      };
+
+      function closeTermsModal() {
+        termsModal.classList.remove('opacity-100');
+        setTimeout(() => termsModal.classList.add('hidden'), 200);
+        document.body.style.overflow = '';
+      }
+
+      if (openTermsHeader) openTermsHeader.addEventListener('click', window.openTermsModal);
+      if (openTermsPolicyBtn) openTermsPolicyBtn.addEventListener('click', window.openTermsModal);
+      if (termsDrawerTrigger) termsDrawerTrigger.addEventListener('click', window.openTermsModal);
+      if (closeTermsBtn) closeTermsBtn.addEventListener('click', closeTermsModal);
+      if (closeTermsConfirm) closeTermsConfirm.addEventListener('click', closeTermsModal);
+
+      // 5. LOGIN / EMPLOYEES MODAL
+      const loginModal = document.getElementById('login-modal');
+      const loginTriggerHeader = document.getElementById('login-modal-trigger');
+      const drawerLoginBtn = document.getElementById('drawer-login-btn');
+      const closeLoginBtn = document.getElementById('close-login-btn');
+      const loginForm = document.getElementById('login-form');
+
+      function openLoginModal(e) {
+        if(e) e.preventDefault();
+        loginModal.classList.remove('hidden');
+        setTimeout(() => loginModal.classList.add('opacity-100'), 10);
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLoginModal() {
+        loginModal.classList.remove('opacity-100');
+        setTimeout(() => loginModal.classList.add('hidden'), 200);
+        document.body.style.overflow = '';
+      }
+
+      if (loginTriggerHeader) loginTriggerHeader.addEventListener('click', openLoginModal);
+      if (drawerLoginBtn) {
+        drawerLoginBtn.addEventListener('click', () => {
+          closeDrawer();
+          openLoginModal();
+        });
+      }
+      if (closeLoginBtn) closeLoginBtn.addEventListener('click', closeLoginModal);
+
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Autenticación corporativa exitosa. Redirigiendo a consola interna...');
+        closeLoginModal();
+      });
+
+      // 6. CONTACT FORM SUBMISSION MOCK
+      const contactForm = document.getElementById('contact-form');
+      const formSuccessMsg = document.getElementById('form-success-msg');
+
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        formSuccessMsg.classList.remove('hidden');
+        contactForm.reset();
+        setTimeout(() => {
+          formSuccessMsg.classList.add('hidden');
+        }, 8000);
+      });
+    });
+
+    // 7. LOAN SELECTION TOAST
+    function showLoanRequest(itemName, itemCode) {
+      const toast = document.getElementById('loan-toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastDesc = document.getElementById('toast-desc');
+
+      toastTitle.innerText = 'Folio Reservado: ' + itemName;
+      toastDesc.innerText = 'Código: ' + itemCode + ' apartado por 2 horas. Acuda al Módulo C-12 con su gafete corporativo para validación física.';
+
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.remove('opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        hideLoanToast();
+      }, 6500);
+    }
+
+    function hideLoanToast() {
+      const toast = document.getElementById('loan-toast');
+      toast.classList.add('opacity-0');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 200);
+    }
+  </script>
+</body></html>

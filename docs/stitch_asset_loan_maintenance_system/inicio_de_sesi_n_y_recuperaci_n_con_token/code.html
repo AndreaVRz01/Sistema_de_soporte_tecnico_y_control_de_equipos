@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGA Enterprise - Inicio de Sesión y Recuperación de Contraseña</title>
+<!-- Material Symbols & Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;family=JetBrains+Mono:ital,wght@0,300..800;1,300..800&amp;family=Space+Grotesk:wght@400..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-container": "#7398b6",
+            "on-secondary-container": "#734a00",
+            "surface-container-highest": "#ffdad7",
+            "background": "#fff8f7",
+            "on-tertiary-container": "#47400e",
+            "on-tertiary-fixed-variant": "#4e4715",
+            "on-error": "#ffffff",
+            "tertiary": "#675f2b",
+            "on-primary-fixed-variant": "#244a64",
+            "secondary-fixed": "#ffddb4",
+            "outline": "#72787e",
+            "primary-fixed": "#cae6ff",
+            "on-secondary-fixed-variant": "#633f00",
+            "secondary-fixed-dim": "#feb956",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#3d627d",
+            "on-secondary": "#ffffff",
+            "tertiary-container": "#b6ac6f",
+            "surface-variant": "#ffdad7",
+            "surface-bright": "#fff8f7",
+            "surface-container": "#ffe9e7",
+            "on-surface": "#410004",
+            "surface-dim": "#ffcfcb",
+            "surface-container-low": "#fff0ef",
+            "on-secondary-fixed": "#291800",
+            "secondary-container": "#feb956",
+            "on-primary-fixed": "#001e2f",
+            "secondary": "#835500",
+            "tertiary-fixed-dim": "#d2c888",
+            "inverse-primary": "#a5cbea",
+            "tertiary-fixed": "#efe4a2",
+            "surface-container-high": "#ffe1df",
+            "inverse-surface": "#5f1415",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c2c7cd",
+            "primary": "#001a2b",
+            "on-background": "#410004",
+            "primary-fixed-dim": "#a5cbea",
+            "inverse-on-surface": "#ffedeb",
+            "surface": "#fff8f7",
+            "on-tertiary-fixed": "#201c00",
+            "on-surface-variant": "#42474d",
+            "on-tertiary": "#ffffff",
+            "primary-container": "#003049",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "gutter-mobile": "0.75rem",
+            "margin-mobile": "1rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "label-md": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"],
+            "headline-xl-mobile": ["Space Grotesk"],
+            "headline-lg": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "body-sm": ["Hanken Grotesk"],
+            "body-lg": ["Hanken Grotesk"],
+            "body-md": ["Hanken Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "headline-md": ["Space Grotesk"]
+          },
+          "fontSize": {
+            "label-md": ["0.75rem", { "lineHeight": "1.3", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["1.625rem", { "lineHeight": "1.25", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-sm": ["0.6875rem", { "lineHeight": "1.2", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "headline-sm": ["1.25rem", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+            "headline-xl-mobile": ["2rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["2.25rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-lg": ["0.875rem", { "lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "body-sm": ["0.8125rem", { "lineHeight": "1.45", "letterSpacing": "0.005em", "fontWeight": "400" }],
+            "body-lg": ["1.125rem", { "lineHeight": "1.55", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["0.9375rem", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+            "headline-xl": ["3rem", { "lineHeight": "1.15", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+            "headline-md": ["1.5rem", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    
+    /* Neumorphic Extrusion & Recessed tokens based on Style Guide */
+    .neu-raised {
+      background: #fff8f7;
+      box-shadow: -6px -6px 14px rgba(255, 255, 255, 0.95), 6px 6px 16px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .dark .neu-raised {
+      background: #001a2b;
+      box-shadow: -4px -4px 12px rgba(255, 243, 176, 0.04), 6px 6px 18px rgba(0, 10, 18, 0.7);
+      border: 1px solid rgba(224, 159, 62, 0.12);
+    }
+
+    .neu-inset {
+      background: #fff0ef;
+      box-shadow: inset 3px 3px 6px rgba(0, 48, 73, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 48, 73, 0.06);
+    }
+    .dark .neu-inset {
+      background: #001422;
+      box-shadow: inset 3px 3px 6px rgba(0, 10, 18, 0.8), inset -2px -2px 5px rgba(255, 243, 176, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.6);
+    }
+
+    .neu-btn-primary {
+      background: #003049;
+      color: #ffffff;
+      box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.8), 5px 5px 12px rgba(0, 48, 73, 0.25);
+      border: 1px solid rgba(255, 243, 176, 0.2);
+    }
+    .neu-btn-primary:active {
+      box-shadow: inset 3px 3px 6px rgba(0, 10, 18, 0.7), inset -2px -2px 5px rgba(255, 243, 176, 0.1);
+      transform: scale(0.985);
+    }
+
+    .neu-btn-secondary {
+      background: #fff8f7;
+      color: #003049;
+      box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.95), 4px 4px 10px rgba(0, 48, 73, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+    .dark .neu-btn-secondary {
+      background: #002238;
+      color: #cae6ff;
+      box-shadow: -3px -3px 8px rgba(255, 243, 176, 0.04), 4px 4px 10px rgba(0, 10, 18, 0.6);
+      border: 1px solid rgba(224, 159, 62, 0.15);
+    }
+    .neu-btn-secondary:active {
+      box-shadow: inset 2px 2px 5px rgba(0, 48, 73, 0.12), inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+      transform: scale(0.985);
+    }
+
+    .neu-tab-active {
+      background: #003049;
+      color: #fff8f7;
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 48, 73, 0.15);
+    }
+    .dark .neu-tab-active {
+      background: #cae6ff;
+      color: #001e2f;
+      box-shadow: inset 1px 1px 4px rgba(0, 30, 47, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-secondary-container selection:text-on-secondary-container transition-colors duration-200">
+<!-- ==================== TOP NAVIGATION DOCKED ==================== -->
+<header class="w-full bg-surface/90 dark:bg-primary/95 backdrop-blur-md sticky top-0 z-40 shadow-sm transition-colors duration-150">
+<div class="max-w-7xl mx-auto px-gutter py-space-sm flex justify-between items-center h-16">
+<!-- Brand Cluster -->
+<div class="flex items-center gap-space-md">
+<div class="neu-raised w-10 h-10 rounded-xl flex items-center justify-center text-primary-container dark:text-secondary-fixed">
+<span class="material-symbols-outlined text-headline-sm" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed tracking-tight">SIGA Enterprise</span>
+<span class="px-space-xs py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm uppercase">v3.8-ER</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary hidden sm:block">Consola de Operaciones &amp; Control Relacional</p>
+</div>
+</div>
+<!-- Center System Status indicator -->
+<div class="hidden md:flex items-center gap-space-sm px-space-md py-1.5 rounded-full neu-inset">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary">
+          DB: <span class="font-bold text-primary dark:text-primary-fixed">Schema ER v3.8</span> (Usuarios, Roles, Tokens)
+        </span>
+</div>
+<!-- Right Trailing Controls -->
+<div class="flex items-center gap-space-sm">
+<a class="hidden lg:flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary hover:text-primary dark:hover:text-primary-fixed transition-colors px-space-sm py-1.5 rounded-lg neu-btn-secondary" href="#catalogo">
+<span class="material-symbols-outlined text-body-md">menu_book</span>
+<span>Catálogo Público</span>
+</a>
+<!-- Dark/Light Theme Toggle -->
+<button aria-label="Cambiar tema de color" class="w-10 h-10 rounded-xl neu-btn-secondary flex items-center justify-center text-primary dark:text-primary-fixed active:scale-95 transition-transform" id="theme-toggle" type="button">
+<span class="material-symbols-outlined" id="theme-icon">dark_mode</span>
+</button>
+<!-- Help Action -->
+<button class="w-10 h-10 rounded-xl neu-btn-secondary flex items-center justify-center text-primary dark:text-primary-fixed active:scale-95 transition-transform" title="Asistencia de Acceso y Políticas" type="button">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ==================== MAIN CONTENT CANVAS ==================== -->
+<main class="flex-grow max-w-7xl w-full mx-auto px-gutter-mobile md:px-gutter py-space-lg flex flex-col justify-center">
+<!-- Notification / Toast Demo Area -->
+<div class="hidden mb-space-lg w-full max-w-4xl mx-auto rounded-xl neu-raised border-l-4 border-l-secondary p-space-md flex items-start justify-between gap-space-md transition-all duration-300" id="status-toast">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">info</span>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-primary dark:text-primary-fixed" id="toast-title">Sesión de Demostración Activa</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary" id="toast-desc">Rol preseleccionado listo para autenticación con esquema relacional.</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary" onclick="document.getElementById('status-toast').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Dual Layout Architecture Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT COLUMN: Institutional Overview & Relational Architecture Insights -->
+<section class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Welcome Card -->
+<div class="neu-raised rounded-2xl p-space-lg">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full neu-inset text-secondary font-label-sm text-label-sm mb-space-md">
+<span class="material-symbols-outlined text-body-sm">verified_user</span>
+<span>Control de Activos &amp; Mantenimiento</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed tracking-tight mb-space-sm leading-tight">
+            Acceso Seguro a la Consola Operativa
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-inverse-primary mb-space-lg leading-relaxed">
+            Plataforma centralizada de registro de hardware, flujo de préstamos y ciclo de vida de tickets de mantenimiento. Autenticación sincronizada con el modelo relacional institucional.
+          </p>
+<!-- Interactive Fast Role Switcher (Diagram ER roles) -->
+<div class="space-y-space-sm mb-space-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant dark:text-inverse-primary font-bold">
+                SIMULAR ACCESO POR ROL (TABLA: ROLES)
+              </span>
+<span class="font-label-sm text-label-sm text-secondary">Nivel de Acceso</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="role-chip neu-btn-secondary p-space-sm rounded-xl text-left flex flex-col hover:border-secondary transition-all" onclick="selectRole('admin', 'admin.central@siga.corp.institucional', 'Administrador')" type="button">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center justify-between">
+                  Administrador
+                  <span class="material-symbols-outlined text-body-sm text-secondary">shield</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary text-xs">Acceso Total ER</span>
+</button>
+<button class="role-chip neu-btn-secondary p-space-sm rounded-xl text-left flex flex-col hover:border-secondary transition-all" onclick="selectRole('activos', 'encargado.activos@siga.corp.institucional', 'Encargado de Activos')" type="button">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center justify-between">
+                  Encargado Activos
+                  <span class="material-symbols-outlined text-body-sm text-secondary">inventory_2</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary text-xs">Gestión &amp; Bajas</span>
+</button>
+<button class="role-chip neu-btn-secondary p-space-sm rounded-xl text-left flex flex-col hover:border-secondary transition-all" onclick="selectRole('prestamos', 'prestamos.ctrl@siga.corp.institucional', 'Encargado de Préstamos')" type="button">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center justify-between">
+                  Enc. Préstamos
+                  <span class="material-symbols-outlined text-body-sm text-secondary">handshake</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary text-xs">Detalle_prestamo</span>
+</button>
+<button class="role-chip neu-btn-secondary p-space-sm rounded-xl text-left flex flex-col hover:border-secondary transition-all" onclick="selectRole('tecnico', 'soporte.hardware@siga.corp.institucional', 'Técnico de Hardware')" type="button">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center justify-between">
+                  Técnico Hardware
+                  <span class="material-symbols-outlined text-body-sm text-secondary">build</span>
+</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary text-xs">Tickets &amp; Refacciones</span>
+</button>
+</div>
+</div>
+<!-- Security Auditing Callout -->
+<div class="neu-inset rounded-xl p-space-md border border-outline-variant/30 flex gap-space-sm items-start">
+<span class="material-symbols-outlined text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">security</span>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed">
+                POLÍTICA DE AUDITORÍA Y BITÁCORA
+              </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary leading-normal">
+                Cada intento de acceso registra dirección IP, huella de terminal e inserta un evento hash SHA-256 en la entidad relacional <span class="font-label-sm text-primary dark:text-secondary-fixed">Bitacora</span>.
+              </p>
+</div>
+</div>
+</div>
+<!-- Telemetry Stats Panel -->
+<div class="neu-raised rounded-2xl p-space-md grid grid-cols-3 gap-space-sm text-center">
+<div class="p-space-xs">
+<span class="block font-label-lg text-label-lg font-bold text-primary dark:text-primary-fixed">99.98%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Uptime Srv</span>
+</div>
+<div class="p-space-xs border-x border-outline-variant/40">
+<span class="block font-label-lg text-label-lg font-bold text-secondary">28</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Tokens Activos</span>
+</div>
+<div class="p-space-xs">
+<span class="block font-label-lg text-label-lg font-bold text-primary dark:text-primary-fixed">NIST SP</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">Cifrado AES-256</span>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Neumorphic Dual Card (Login & Token Recovery) -->
+<section class="lg:col-span-7">
+<div class="neu-raised rounded-2xl p-space-lg md:p-space-xl relative overflow-hidden transition-all duration-200">
+<!-- Top Surface Tactile Switcher (Pestañas) -->
+<div class="neu-inset p-1.5 rounded-xl flex items-center gap-1 mb-space-lg">
+<button class="flex-1 py-2.5 px-space-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-space-xs neu-tab-active transition-all" id="tab-login-btn" onclick="switchView('login')" type="button">
+<span class="material-symbols-outlined text-body-md">lock</span>
+<span>Iniciar Sesión</span>
+</button>
+<button class="flex-1 py-2.5 px-space-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-space-xs text-on-surface-variant hover:text-primary dark:text-inverse-primary transition-all" id="tab-recovery-btn" onclick="switchView('recovery')" type="button">
+<span class="material-symbols-outlined text-body-md">key</span>
+<span>Recuperar con Token</span>
+</button>
+</div>
+<!-- ================= VIEW 1: INICIAR SESIÓN ================= -->
+<div class="space-y-space-lg transition-all duration-200" id="view-login">
+<div class="border-b border-outline-variant/30 pb-space-sm">
+<h2 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
+                Autenticación de Operador
+              </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                Introduce tus credenciales registradas en la tabla <code class="font-label-sm bg-surface-container px-1 py-0.5 rounded text-primary">Usuario</code>.
+              </p>
+</div>
+<form class="space-y-space-md" onsubmit="handleLoginSubmit(event)">
+<!-- Campo: Correo Institucional / Usuario -->
+<div class="space-y-space-xs">
+<label class="block font-label-md text-label-md text-primary dark:text-primary-fixed font-bold" for="login-email">
+                  Correo Institucional o No. de Empleado
+                </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-space-md flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<input class="neu-inset w-full pl-12 pr-space-md py-3 rounded-xl font-body-md text-body-md text-primary dark:text-primary-fixed placeholder-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-secondary transition-all" id="login-email" placeholder="ej. usuario@siga.corp.institucional o EMP-00102" required="" type="text" value="admin.central@siga.corp.institucional"/>
+</div>
+</div>
+<!-- Campo: Contraseña -->
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center">
+<label class="block font-label-md text-label-md text-primary dark:text-primary-fixed font-bold" for="login-password">
+                    Contraseña Operativa
+                  </label>
+<button class="font-label-sm text-label-sm text-secondary hover:underline" onclick="switchView('recovery')" type="button">
+                    ¿Olvidaste tu contraseña?
+                  </button>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-space-md flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<input class="neu-inset w-full pl-12 pr-12 py-3 rounded-xl font-body-md text-body-md text-primary dark:text-primary-fixed placeholder-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-secondary transition-all" id="login-password" placeholder="••••••••••••" required="" type="password" value="SIGA-SecurePass2025#"/>
+<button class="absolute inset-y-0 right-0 pr-space-md flex items-center text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed" onclick="togglePasswordVisibility('login-password', 'toggle-pass-icon')" type="button">
+<span class="material-symbols-outlined" id="toggle-pass-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Selector de Rol Detectado / Asociado -->
+<div class="space-y-space-xs">
+<label class="block font-label-md text-label-md text-primary dark:text-primary-fixed font-bold" for="login-role">
+                  Perfil de Rol Activo (Tabla: Usuario_rol)
+                </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-space-md flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<select class="neu-inset w-full pl-12 pr-space-md py-3 rounded-xl font-body-md text-body-md text-primary dark:text-primary-fixed focus:outline-none focus:ring-2 focus:ring-secondary transition-all appearance-none cursor-pointer" id="login-role">
+<option value="Administrador">Administrador del Sistema (Full Permissions)</option>
+<option value="Encargado de Activos">Encargado de Activos (Módulo: Activos &amp; Garantía)</option>
+<option value="Encargado de Préstamos">Encargado de Préstamos (Módulo: Prestamos &amp; Detalle)</option>
+<option value="Técnico de Hardware">Técnico de Hardware (Módulo: Tickets &amp; Refacciones)</option>
+<option value="Supervisor">Supervisor de Auditoría (Bitácora &amp; Historial)</option>
+<option value="Usuario Solicitante">Usuario Solicitante (Catálogo &amp; Solicitudes)</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-space-md flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">unfold_more</span>
+</div>
+</div>
+</div>
+<!-- Opciones Adicionales Checkbox -->
+<div class="flex items-center justify-between pt-1">
+<label class="flex items-center gap-space-sm cursor-pointer select-none">
+<input checked="" class="w-5 h-5 rounded neu-inset text-primary-container focus:ring-secondary cursor-pointer" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                    Recordar terminal autorizada (Token 12h)
+                  </span>
+</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-tertiary-container">lock_clock</span> TLS 1.3
+                </span>
+</div>
+<!-- CTA Button Iniciar Sesión -->
+<div class="pt-space-sm">
+<button class="neu-btn-primary w-full py-3.5 px-space-lg rounded-xl font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-sm transition-all duration-150" type="submit">
+<span>Ingresar al Sistema SIGA</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Disclaimer de Alta de Operadores -->
+<div class="p-space-sm rounded-lg neu-inset text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                  ¿Nuevo operador o docente? Contacta al <strong class="text-primary dark:text-primary-fixed">Encargado de Activos</strong> para asignación en el padrón.
+                </p>
+</div>
+</form>
+</div>
+<!-- ================= VIEW 2: RECUPERACIÓN CON TOKEN ================= -->
+<div class="hidden space-y-space-lg transition-all duration-200" id="view-recovery">
+<div class="border-b border-outline-variant/30 pb-space-sm">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
+                  Recuperación de Acceso
+                </h2>
+<span class="px-space-xs py-0.5 rounded neu-inset font-label-sm text-label-sm text-secondary font-bold">
+                  Tabla: Token_recuperacion
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+                Protocolo criptográfico de restablecimiento mediante token temporal de un solo uso.
+              </p>
+</div>
+<!-- Paso a Paso Operativo -->
+<div class="space-y-space-md">
+<!-- Paso 1: Solicitud o Verificación de Identidad -->
+<div class="neu-inset p-space-md rounded-xl space-y-space-xs">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-primary-container text-white flex items-center justify-center text-xs">1</span>
+                    Identidad del Usuario Institucional
+                  </span>
+<span class="font-label-sm text-label-sm text-tertiary-container font-semibold">Validado</span>
+</div>
+<div class="flex gap-space-xs">
+<input class="neu-raised flex-1 px-space-md py-2.5 rounded-lg font-body-sm text-body-sm text-primary dark:text-primary-fixed focus:outline-none focus:ring-1 focus:ring-secondary" id="recovery-email" placeholder="Correo o No. de Empleado" type="text" value="admin.central@siga.corp.institucional"/>
+<button class="neu-btn-secondary px-space-md py-2.5 rounded-lg font-label-sm text-label-sm font-bold flex items-center gap-1" onclick="generateSimulatedToken()" type="button">
+<span class="material-symbols-outlined text-body-sm">sync</span>
+<span>Reenviar Token</span>
+</button>
+</div>
+</div>
+<!-- Paso 2: Introducción de Token Criptográfico -->
+<div class="neu-inset p-space-md rounded-xl space-y-space-xs border border-secondary-container/40">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-secondary text-white flex items-center justify-center text-xs">2</span>
+                    Token de Validación Temporal
+                  </span>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-error">
+<span class="material-symbols-outlined text-xs">timer</span>
+<span id="countdown-timer">Expira en 14:32 min</span>
+</div>
+</div>
+<div class="relative">
+<input class="w-full text-center tracking-widest font-label-lg text-headline-sm py-2.5 rounded-lg bg-surface font-bold text-primary dark:text-primary-fixed focus:outline-none focus:ring-2 focus:ring-secondary uppercase border border-outline-variant/50" id="recovery-token-input" maxlength="11" placeholder="TK-8942-X" type="text" value="TK-8942-X"/>
+<div class="absolute inset-y-0 right-0 pr-space-md flex items-center">
+<span class="material-symbols-outlined text-tertiary-container" title="Token coincidente en DB">check_circle</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs pt-1 text-on-surface-variant dark:text-inverse-primary font-label-sm">
+<span>Hash SHA-256 Verificado: #a8f3...49e1</span>
+<span class="text-secondary font-bold">1 Intento Usado de 3</span>
+</div>
+</div>
+<!-- Paso 3: Definición de Nueva Contraseña -->
+<div class="neu-inset p-space-md rounded-xl space-y-space-sm">
+<span class="font-label-sm text-label-sm font-bold text-primary dark:text-primary-fixed flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-primary-container text-white flex items-center justify-center text-xs">3</span>
+                  Nueva Contraseña &amp; Confirmación
+                </span>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">Nueva Clave</label>
+<input class="w-full px-space-sm py-2 rounded-lg neu-raised font-body-sm text-body-sm text-primary dark:text-primary-fixed focus:outline-none focus:ring-1 focus:ring-secondary" id="new-password" placeholder="••••••••••••" type="password" value="NuevaClaveSiga2025!"/>
+</div>
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">Confirmar Clave</label>
+<input class="w-full px-space-sm py-2 rounded-lg neu-raised font-body-sm text-body-sm text-primary dark:text-primary-fixed focus:outline-none focus:ring-1 focus:ring-secondary" id="confirm-password" placeholder="••••••••••••" type="password" value="NuevaClaveSiga2025!"/>
+</div>
+</div>
+<!-- Barra de Fortaleza de Seguridad -->
+<div class="space-y-1 pt-1">
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">
+<span>Nivel de Fortaleza Criptográfica:</span>
+<span class="font-bold text-tertiary-container">Excelente (16 caracteres, símbolos, números)</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden flex gap-1">
+<div class="h-full w-1/4 bg-secondary-container rounded-full"></div>
+<div class="h-full w-1/4 bg-secondary-container rounded-full"></div>
+<div class="h-full w-1/4 bg-secondary rounded-full"></div>
+<div class="h-full w-1/4 bg-tertiary-container rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Botones de Acción de Recuperación -->
+<div class="pt-space-xs space-y-space-sm">
+<button class="neu-btn-primary w-full py-3.5 px-space-lg rounded-xl font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-sm" onclick="handlePasswordReset()" type="button">
+<span class="material-symbols-outlined">restart_alt</span>
+<span>Restablecer Credenciales e Iniciar Sesión</span>
+</button>
+<button class="neu-btn-secondary w-full py-2.5 px-space-md rounded-xl font-label-md text-label-md flex items-center justify-center gap-space-xs" onclick="switchView('login')" type="button">
+<span class="material-symbols-outlined text-body-sm">arrow_back</span>
+<span>Cancelar y Volver a Iniciar Sesión</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- ==================== FOOTER CORPORATIVO AUDITABLE ==================== -->
+<footer class="w-full bg-surface-container-low dark:bg-primary-container border-t border-outline-variant/30 py-space-md mt-space-xl transition-colors duration-150">
+<div class="max-w-7xl mx-auto px-gutter flex flex-col md:flex-row justify-between items-center gap-space-md text-center md:text-left">
+<!-- Certificaciones y Cumplimiento -->
+<div class="flex items-center gap-space-md flex-wrap justify-center">
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">
+<span class="material-symbols-outlined text-body-sm text-secondary">verified</span>
+<span>Certificación ISO/IEC 27001:2022</span>
+</div>
+<span class="text-outline-variant hidden md:inline">•</span>
+<div class="font-body-sm text-body-sm text-on-surface-variant dark:text-inverse-primary">
+          Términos de Resguardo de Equipos y Préstamos Institucionales
+        </div>
+</div>
+<!-- Políticas y Copyright -->
+<div class="font-label-sm text-label-sm text-on-surface-variant dark:text-inverse-primary">
+<span>© 2025 SIGA Enterprise. Consola Operativa de Activos y Mantenimiento.</span>
+</div>
+</div>
+</footer>
+<!-- ==================== INTERACTION JAVASCRIPT ==================== -->
+<script>
+    // Tab View Switcher (Login vs Recovery)
+    function switchView(target) {
+      const viewLogin = document.getElementById('view-login');
+      const viewRecovery = document.getElementById('view-recovery');
+      const tabLoginBtn = document.getElementById('tab-login-btn');
+      const tabRecoveryBtn = document.getElementById('tab-recovery-btn');
+
+      if (target === 'login') {
+        viewLogin.classList.remove('hidden');
+        viewRecovery.classList.add('hidden');
+        
+        tabLoginBtn.className = "flex-1 py-2.5 px-space-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-space-xs neu-tab-active transition-all";
+        tabRecoveryBtn.className = "flex-1 py-2.5 px-space-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-space-xs text-on-surface-variant hover:text-primary dark:text-inverse-primary transition-all";
+      } else {
+        viewLogin.classList.add('hidden');
+        viewRecovery.classList.remove('hidden');
+        
+        tabRecoveryBtn.className = "flex-1 py-2.5 px-space-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-space-xs neu-tab-active transition-all";
+        tabLoginBtn.className = "flex-1 py-2.5 px-space-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-space-xs text-on-surface-variant hover:text-primary dark:text-inverse-primary transition-all";
+      }
+    }
+
+    // Role Fast Switcher Logic
+    function selectRole(roleKey, email, roleName) {
+      const emailInput = document.getElementById('login-email');
+      const roleSelect = document.getElementById('login-role');
+      const toast = document.getElementById('status-toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastDesc = document.getElementById('toast-desc');
+
+      emailInput.value = email;
+      roleSelect.value = roleName;
+
+      // Update toast
+      toastTitle.innerText = `Rol Preseleccionado: ${roleName}`;
+      toastDesc.innerText = `Credenciales cargadas para pruebas. Permisos mapeados con diagrama ER (Usuario -> Usuario_rol -> ${roleName}).`;
+      toast.classList.remove('hidden');
+
+      // Ensure login view is active
+      switchView('login');
+    }
+
+    // Toggle Password Visibility
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerText = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.innerText = 'visibility';
+      }
+    }
+
+    // Login Submission Handler
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const role = document.getElementById('login-role').value;
+      const toast = document.getElementById('status-toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastDesc = document.getElementById('toast-desc');
+
+      toastTitle.innerText = "¡Autenticación Exitosa en SIGA Enterprise!";
+      toastDesc.innerText = `Bienvenido ${email}. Sesión iniciada con privilegios de '${role}'. Registro hash creado en Bitácora.`;
+      toast.classList.remove('hidden');
+    }
+
+    // Simulated Token Generator
+    function generateSimulatedToken() {
+      const randomCode = 'TK-' + Math.floor(1000 + Math.random() * 9000) + '-R';
+      document.getElementById('recovery-token-input').value = randomCode;
+      
+      const toast = document.getElementById('status-toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastDesc = document.getElementById('toast-desc');
+
+      toastTitle.innerText = "Nuevo Token Emitido en Token_recuperacion";
+      toastDesc.innerText = `Token activo: ${randomCode}. Válido durante 15 minutos en la base de datos relacional.`;
+      toast.classList.remove('hidden');
+    }
+
+    // Password Reset Handler
+    function handlePasswordReset() {
+      const toast = document.getElementById('status-toast');
+      const toastTitle = document.getElementById('toast-title');
+      const toastDesc = document.getElementById('toast-desc');
+
+      toastTitle.innerText = "Contraseña Restablecida Exitosamente";
+      toastDesc.innerText = "El hash de la contraseña ha sido actualizado en la tabla Usuario. Procediendo al inicio de sesión...";
+      toast.classList.remove('hidden');
+
+      setTimeout(() => {
+        switchView('login');
+      }, 1200);
+    }
+
+    // Theme Toggle (Dark / Light)
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        themeIcon.innerText = 'dark_mode';
+      } else {
+        document.documentElement.classList.add('dark');
+        themeIcon.innerText = 'light_mode';
+      }
+    });
+
+    // Countdown Timer Simulation
+    let minutes = 14;
+    let seconds = 32;
+    setInterval(() => {
+      if (seconds > 0) {
+        seconds--;
+      } else {
+        if (minutes > 0) {
+          minutes--;
+          seconds = 59;
+        }
+      }
+      const formatted = `Expira en ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} min`;
+      const timerElement = document.getElementById('countdown-timer');
+      if (timerElement) {
+        timerElement.innerText = formatted;
+      }
+    }, 1000);
+  </script>
+</body></html>
