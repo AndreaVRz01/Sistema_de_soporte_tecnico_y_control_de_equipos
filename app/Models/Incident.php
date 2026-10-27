@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Incident extends Model
 {
@@ -67,9 +66,9 @@ class Incident extends Model
         return $this->hasMany(IncidentLog::class);
     }
 
-    public function sanction(): HasOne
+    public function sanctions(): HasMany
     {
-        return $this->hasOne(Sanction::class);
+        return $this->hasMany(Sanction::class);
     }
 
     public function scopeOpen(Builder $query): Builder

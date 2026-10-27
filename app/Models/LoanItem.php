@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LoanItem extends Model
 {
@@ -39,8 +39,8 @@ class LoanItem extends Model
         return $this->belongsTo(Equipment::class);
     }
 
-    public function incident(): HasOne
+    public function incidents(): HasMany
     {
-        return $this->hasOne(Incident::class, 'loan_item_id');
+        return $this->hasMany(Incident::class, 'loan_item_id');
     }
 }
