@@ -66,74 +66,73 @@
 \begin{document}
 
 \makeatletter
-  \renewcommand{\ALG@name}{Algoritmo}
+\renewcommand{\ALG@name}{Algoritmo}
 \makeatother
-  
+
 \renewcommand{\listtablename}{Índice de tablas}
 \renewcommand{\tablename}{Tabla}
 
 \begin{titlepage}
-\begin{minipage}[l]{3.5cm}
-\includegraphics[width=5cm, height=22.0cm]{imagenes/Imagen_front_UPTex.jpg}
-\end{minipage}
-\vspace*{-3.0cm}
-\begin{minipage}[r]{13.0cm}
-\begin{center}
-\textbf{\LARGE{UNIVERSIDAD POLIT\'{E}CNICA }}\\
-\vspace*{0.5cm}
-\textbf{\LARGE{DE TEXCOCO}} \\
-\vspace*{2.0cm}
-\large{\textbf{Sistema de gesti\'{o}n de pr\'{e}stamos y control de equipos} \\
+	\begin{minipage}[l]{3.5cm}
+		\includegraphics[width=5cm, height=22.0cm]{imagenes/Imagen_front_UPTex.jpg}
+	\end{minipage}
+	\vspace*{-3.0cm}
+	\begin{minipage}[r]{13.0cm}
+		\begin{center}
+			\textbf{\LARGE{UNIVERSIDAD POLIT\'{E}CNICA }}\\
+			\vspace*{0.5cm}
+			\textbf{\LARGE{DE TEXCOCO}} \\
+			\vspace*{2.0cm}
+			\large{\textbf{Sistema de gesti\'{o}n de pr\'{e}stamos y control de equipos}} \\
 
-\vspace*{0.5cm}
+			\vspace*{0.5cm}
 
-\vspace*{0.5cm}
+			\vspace*{0.5cm}
 
-\vspace*{1.0cm}
-\textbf{P R E S E N T A:} \\
-\vspace*{0.5cm}
-\textbf{Felipe Portuguez Hern\'{a}ndez} \\
-\textbf{Andrea Vel\'{a}zquez Ruiz} \\
-\textbf{Jonathan Iv\'{a}n Maya Mora} \\
+			\vspace*{1.0cm}
+			\textbf{P R E S E N T A:} \\
+			\vspace*{0.5cm}
+			\textbf{Felipe Portuguez Hern\'{a}ndez} \\
+			\textbf{Andrea Vel\'{a}zquez Ruiz} \\
+			\textbf{Jonathan Iv\'{a}n Maya Mora} \\
 
-\textbf{}\\
-\vspace*{1.0cm}
+			\textbf{}\\
+			\vspace*{1.0cm}
 
-\vspace*{0.5cm}
+			\vspace*{0.5cm}
 
-\vspace*{1.5cm}
-TEXCOCO, EDO. MÉX. \hspace{3cm}ENERO 2025 \\
-\end{center}
-\end{minipage}
+			\vspace*{1.5cm}
+			TEXCOCO, EDO. MÉX. \hspace{3cm}ENERO 2025 \\
+		\end{center}
+	\end{minipage}
 \end{titlepage}
-\spacing{1.5}   
+\onehalfspacing
 \pagenumbering{Roman} \setcounter{page}{2}
 
 \newpage
 \input{capitulos/_resumen}\addcontentsline{toc}{chapter}{Resumen}
 \newpage
 \input{capitulos/_resumen2}\addcontentsline{toc}{chapter}{Abstract}
-\newpage 
+\newpage
 
 
 %\begin{spacing}{1.5}
-    \tableofcontents
-    \newpage
-    \listoffigures
-    \newpage
-    \listoftables    
-    \newpage
-    %\input{acronimos.tex}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+%\input{acronimos.tex}
 %\end{spacing}
 
 
 \pagenumbering{arabic} \setcounter{page}{1} % Números arábigos para el contenido principal
 
-
-\include{capitulos/capitulo1}
-\include{capitulos/capitulo2}
-\include{capitulos/capitulo3}
-\include{capitulos/capitulo4}
+\input{capitulos/capitulo1}
+\input{capitulos/capitulo2}
+\input{capitulos/capitulo3}
+\input{capitulos/capitulo4}
 
 
 

@@ -1,28 +1,28 @@
 \chapter{Marco de Referencia}
 
- Desde finales del siglo pasado, los avances tecnológicos en la miniaturización de la electrónica y los componentes mecánicos han allanado el camino para la creación y desarrollo de objetos voladores de pequeñas dimensiones, tales como aviones y helicópteros, los cuales están adquiriendo cada vez más habilidades para realizar vuelos de forma autónoma. Estos dispositivos son popularmente conocidos como drones, un término derivado del inglés \say{abejorros}, y se consideran máquinas voladoras autónomas o semiautónomas capaces de llevar a cabo misiones de vuelo. En el ámbito internacional, se les conoce como UAVs del inglés \say{Unmanned Aerial Vehicles}, y representan una tecnología compleja cuyo control presenta desafíos, dado que sus características aerodinámicas son similares a las de las aeronaves convencionales \cite{eisenbeiss2004mini}.
+Desde finales del siglo pasado, los avances tecnológicos en la miniaturización de la electrónica y los componentes mecánicos han allanado el camino para la creación y desarrollo de objetos voladores de pequeñas dimensiones, tales como aviones y helicópteros, los cuales están adquiriendo cada vez más habilidades para realizar vuelos de forma autónoma. Estos dispositivos son popularmente conocidos como drones, un término derivado del inglés \say{abejorros}, y se consideran máquinas voladoras autónomas o semiautónomas capaces de llevar a cabo misiones de vuelo. En el ámbito internacional, se les conoce como UAVs del inglés \say{Unmanned Aerial Vehicles}, y representan una tecnología compleja cuyo control presenta desafíos, dado que sus características aerodinámicas son similares a las de las aeronaves convencionales \cite{eisenbeiss2004mini}.
 
 El estudio de estos dispositivos despierta un gran interés debido a su versatilidad y capacidad de maniobra, lo que les permite llevar a cabo una amplia gama de tareas en diversas aplicaciones, tales como el uso civil, militar y aeroespacial \cite{nawaz2019applications, shakhatreh2019unmanned, xiaoning2020analysis}. En la figura \ref{fig1_aplicacion_UAV}, se presenta una clasificación detallada de las aplicaciones más importantes de los UAVs.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=16cm, height=7.5cm]{imagenes/Aplicaciones_UAV.png}
-    \caption{Áreas de aplicación UAVs.}
-    \label{fig1_aplicacion_UAV}
+	\centering
+	\includegraphics[width=16cm, height=7.5cm]{imagenes/Aplicaciones_UAV.png}
+	\caption{Áreas de aplicación UAVs.}
+	\label{fig1_aplicacion_UAV}
 \end{figure}
 
 \section{Antecedentes}
 
-Los drones han atraído la atención de la comunidad investigadora que trabaja tanto en el campo militar como en el civil, con una gran cantidad de usos que han sido propuestos por los grupos de investigación, debido a sus características como capacidad y configuraciones, donde el helicóptero de cuatro rotores tiene el mayor número de citas en la literatura de control y ha sido ampliamente investigado para pruebas tanto en interiores como en exteriores. 
+Los drones han atraído la atención de la comunidad investigadora que trabaja tanto en el campo militar como en el civil, con una gran cantidad de usos que han sido propuestos por los grupos de investigación, debido a sus características como capacidad y configuraciones, donde el helicóptero de cuatro rotores tiene el mayor número de citas en la literatura de control y ha sido ampliamente investigado para pruebas tanto en interiores como en exteriores.
 
 \section{Objetivo General}
 \textbf{Desarrollar un sistema web de gestión de préstamos y control de equipos, utilizando el framework Laravel con control de acceso por roles, con el fin de que se optimice el seguimiento de activos y que mejore la trazabilidad en la organización.}
 \section{Objetivos Específicos}
 \begin{enumerate}
-\item Analizar los requerimientos del sistema para la elaboración de la base de datos relacional y normalizada.
-\item Diseñar interfaces intuitivas y responsivas asegurando una experiencia de navegación óptima con la plataforma web.
-\item Crear el núcleo con modelos para el registro de activos, control de estado y la lógica para las solicitudes de préstamos, devoluciones y levantamiento de tickets.
-\item Integrar un sistema de seguridad para la autenticación, control de acceso por roles y la recuperación de contraseña por correo de forma segura.
+	\item Analizar los requerimientos del sistema para la elaboración de la base de datos relacional y normalizada.
+	\item Diseñar interfaces intuitivas y responsivas asegurando una experiencia de navegación óptima con la plataforma web.
+	\item Crear el núcleo con modelos para el registro de activos, control de estado y la lógica para las solicitudes de préstamos, devoluciones y levantamiento de tickets.
+	\item Integrar un sistema de seguridad para la autenticación, control de acceso por roles y la recuperación de contraseña por correo de forma segura.
 
 \end{enumerate}
 
@@ -30,6 +30,7 @@ Los drones han atraído la atención de la comunidad investigadora que trabaja t
 El presente proyecto tiene como alcance el diseño e implementación de un sistema web para la gestión de préstamos y control de equipos dentro de una institución educativa, con el objetivo de optimizar la administración del inventario, mejorar la trazabilidad de los activos y reducir los riesgos asociados al uso, préstamo y mantenimiento de los equipos. La solución se desarrollará utilizando el framework Laravel, con una arquitectura basada en roles de usuario y en la lógica de negocio orientada a la operación institucional.
 Dentro del alcance del sistema se incluye la creación de una plataforma con las siguientes funcionalidades principales: registro y clasificación de equipos, control del estado de cada activo, gestión de préstamos y devoluciones, revisión de solicitudes, seguimiento de fechas de entrega y devolución, así como la administración de incidencias y tickets de mantenimiento. Asimismo, se contempla la implementación de una vista pública para consulta del inventario.
 También se incluye la definición de roles de usuario, como administrador, supervisor, encargado de activos, encargado de préstamos, técnico y usuario final, lo cual permite controlar el acceso a la información y evitar operaciones no autorizadas. El sistema tendrá además funcionalidades para registrar actividades del usuario, generar bitácoras de auditoría, gestionar sanciones por incumplimientos y establecer un flujo de soporte técnico para atender fallas o daños en los equipos.
+
 
 \section{Limitación}
 El presente trabajo presenta ciertas limitaciones al alcance académico y técnico del proyecto. En primer lugar, el sistema se desarrolla como una solución funcional de tipo prototipo, orientada a validar la lógica de negocio, la estructura de la base de datos y la experiencia de usuario en un entorno controlado. Por lo tanto, no se pretende cubrir un despliegue a nivel institucional completo ni una implementación con infraestructura de producción de gran escala.
