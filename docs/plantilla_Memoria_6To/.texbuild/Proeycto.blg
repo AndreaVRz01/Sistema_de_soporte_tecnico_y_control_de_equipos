@@ -1,0 +1,14 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[1] Config.pm:310> INFO - Logfile is '.texbuild/Proeycto.blg'
+[248] biber:340> INFO - === jue nov  5, 2026, 13:06:01
+[289] Biber.pm:419> INFO - Reading '.texbuild/Proeycto.bcf'
+[460] Biber.pm:979> INFO - Found 9 citekeys in bib section 0
+[497] Biber.pm:4419> INFO - Processing section 0
+[523] Biber.pm:4610> INFO - Looking for bibtex file 'Referencias.bib' for section 0
+[533] bibtex.pm:1713> INFO - LaTeX decoding ...
+[793] bibtex.pm:1519> INFO - Found BibTeX data source 'Referencias.bib'
+[1109] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1109] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1109] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'es-ES'
+[1124] bbl.pm:660> INFO - Writing '.texbuild/Proeycto.bbl' with encoding 'UTF-8'
+[1134] bbl.pm:763> INFO - Output to .texbuild/Proeycto.bbl

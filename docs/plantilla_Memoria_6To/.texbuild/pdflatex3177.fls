@@ -1,0 +1,5 @@
+PWD /home/felipe/Escritorio/prestamo/Sistema_de_soporte_tecnico_y_control_de_equipos/docs/plantilla_Memoria_6To
+INPUT /etc/texmf/web2c/texmf.cnf
+INPUT /usr/share/texmf/web2c/texmf.cnf
+INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AuditLog;
 use App\Models\Category;
 use App\Models\Equipment;
 use App\Models\Incident;
@@ -323,6 +324,55 @@ class DatabaseSeeder extends Seeder
                 'notes' => 'Se desarmó tapa inferior, pasta térmica reseca. Se procedió a limpieza con aire comprimido y alcohol isopropílico.',
                 'status_before' => 'asignado',
                 'status_after' => 'en_reparacion',
+            ]
+        );
+
+        // 6. Bitácora de Auditoría Forense Inicial
+        AuditLog::firstOrCreate(
+            ['event_folio' => 'EVT-2026-INIT01'],
+            [
+                'user_id' => $admin->id,
+                'entity_type' => 'Equipment',
+                'entity_id' => $lap1->id,
+                'action' => 'CREAR',
+                'ip_address' => '192.168.1.10',
+                'user_agent' => 'Mozilla/5.0 (X11; Linux x86_64)',
+                'description' => 'Alta inicial de activo patrimonial ACT-LAP-001 (Dell Latitude 5420)',
+                'diff_payload' => ['estado' => 'disponible'],
+                'risk_level' => 'normal',
+                'created_at' => now()->subDays(3),
+            ]
+        );
+
+        AuditLog::firstOrCreate(
+            ['event_folio' => 'EVT-2026-INIT02'],
+            [
+                'user_id' => $encargadoPrestamos->id,
+                'entity_type' => 'Loan',
+                'entity_id' => $prestamo->id,
+                'action' => 'PRESTAMO_ENTREGADO',
+                'ip_address' => '192.168.1.25',
+                'user_agent' => 'SIGA-Client-Web/4.2',
+                'description' => 'Entrega en ventanilla de acta PRE-2026-0001 a ' . $docente->name,
+                'diff_payload' => ['folio' => $prestamo->folio, 'estatus' => 'entregado'],
+                'risk_level' => 'normal',
+                'created_at' => now()->subDays(2),
+            ]
+        );
+
+        AuditLog::firstOrCreate(
+            ['event_folio' => 'EVT-2026-INIT03'],
+            [
+                'user_id' => $encargadoActivos->id,
+                'entity_type' => 'Incident',
+                'entity_id' => $incidente->id,
+                'action' => 'TICKET_CREADO',
+                'ip_address' => '192.168.1.30',
+                'user_agent' => 'SIGA-Client-Web/4.2',
+                'description' => 'Apertura de orden de taller INC-2026-0001 por sobrecalentamiento y daño físico',
+                'diff_payload' => ['ticket' => 'INC-2026-0001', 'prioridad' => 'alta'],
+                'risk_level' => 'advertencia',
+                'created_at' => now()->subDay(),
             ]
         );
     }

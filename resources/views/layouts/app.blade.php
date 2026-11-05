@@ -411,6 +411,12 @@
                         <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('bitacora*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">verified_user</span>
                         <span class="font-body text-sm">Bitácora & Auditoría</span>
                     </a>
+
+                    <!-- Sanciones Disciplinarias -->
+                    <a href="{{ url('/sanciones') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('sanciones*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
+                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('sanciones*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">gavel</span>
+                        <span class="font-body text-sm">Sanciones & Bloqueos</span>
+                    </a>
                 </nav>
             </div>
 
