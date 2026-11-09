@@ -73,6 +73,14 @@
             background-color: #001a2b;
             color: #fff8f7;
         }
+        .dark body { color: #eef4f7; }
+        .dark .text-primary:not([class~="dark:text-surface"]):not([class~="dark:text-primary"]):not([class~="dark:text-primary-fixed"]):not([class~="dark:text-inverse-primary"]):not([class~="bg-surface-container"]):not([class~="bg-surface-container-low"]):not([class~="bg-secondary-container"]):not([class~="bg-error-container"]):not([class~="bg-amber-50"]):not([class~="bg-blue-50"]):not([class~="bg-emerald-50"]):not([class~="bg-gray-100"]):not(.neu-btn-primary):not(.neu-btn-secondary) { color: #e8f1f5 !important; }
+        .dark .text-on-surface:not([class~="bg-surface-container"]):not([class~="bg-surface-container-low"]):not([class~="bg-secondary-container"]):not([class~="bg-error-container"]) { color: #e8f1f5 !important; }
+        .dark .text-on-surface-variant:not([class~="dark:text-inverse-primary"]):not([class~="bg-surface-container"]):not([class~="bg-surface-container-low"]):not([class~="bg-error-container"]) { color: #c9d5dc !important; }
+        .dark .text-outline { color: #a9bac5 !important; }
+        .dark .text-secondary:not([class~="dark:text-secondary-fixed"]):not([class~="bg-secondary-container"]):not([class~="bg-amber-50"]):not(.neu-btn-secondary) { color: #ffd27b !important; }
+        .dark input::placeholder, .dark textarea::placeholder { color: #a9bac5 !important; opacity: 1; }
+        .dark select, .dark input, .dark textarea { color-scheme: dark; }
         .font-headline { font-family: 'Space Grotesk', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
 
@@ -389,7 +397,8 @@
         }
 
         // Inicialización del tema
-        const savedTheme = localStorage.getItem('siga_theme');
+        const savedTheme = localStorage.getItem('siga_theme') || localStorage.getItem('theme');
+        if (savedTheme) localStorage.setItem('siga_theme', savedTheme);
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             applyTheme(true);
         } else {

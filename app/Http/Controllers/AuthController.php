@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\AuditService;
+use App\Services\PasswordRecoveryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -73,10 +72,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Genera y despacha un token seguro de recuperación de contraseña institucional.
-     * Formato del token en la interfaz de diseño: TK-8942-X
+    * Envía por correo un enlace temporal para restablecer la contraseña.
      */
-    public function sendRecoveryToken(Request $request): RedirectResponse
+    public function sendRecoveryToken(Request $request, PasswordRecoveryService $passwordRecovery): RedirectResponse
     {
         $request->validate([
             'recovery_identifier' => ['required', 'string'],
@@ -89,36 +87,35 @@ class AuthController extends Controller
 
         $user = User::where($field, $input)->first();
 
-        if (!$user) {
-            return back()->with('error', 'El identificador institucional ingresado no está registrado en el sistema.');
+        if ($user) {
+            $status = $passwordRecovery->sendResetLink($user->email);
+
+            if ($status === Password::RESET_LINK_SENT) {
+                AuditService::log(
+                    'Auth',
+                    $user->id,
+                    'PASSWORD_RESET_LINK_SENT',
+                    "Enlace de recuperación enviado a {$user->email}",
+                    null,
+                    'normal',
+                    $user->id
+                );
+            }
         }
 
-        // Generar token con el patrón visual exacto: TK-####-X
-        $tokenNumber = rand(1000, 9999);
-        $tokenLetter = chr(rand(65, 90));
-        $generatedToken = "TK-{$tokenNumber}-{$tokenLetter}";
-
-        // Guardar token en tabla password_reset_tokens
-        DB::table('password_reset_tokens')->updateOrInsert(
-            ['email' => $user->email],
-            [
-                'token' => Hash::make($generatedToken),
-                'created_at' => now(),
-            ]
-        );
-
-        AuditService::log('Auth', $user->id, 'TOKEN_GENERATED', "Token de recuperación emitido para {$user->email}: {$generatedToken}", null, 'advertencia', $user->id);
-
         return back()->with('token_sent', true)
-                     ->with('demo_token', $generatedToken)
-                     ->with('user_email', $user->email)
-                     ->with('success', "Token de seguridad generado con éxito. Su código de autorización es: {$generatedToken}");
+            ->with('success', 'Si los datos corresponden a una cuenta registrada, recibirás un correo con el enlace para cambiar tu contraseña.');
     }
 
-    /**
-     * Valida el token emitido y restablece la contraseña del usuario.
-     */
-    public function resetPassword(Request $request): RedirectResponse
+    public function showResetForm(Request $request, string $token): View
+    {
+        return view('auth.reset-password', [
+            'token' => $token,
+            'email' => $request->query('email', ''),
+        ]);
+    }
+
+    public function resetPassword(Request $request, PasswordRecoveryService $passwordRecovery): RedirectResponse
     {
         $request->validate([
             'email' => ['required', 'email'],
@@ -130,37 +127,21 @@ class AuthController extends Controller
             'password.confirmed' => 'La confirmación de la contraseña no coincide.',
         ]);
 
-        $record = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+        $status = $passwordRecovery->resetPassword($request->only('email', 'token', 'password', 'password_confirmation'));
 
-        if (!$record) {
-            return back()->with('error', 'No existe una solicitud de recuperación activa para esta cuenta.');
+        if ($status !== Password::PASSWORD_RESET) {
+            return back()->withInput($request->only('email'))
+                ->with('error', __($status));
         }
 
-        // Verificar validez del token
-        $tokenInput = trim(strtoupper($request->token));
-        $validToken = Hash::check($tokenInput, $record->token) || ($tokenInput === $record->token);
+        $user = User::where('email', $request->input('email'))->first();
 
-        if (!$validToken) {
-            AuditService::log('Auth', null, 'TOKEN_INVALID', "Intento de restablecimiento con token inválido para: {$request->email}", null, 'advertencia');
-            return back()->with('error', 'El token ingresado no es válido o ha expirado. Solicite uno nuevo.');
+        if ($user) {
+            app(\App\Services\ActivityLogService::class)->record($user, 'contrasena.restablecida', $user);
+            AuditService::log('Auth', $user->id, 'PASSWORD_RESET', "Contraseña restablecida para {$user->email}", null, 'normal', $user->id);
         }
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return back()->with('error', 'Usuario no localizado.');
-        }
-
-        $user->update([
-            'password' => Hash::make($request->password),
-            'remember_token' => Str::random(60),
-        ]);
-
-        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
-
-        AuditService::log('Auth', $user->id, 'PASSWORD_RESET', "Contraseña restablecida exitosamente para {$user->email}", null, 'normal', $user->id);
-
-        return redirect()->route('login')->with('success', 'Su contraseña ha sido actualizada con éxito. Inicie sesión con sus nuevas credenciales.');
+        return redirect()->route('login')->with('success', 'Tu contraseña fue actualizada. Inicia sesión con la nueva contraseña.');
     }
 
     /**

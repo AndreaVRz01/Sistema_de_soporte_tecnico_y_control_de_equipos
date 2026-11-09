@@ -118,6 +118,14 @@
           color: #001e2f;
           box-shadow: inset 1px 1px 4px rgba(0, 30, 47, 0.2);
         }
+                .dark body { color: #eef4f7; }
+                .dark .text-primary:not([class~="dark:text-surface"]):not([class~="dark:text-primary"]):not([class~="dark:text-primary-fixed"]):not([class~="dark:text-inverse-primary"]):not([class~="bg-surface-container"]):not([class~="bg-surface-container-low"]):not([class~="bg-secondary-container"]):not([class~="bg-error-container"]):not([class~="bg-amber-50"]):not([class~="bg-blue-50"]):not([class~="bg-emerald-50"]):not([class~="bg-gray-100"]):not(.neu-btn-primary):not(.neu-btn-secondary) { color: #e8f1f5 !important; }
+                .dark .text-on-surface:not([class~="bg-surface-container"]):not([class~="bg-surface-container-low"]):not([class~="bg-secondary-container"]):not([class~="bg-error-container"]) { color: #e8f1f5 !important; }
+                .dark .text-on-surface-variant:not([class~="dark:text-inverse-primary"]):not([class~="bg-surface-container"]):not([class~="bg-surface-container-low"]):not([class~="bg-error-container"]) { color: #c9d5dc !important; }
+                .dark .text-outline { color: #a9bac5 !important; }
+                .dark .text-secondary:not([class~="dark:text-secondary-fixed"]):not([class~="bg-secondary-container"]):not([class~="bg-amber-50"]):not(.neu-btn-secondary) { color: #ffd27b !important; }
+                .dark input::placeholder, .dark textarea::placeholder { color: #a9bac5 !important; opacity: 1; }
+                .dark select, .dark input, .dark textarea { color-scheme: dark; }
     </style>
 </head>
 <body class="bg-surface dark:bg-primary text-on-surface dark:text-surface antialiased min-h-screen flex flex-col justify-between selection:bg-secondary-container transition-colors duration-200 font-body">
@@ -276,81 +284,48 @@
                     <div class="space-y-6 {{ session('token_sent') || old('recovery_mode') ? '' : 'hidden' }}" id="view-recovery">
                         <div class="border-b border-outline-variant/30 pb-3">
                             <h2 class="font-headline text-xl font-bold text-primary dark:text-primary-fixed">
-                                Recuperación de Acceso con Token
+                                Recuperación de acceso
                             </h2>
                             <p class="font-body text-xs text-on-surface-variant">
-                                Genere un token alfanumérico institucional y valide sus nuevas credenciales.
+                                Te enviaremos un enlace seguro a tu correo institucional para que puedas crear una nueva contraseña.
                             </p>
                         </div>
 
-                        <!-- PASO 1: SOLICITAR TOKEN -->
                         <form class="space-y-4" method="POST" action="{{ route('password.token') }}">
                             @csrf
                             <input type="hidden" name="recovery_mode" value="1" />
                             <div class="space-y-1">
-                                <label class="block font-mono text-xs text-primary dark:text-primary-fixed font-bold">
-                                    Paso 1: Solicitar Token de Autorización
+                                <label for="recovery-identifier" class="block font-mono text-xs text-primary dark:text-primary-fixed font-bold">
+                                    Correo institucional o matrícula
                                 </label>
                                 <div class="flex gap-2">
                                     <input 
-                                        type="text" 
+                                        id="recovery-identifier"
+                                        type="text"
                                         name="recovery_identifier" 
                                         class="neu-inset flex-1 px-3.5 py-2.5 rounded-xl font-body text-xs text-primary placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-secondary" 
-                                        placeholder="Correo institucional o Matrícula" 
+                                        placeholder="correo@universidad.edu.mx o matrícula"
                                         required 
-                                        value="{{ session('user_email', old('recovery_identifier', '')) }}"
+                                        value="{{ old('recovery_identifier', '') }}"
                                     />
                                     <button type="submit" class="neu-btn-secondary px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-secondary flex items-center gap-1 cursor-pointer">
-                                        <span class="material-symbols-outlined text-base">vpn_key</span>
-                                        <span>Generar</span>
+                                        <span class="material-symbols-outlined text-base">mail</span>
+                                        <span>Enviar enlace</span>
                                     </button>
                                 </div>
                             </div>
                         </form>
 
-                        @if (session('demo_token'))
-                            <div class="p-3 rounded-xl neu-inset bg-amber-50 border border-amber-300 text-amber-900 text-xs">
-                                <span class="font-bold">Token generado para demostración:</span>
-                                <code class="ml-2 px-2 py-0.5 rounded bg-amber-200 font-mono font-bold text-amber-950 text-sm">{{ session('demo_token') }}</code>
+                        @if (session('token_sent'))
+                            <div class="p-4 rounded-xl neu-inset flex items-start gap-3 text-on-surface-variant dark:text-inverse-primary">
+                                <span class="material-symbols-outlined text-secondary dark:text-secondary-fixed">mark_email_read</span>
+                                @if (in_array(config('mail.default'), ['log', 'array'], true))
+                                    <p class="font-body text-sm">El correo saliente aún no está configurado. Contacta al administrador para habilitar SMTP y recibir el enlace de recuperación.</p>
+                                @else
+                                    <p class="font-body text-sm">Si la cuenta existe, recibirás un correo con un enlace válido durante 60 minutos. Abre el enlace para elegir tu nueva contraseña.</p>
+                                @endif
                             </div>
                         @endif
-
-                        <!-- PASO 2: RESTABLECER CON TOKEN -->
-                        <form class="space-y-4 pt-2 border-t border-outline-variant/30" method="POST" action="{{ route('password.reset') }}">
-                            @csrf
-                            <input type="hidden" name="recovery_mode" value="1" />
-                            <input type="hidden" name="email" value="{{ session('user_email', old('email', '')) }}" id="recovery-post-email" />
-
-                            <div class="space-y-1">
-                                <label class="block font-mono text-xs text-primary font-bold">
-                                    Paso 2: Código de Token Recibido (ej: TK-8942-X)
-                                </label>
-                                <input 
-                                    type="text" 
-                                    name="token" 
-                                    class="w-full text-center tracking-widest font-mono text-lg py-2 rounded-xl neu-inset font-bold text-primary uppercase focus:outline-none focus:ring-2 focus:ring-secondary" 
-                                    placeholder="TK-8942-X" 
-                                    required 
-                                    value="{{ session('demo_token', '') }}"
-                                />
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div class="space-y-1">
-                                    <label class="block font-mono text-[11px] text-primary font-bold">Nueva Contraseña</label>
-                                    <input type="password" name="password" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" placeholder="Mínimo 8 caracteres" required />
-                                </div>
-                                <div class="space-y-1">
-                                    <label class="block font-mono text-[11px] text-primary font-bold">Confirmar Clave</label>
-                                    <input type="password" name="password_confirmation" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" placeholder="Repita la clave" required />
-                                </div>
-                            </div>
-
-                            <button type="submit" class="w-full neu-btn-primary py-2.5 rounded-xl font-headline font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer">
-                                <span class="material-symbols-outlined text-base">restart_alt</span>
-                                <span>Restablecer Contraseña e Iniciar</span>
-                            </button>
-                        </form>
 
                         <div class="text-center pt-2">
                             <button type="button" onclick="switchView('login')" class="font-mono text-xs text-on-surface-variant hover:text-primary cursor-pointer flex items-center justify-center gap-1 mx-auto">
@@ -402,15 +377,17 @@
             const html = document.documentElement;
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
+                    localStorage.setItem('siga_theme', 'light');
                 themeIcon.textContent = 'dark_mode';
             } else {
                 html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
+                    localStorage.setItem('siga_theme', 'dark');
                 themeIcon.textContent = 'light_mode';
             }
         });
-        if (localStorage.getItem('theme') === 'dark') {
+        const savedTheme = localStorage.getItem('siga_theme') || localStorage.getItem('theme');
+        if (savedTheme) localStorage.setItem('siga_theme', savedTheme);
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             themeIcon.textContent = 'light_mode';
         }

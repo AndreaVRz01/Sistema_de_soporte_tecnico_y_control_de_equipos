@@ -176,6 +176,42 @@ it('envía y completa la recuperación de contraseña con el token emitido', fun
     expect(Hash::check('NuevaClave123!', $user->fresh()->password))->toBeTrue();
 });
 
+it('envía un enlace por correo y permite restablecer la contraseña desde ese enlace', function (): void {
+    Notification::fake();
+    $user = User::factory()->create(['email' => 'enlace@example.test']);
+
+    $this->post(route('password.token'), ['recovery_identifier' => $user->email])
+        ->assertRedirect()
+        ->assertSessionHas('token_sent');
+
+    $resetUrl = null;
+    $resetToken = null;
+    Notification::assertSentTo($user, ResetPassword::class, function (ResetPassword $notification) use (&$resetUrl, &$resetToken, $user): bool {
+        $resetUrl = $notification->toMail($user)->actionUrl;
+        $resetToken = $notification->token;
+
+        return true;
+    });
+
+    expect($resetUrl)->toBeString();
+    $resetPath = parse_url($resetUrl, PHP_URL_PATH);
+    $resetQuery = parse_url($resetUrl, PHP_URL_QUERY);
+
+    $this->get($resetPath . '?' . $resetQuery)
+        ->assertOk()
+        ->assertSee('Crea una nueva contraseña')
+        ->assertSee('name="token"', false);
+
+    $this->post(route('password.update'), [
+        'email' => $user->email,
+        'token' => $resetToken,
+        'password' => 'NuevaClaveDesdeCorreo123!',
+        'password_confirmation' => 'NuevaClaveDesdeCorreo123!',
+    ])->assertRedirect(route('login'));
+
+    expect(Hash::check('NuevaClaveDesdeCorreo123!', $user->fresh()->password))->toBeTrue();
+});
+
 it('permite al administrador crear personal y al encargado crear solicitantes', function (): void {
     $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
     $loanManager = User::factory()->create(['role' => User::ROLE_ENCARGADO_PRESTAMOS]);

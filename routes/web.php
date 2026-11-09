@@ -38,7 +38,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get'); // Accesibilidad directa
 Route::post('/recuperar-password', [AuthController::class, 'sendRecoveryToken'])->name('password.token');
-Route::post('/restablecer-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::get('/restablecer-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/restablecer-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 // =========================================================================
 // 3. CONSOLA OPERATIVA PRIVADA (DASHBOARD & MÓDULOS DE GESTIÓN)
