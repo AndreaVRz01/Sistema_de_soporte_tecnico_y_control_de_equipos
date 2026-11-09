@@ -121,6 +121,9 @@ class EquipmentController extends Controller
             $validated,
             'normal'
         );
+        app(\App\Services\ActivityLogService::class)->record($request->user(), 'inventario.activo_creado', $item, [
+            'inventory_code' => $item->inventory_code,
+        ]);
 
         if ($request->wantsJson()) {
             return response()->json([

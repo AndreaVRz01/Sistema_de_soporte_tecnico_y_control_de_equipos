@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\ActivityLog;
+use App\Models\AuditLog;
 use App\Models\Category;
 use App\Models\Equipment;
 use App\Models\Loan;
@@ -200,4 +201,63 @@ it('permite al administrador crear personal y al encargado crear solicitantes', 
         ->and($requester->role)->toBe(User::ROLE_USUARIO)
         ->and(Hash::check('ClaveTemporal123!', $requester->password))->toBeTrue()
         ->and(ActivityLog::query()->whereIn('event', ['usuario.personal_creado', 'usuario.solicitante_creado'])->count())->toBe(2);
+});
+
+it('muestra a cada alumno su dashboard y únicamente su propia bitácora', function (): void {
+    $student = User::factory()->create(['role' => User::ROLE_USUARIO, 'user_type' => User::TYPE_ALUMNO]);
+    $otherStudent = User::factory()->create(['role' => User::ROLE_USUARIO, 'user_type' => User::TYPE_DOCENTE]);
+    $activityLog = new ActivityLogService();
+    $activityLog->record($student, 'prestamo.solicitado', $student);
+    $activityLog->record($otherStudent, 'ticket.privado', $otherStudent);
+
+    $this->actingAs($student)
+        ->get(route('dashboard'))
+        ->assertOk()
+        ->assertSee("Hola, {$student->name}")
+        ->assertSee('Mis préstamos');
+
+    $this->get(route('portal.activity'))
+        ->assertOk()
+        ->assertSee('Solicitud de préstamo enviada')
+        ->assertDontSee('Ticket Privado');
+});
+
+it('audita altas de activos y usuarios y reportes enviados por la comunidad', function (): void {
+    $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+    $student = User::factory()->create(['role' => User::ROLE_USUARIO, 'user_type' => User::TYPE_ALUMNO]);
+    $category = Category::create(['name' => 'Auditoría', 'code' => 'AUD']);
+
+    $this->actingAs($admin)->post(route('equipment.store'), [
+        'category_id' => $category->id,
+        'name' => 'Equipo auditado',
+        'brand' => 'Marca',
+        'model' => 'Modelo',
+        'serial_number' => 'AUD-SERIAL-001',
+        'physical_condition' => 'bueno',
+        'location' => 'Laboratorio',
+    ])->assertRedirect(route('equipment.index'));
+
+    $equipment = Equipment::query()->where('serial_number', 'AUD-SERIAL-001')->firstOrFail();
+
+    $this->post(route('users.store'), [
+        'name' => 'Técnico auditado',
+        'institutional_id' => 'EMP-AUD-001',
+        'email' => 'tecnico-auditoria@example.test',
+        'password' => 'ClaveTemporal123!',
+        'role' => User::ROLE_TECNICO,
+        'user_type' => User::TYPE_ADMINISTRATIVO,
+        'status' => 'activo',
+    ])->assertRedirect(route('users.index'));
+
+    $this->actingAs($student)->post(route('portal.reports.store'), [
+        'equipment_id' => $equipment->id,
+        'title' => 'Falla reportada por alumno',
+        'description' => 'El equipo dejó de funcionar durante la clase.',
+        'type' => 'hardware',
+    ])->assertRedirect(route('portal.activity'));
+
+    expect(AuditLog::query()->whereIn('action', ['CREAR', 'USUARIO_CREADO', 'REPORTE_USUARIO'])->count())->toBe(3)
+        ->and(ActivityLog::query()->where('user_id', $admin->id)->where('event', 'inventario.activo_creado')->exists())->toBeTrue()
+        ->and(ActivityLog::query()->where('user_id', $admin->id)->where('event', 'usuario.personal_creado')->exists())->toBeTrue()
+        ->and(ActivityLog::query()->where('user_id', $student->id)->where('event', 'ticket.servicio_creado')->exists())->toBeTrue();
 });

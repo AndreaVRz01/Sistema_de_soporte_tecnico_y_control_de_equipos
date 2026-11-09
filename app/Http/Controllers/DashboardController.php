@@ -21,6 +21,20 @@ class DashboardController extends Controller
      */
     public function index(Request $request): View
     {
+        if ($request->user()->isUsuario()) {
+            $user = $request->user();
+            $loanCounts = [
+                'total' => $user->loans()->count(),
+                'pending' => $user->loans()->whereIn('status', ['solicitado', 'aprobado'])->count(),
+                'active' => $user->loans()->whereIn('status', ['entregado', 'vencido'])->count(),
+            ];
+            $myLoans = $user->loans()->with('items.equipment')->latest('request_date')->take(5)->get();
+            $myReports = $user->reportedIncidents()->with('equipment')->latest('reported_at')->take(5)->get();
+            $recentActivity = $user->activityLogs()->latest()->take(6)->get();
+
+            return view('private.user-dashboard', compact('user', 'loanCounts', 'myLoans', 'myReports', 'recentActivity'));
+        }
+
         // 1. Métricas Principales (KPIs)
         $totalEquipment = Equipment::count();
         $availableEquipment = Equipment::where('status', 'disponible')->count();

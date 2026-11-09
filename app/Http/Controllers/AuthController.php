@@ -60,6 +60,7 @@ class AuthController extends Controller
         if (Auth::attempt([$field => $loginInput, 'password' => $credentials['password']], $remember)) {
             $request->session()->regenerate();
 
+            app(\App\Services\ActivityLogService::class)->record($user, 'sesion.iniciada', $user);
             AuditService::log('Auth', $user->id, 'LOGIN', "Inicio de sesión exitoso ({$user->role}) desde {$request->ip()}", null, 'normal', $user->id);
 
             return redirect()->to($this->destinationFor($user))
@@ -169,6 +170,11 @@ class AuthController extends Controller
     {
         $userId = Auth::id();
         $userEmail = Auth::user()?->email;
+        $user = Auth::user();
+
+        if ($user) {
+            app(\App\Services\ActivityLogService::class)->record($user, 'sesion.cerrada', $user);
+        }
 
         Auth::logout();
 
@@ -185,7 +191,7 @@ class AuthController extends Controller
     private function destinationFor(User $user): string
     {
         return match ($user->role) {
-            User::ROLE_USUARIO => route('public.catalog'),
+            User::ROLE_USUARIO => route('dashboard'),
             User::ROLE_ENCARGADO_ACTIVOS => route('equipment.index'),
             User::ROLE_ENCARGADO_PRESTAMOS => route('loans.index'),
             User::ROLE_TECNICO => route('incidents.index'),

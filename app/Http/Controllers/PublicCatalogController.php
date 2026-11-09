@@ -153,6 +153,10 @@ class PublicCatalogController extends Controller
                 'normal',
                 $user->id
             );
+            app(\App\Services\ActivityLogService::class)->record($user, 'prestamo.solicitado', $loan, [
+                'folio' => $loan->folio,
+                'equipment_id' => $equipment->id,
+            ]);
 
             if ($request->wantsJson()) {
                 return response()->json([

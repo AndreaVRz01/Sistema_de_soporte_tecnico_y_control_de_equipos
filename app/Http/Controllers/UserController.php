@@ -93,6 +93,8 @@ class UserController extends Controller
         $validated['password'] = Hash::make($validated['password']);
 
         $user = User::create($validated);
+        app(\App\Services\ActivityLogService::class)->record($request->user(), 'usuario.personal_creado', $user, ['role' => $user->role]);
+        app(\App\Services\ActivityLogService::class)->record($user, 'usuario.cuenta_creada', $user);
 
         AuditService::log(
             'User',
@@ -140,6 +142,8 @@ class UserController extends Controller
         $validated['status'] = 'activo';
 
         $user = User::create($validated);
+        app(\App\Services\ActivityLogService::class)->record($request->user(), 'usuario.solicitante_registrado', $user, ['user_type' => $user->user_type]);
+        app(\App\Services\ActivityLogService::class)->record($user, 'usuario.cuenta_creada', $user);
 
         AuditService::log(
             'User',

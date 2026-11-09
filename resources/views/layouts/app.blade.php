@@ -240,6 +240,11 @@
                     'tecnico' => [
                         ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
                     ],
+                    'usuario' => [
+                        ['label' => 'Mi panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
+                        ['label' => 'Catálogo', 'route' => 'public.catalog', 'active' => 'public.*', 'icon' => 'inventory_2'],
+                        ['label' => 'Mi bitácora', 'route' => 'portal.activity', 'active' => 'portal.*', 'icon' => 'history'],
+                    ],
                     default => [],
                 };
             @endphp

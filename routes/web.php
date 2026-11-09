@@ -8,6 +8,7 @@ use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PublicCatalogController;
 use App\Http\Controllers\SanctionController;
+use App\Http\Controllers\UserPortalController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,8 +44,14 @@ Route::post('/restablecer-password', [AuthController::class, 'resetPassword'])->
 // 3. CONSOLA OPERATIVA PRIVADA (DASHBOARD & MÓDULOS DE GESTIÓN)
 // =========================================================================
 Route::middleware('auth')->group(function () {
-    Route::middleware('role:admin,supervisor,encargado_activos,encargado_prestamos')->group(function () {
+    Route::middleware('role:admin,supervisor,encargado_activos,encargado_prestamos,usuario')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
+
+    Route::prefix('mi')->name('portal.')->middleware('role:usuario')->group(function () {
+        Route::get('/bitacora', [UserPortalController::class, 'activity'])->name('activity');
+        Route::get('/reportes/crear', [UserPortalController::class, 'createReport'])->name('reports.create');
+        Route::post('/reportes', [UserPortalController::class, 'storeReport'])->name('reports.store');
     });
 
     Route::prefix('activos')->name('equipment.')->middleware('role:admin,supervisor,encargado_activos')->group(function () {

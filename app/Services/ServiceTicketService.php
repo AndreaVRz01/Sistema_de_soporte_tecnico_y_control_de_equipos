@@ -35,8 +35,9 @@ class ServiceTicketService
             User::ROLE_SUPERVISOR,
             User::ROLE_ENCARGADO_ACTIVOS,
             User::ROLE_TECNICO,
+            User::ROLE_USUARIO,
         ], true)) {
-            throw new AuthorizationException('Solo personal técnico o de activos puede crear tickets de servicio.');
+            throw new AuthorizationException('No tienes permiso para crear reportes de servicio.');
         }
 
         $validated = Validator::make($data, [

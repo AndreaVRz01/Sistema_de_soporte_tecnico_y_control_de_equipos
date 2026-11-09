@@ -164,6 +164,9 @@ class IncidentController extends Controller
                 $validated,
                 in_array($incident->priority, ['alta', 'critica']) ? 'advertencia' : 'normal'
             );
+            app(\App\Services\ActivityLogService::class)->record(Auth::user(), 'ticket.servicio_creado', $incident, [
+                'ticket_code' => $incident->ticket_code,
+            ]);
 
             if ($request->wantsJson()) {
                 return response()->json([

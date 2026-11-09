@@ -169,6 +169,10 @@ class LoanController extends Controller
                 ['folio' => $loan->folio, 'custodio' => $borrower->name, 'inmediato' => $isImmediate],
                 'normal'
             );
+            app(\App\Services\ActivityLogService::class)->record($borrower, 'prestamo.registrado', $loan, [
+                'folio' => $loan->folio,
+                'operator_id' => $operatorId,
+            ]);
 
             if ($request->wantsJson()) {
                 return response()->json([
@@ -222,6 +226,9 @@ class LoanController extends Controller
         ]);
 
         AuditService::log('Loan', $loan->id, 'PRESTAMO_AUTORIZADO', "Préstamo {$loan->folio} autorizado por " . Auth::user()->name, null, 'normal');
+        app(\App\Services\ActivityLogService::class)->record($loan->user, 'prestamo.aprobado', $loan, [
+            'operator_id' => Auth::id(),
+        ]);
 
         return back()->with('success', "Préstamo {$loan->folio} autorizado. Listo para entrega en ventanilla.");
     }
@@ -244,6 +251,9 @@ class LoanController extends Controller
         ]);
 
         AuditService::log('Loan', $loan->id, 'PRESTAMO_RECHAZADO', "Préstamo {$loan->folio} rechazado: {$request->rejection_reason}", null, 'advertencia');
+        app(\App\Services\ActivityLogService::class)->record($loan->user, 'prestamo.rechazado', $loan, [
+            'operator_id' => Auth::id(),
+        ]);
 
         return back()->with('success', "Solicitud {$loan->folio} rechazada.");
     }
@@ -273,6 +283,9 @@ class LoanController extends Controller
             DB::commit();
 
             AuditService::log('Loan', $loan->id, 'PRESTAMO_DESPACHADO', "Equipos entregados físicamente para el folio {$loan->folio}", null, 'normal');
+            app(\App\Services\ActivityLogService::class)->record($loan->user, 'prestamo.entregado', $loan, [
+                'operator_id' => Auth::id(),
+            ]);
 
             return back()->with('success', "Activos entregados al custodio. Préstamo {$loan->folio} activo.");
         } catch (\Throwable $e) {
@@ -378,6 +391,10 @@ class LoanController extends Controller
                 ['folio' => $loan->folio, 'anomalias' => $hasIncidents],
                 $hasIncidents ? 'advertencia' : 'normal'
             );
+            app(\App\Services\ActivityLogService::class)->record($loan->user, 'prestamo.devuelto', $loan, [
+                'status' => $finalStatus,
+                'operator_id' => $operatorId,
+            ]);
 
             $msg = $hasIncidents
                 ? "Devolución registrada con observaciones. Se aperturaron tickets técnicos para los activos averiados."

@@ -195,3 +195,20 @@ it('permite al técnico asignado comentar y resolver el ticket', function (): vo
         ->and($ticket->logs()->count())->toBe(1)
         ->and($equipment->fresh()->status)->toBe('disponible');
 });
+
+it('permite a un alumno reportar un problema y registra el evento en su bitácora', function (): void {
+    $student = User::factory()->create(['role' => User::ROLE_USUARIO, 'user_type' => User::TYPE_ALUMNO]);
+    $category = Category::create(['name' => 'Reportes', 'code' => 'REP']);
+    $equipment = businessTestEquipment($category, 'REPORT-STUDENT');
+    $service = new ServiceTicketService(new ActivityLogService());
+
+    $ticket = $service->createTicket($student, [
+        'equipment_id' => $equipment->id,
+        'title' => 'No enciende el proyector',
+        'description' => 'El equipo no enciende al presionar el botón de encendido.',
+        'type' => 'hardware',
+    ]);
+
+    expect($ticket->reported_by_id)->toBe($student->id)
+        ->and($student->activityLogs()->where('event', 'ticket.servicio_creado')->exists())->toBeTrue();
+});

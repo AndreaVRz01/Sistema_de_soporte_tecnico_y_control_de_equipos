@@ -61,7 +61,7 @@ it('mantiene cada perfil fuera de módulos asignados a otros roles', function (s
     'Activos no gestiona préstamos' => [User::ROLE_ENCARGADO_ACTIVOS, '/prestamos'],
     'Préstamos no gestiona activos' => [User::ROLE_ENCARGADO_PRESTAMOS, '/activos'],
     'Técnico no gestiona sanciones' => [User::ROLE_TECNICO, '/sanciones'],
-    'Usuario no entra al dashboard operativo' => [User::ROLE_USUARIO, '/dashboard'],
+    'Usuario no entra a administración de usuarios' => [User::ROLE_USUARIO, '/usuarios'],
 ]);
 
 it('redirige cada rol autenticado a su módulo de inicio', function (string $role, string $route): void {
@@ -73,5 +73,5 @@ it('redirige cada rol autenticado a su módulo de inicio', function (string $rol
     'Encargado de activos' => [User::ROLE_ENCARGADO_ACTIVOS, 'equipment.index'],
     'Encargado de préstamos' => [User::ROLE_ENCARGADO_PRESTAMOS, 'loans.index'],
     'Técnico' => [User::ROLE_TECNICO, 'incidents.index'],
-    'Usuario solicitante' => [User::ROLE_USUARIO, 'public.catalog'],
+    'Usuario solicitante' => [User::ROLE_USUARIO, 'dashboard'],
 ]);
