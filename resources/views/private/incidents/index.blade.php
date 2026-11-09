@@ -13,10 +13,12 @@
     </div>
 
     <div class="flex items-center gap-2">
-        <button type="button" onclick="openNewTicketModal()" class="neu-btn-primary px-4 py-2 rounded-xl font-headline font-semibold text-xs flex items-center gap-1.5 cursor-pointer">
-            <span class="material-symbols-outlined text-base">build_circle</span>
-            <span>+ Generar Ticket</span>
-        </button>
+        @unless (Auth::user()->isTecnico())
+            <button type="button" onclick="openNewTicketModal()" class="neu-btn-primary px-4 py-2 rounded-xl font-headline font-semibold text-xs flex items-center gap-1.5 cursor-pointer">
+                <span class="material-symbols-outlined text-base">build_circle</span>
+                <span>+ Generar Ticket</span>
+            </button>
+        @endunless
     </div>
 @endsection
 

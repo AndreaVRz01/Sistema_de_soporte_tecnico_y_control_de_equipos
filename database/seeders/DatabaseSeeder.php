@@ -349,12 +349,12 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id' => $encargadoPrestamos->id,
                 'entity_type' => 'Loan',
-                'entity_id' => $prestamo->id,
+                'entity_id' => $prestamoActivo->id,
                 'action' => 'PRESTAMO_ENTREGADO',
                 'ip_address' => '192.168.1.25',
                 'user_agent' => 'SIGA-Client-Web/4.2',
                 'description' => 'Entrega en ventanilla de acta PRE-2026-0001 a ' . $docente->name,
-                'diff_payload' => ['folio' => $prestamo->folio, 'estatus' => 'entregado'],
+                'diff_payload' => ['folio' => $prestamoActivo->folio, 'estatus' => 'entregado'],
                 'risk_level' => 'normal',
                 'created_at' => now()->subDays(2),
             ]

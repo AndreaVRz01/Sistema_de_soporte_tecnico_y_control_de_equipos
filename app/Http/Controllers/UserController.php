@@ -80,8 +80,8 @@ class UserController extends Controller
             'institutional_id' => ['required', 'string', 'max:50', 'unique:users,institutional_id'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
-            'role' => ['required', 'in:admin,supervisor,encargado_activos,encargado_prestamos,tecnico,usuario'],
-            'user_type' => ['required', 'in:alumno,docente,administrativo'],
+            'role' => ['required', 'in:supervisor,encargado_activos,encargado_prestamos,tecnico'],
+            'user_type' => ['required', 'in:administrativo'],
             'career_or_department' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:25'],
             'status' => ['required', 'in:activo,inactivo,sancionado'],
@@ -112,6 +112,46 @@ class UserController extends Controller
         }
 
         return redirect()->route('users.index')->with('success', "Usuario {$user->name} registrado exitosamente.");
+    }
+
+    public function createBorrower(): View
+    {
+        return view('private.users.borrower-create');
+    }
+
+    public function storeBorrower(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'institutional_id' => ['required', 'string', 'max:50', 'unique:users,institutional_id'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'user_type' => ['required', 'in:alumno,docente,administrativo'],
+            'career_or_department' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:25'],
+        ], [
+            'institutional_id.unique' => 'La matrícula o número de empleado ya se encuentra registrado.',
+            'email.unique' => 'El correo institucional ya está registrado.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        ]);
+
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['role'] = User::ROLE_USUARIO;
+        $validated['status'] = 'activo';
+
+        $user = User::create($validated);
+
+        AuditService::log(
+            'User',
+            $user->id,
+            'SOLICITANTE_CREADO',
+            "Alta de solicitante para préstamo: {$user->name} - ID: {$user->institutional_id}",
+            ['nombre' => $user->name, 'user_type' => $user->user_type, 'email' => $user->email],
+            'normal'
+        );
+
+        return redirect()->route('loans.index', ['new_user_id' => $user->id])
+            ->with('success', "El solicitante {$user->name} fue registrado y ya está disponible para el préstamo.");
     }
 
     /**

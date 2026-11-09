@@ -196,105 +196,66 @@
     <!-- ========================================================================= -->
     <!-- TOP APP BAR INSTITUCIONAL (Barra Superior Fija)                           -->
     <!-- ========================================================================= -->
-    <header class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200 h-16">
-        <div class="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200 min-h-16">
+        <div class="w-full px-4 sm:px-6 lg:px-8 min-h-16 flex flex-wrap items-center justify-between gap-y-1">
             
-            <!-- Izquierda: Toggle de Sidebar & Identidad -->
+            <!-- Identidad institucional -->
             <div class="flex items-center gap-3">
-                <button aria-label="Alternar navegación lateral" class="w-10 h-10 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-surface neu-btn active:scale-95 cursor-pointer" id="sidebar-toggle-btn" type="button">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-                
-                <a href="{{ url('/dashboard') }}" class="flex flex-col">
+                <a href="{{ Auth::user()->isTecnico() ? route('incidents.index') : route('dashboard') }}" class="flex flex-col">
                     <span class="font-headline text-lg sm:text-xl font-bold text-primary dark:text-surface tracking-tight leading-none">SIGA Enterprise</span>
                     <span class="font-mono text-[10px] text-secondary dark:text-secondary-fixed uppercase tracking-wider font-semibold">Consola Operativa Institucional</span>
                 </a>
             </div>
 
-            <!-- Centro: Buscador Predictivo Global Inteligente (Ctrl + K) -->
-            <div class="relative hidden lg:flex items-center flex-1 max-w-xl mx-8">
-                <div class="w-full neu-inset rounded-xl flex items-center px-4 py-1.5 focus-within:ring-2 focus-within:ring-secondary/50 transition-all">
-                    <span class="material-symbols-outlined text-secondary mr-2 text-xl">search</span>
-                    <input 
-                        type="text" 
-                        id="global-search-input" 
-                        class="w-full bg-transparent border-0 font-body text-xs sm:text-sm text-on-surface dark:text-surface focus:outline-none focus:ring-0 placeholder:text-outline p-0" 
-                        placeholder="Buscar por serie (SN-...), ticket (#TK-...), técnico o activo..."
-                    >
-                    <div class="flex items-center gap-1 ml-2">
-                        <kbd class="px-2 py-0.5 rounded neu-raised font-mono text-[11px] text-secondary bg-surface-container dark:bg-primary-container border border-outline-variant/30">
-                            Ctrl + K
-                        </kbd>
-                    </div>
-                </div>
+            <!-- Navegación horizontal por rol -->
+            @php
+                $roleNavigation = match (Auth::user()->role) {
+                    'admin' => [
+                        ['label' => 'Panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
+                        ['label' => 'Activos', 'route' => 'equipment.index', 'active' => 'equipment.*', 'icon' => 'inventory_2'],
+                        ['label' => 'Préstamos', 'route' => 'loans.index', 'active' => 'loans.*', 'icon' => 'handshake'],
+                        ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
+                        ['label' => 'Usuarios', 'route' => 'users.index', 'active' => 'users.*', 'icon' => 'manage_accounts'],
+                        ['label' => 'Bitácora', 'route' => 'audit.index', 'active' => 'audit.*', 'icon' => 'verified_user'],
+                        ['label' => 'Sanciones', 'route' => 'sanctions.index', 'active' => 'sanctions.*', 'icon' => 'gavel'],
+                    ],
+                    'supervisor' => [
+                        ['label' => 'Panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
+                        ['label' => 'Activos', 'route' => 'equipment.index', 'active' => 'equipment.*', 'icon' => 'inventory_2'],
+                        ['label' => 'Préstamos', 'route' => 'loans.index', 'active' => 'loans.*', 'icon' => 'handshake'],
+                        ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
+                        ['label' => 'Bitácora', 'route' => 'audit.index', 'active' => 'audit.*', 'icon' => 'verified_user'],
+                        ['label' => 'Sanciones', 'route' => 'sanctions.index', 'active' => 'sanctions.*', 'icon' => 'gavel'],
+                    ],
+                    'encargado_activos' => [
+                        ['label' => 'Panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
+                        ['label' => 'Activos', 'route' => 'equipment.index', 'active' => 'equipment.*', 'icon' => 'inventory_2'],
+                        ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
+                        ['label' => 'Sanciones', 'route' => 'sanctions.index', 'active' => 'sanctions.*', 'icon' => 'gavel'],
+                    ],
+                    'encargado_prestamos' => [
+                        ['label' => 'Panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
+                        ['label' => 'Préstamos', 'route' => 'loans.index', 'active' => 'loans.*', 'icon' => 'handshake'],
+                    ],
+                    'tecnico' => [
+                        ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
+                    ],
+                    default => [],
+                };
+            @endphp
+            <nav aria-label="Navegación principal" class="order-3 w-full flex items-center gap-1 overflow-x-auto border-t border-outline-variant/30 py-2 lg:order-2 lg:w-auto lg:flex-1 lg:justify-center lg:border-0 lg:py-0">
+                @foreach ($roleNavigation as $item)
+                    <a href="{{ route($item['route']) }}" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-2 font-body text-xs font-semibold transition-colors {{ request()->routeIs($item['active']) ? 'bg-surface-container text-primary dark:bg-primary-container dark:text-surface' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/70 dark:hover:bg-primary-container/60' }}">
+                        <span class="material-symbols-outlined text-base">{{ $item['icon'] }}</span>
+                        <span>{{ $item['label'] }}</span>
+                    </a>
+                @endforeach
+            </nav>
 
-                <!-- Dropdown de Sugerencias Predictivas -->
-                <div class="hidden absolute top-12 left-0 right-0 rounded-2xl bg-surface dark:bg-primary neu-floating p-4 z-50 border border-outline-variant/40 mt-1" id="predictive-search-dropdown">
-                    <div class="flex items-center justify-between pb-2 border-b border-outline-variant/20 mb-2">
-                        <span class="font-mono text-[11px] text-secondary uppercase font-bold tracking-wider">Coincidencias Recientes</span>
-                        <span class="font-mono text-[11px] text-outline">ESC para salir</span>
-                    </div>
-                    <div class="space-y-1">
-                        <!-- Activo Sugerido -->
-                        <div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container dark:hover:bg-primary-container cursor-pointer transition-colors">
-                            <div class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-secondary text-lg">laptop_mac</span>
-                                <div>
-                                    <p class="font-headline text-xs font-semibold text-primary dark:text-surface">MacBook Pro M2 Max 32GB</p>
-                                    <p class="font-mono text-[11px] text-outline">Lab Multimedia • Estante 4</p>
-                                </div>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full font-mono text-[11px] bg-surface-container-high dark:bg-primary-container text-primary dark:text-surface">
-                                SN-8921-MBP
-                            </span>
-                        </div>
-                        <!-- Ticket Sugerido -->
-                        <div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-container dark:hover:bg-primary-container cursor-pointer transition-colors">
-                            <div class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-error text-lg">build</span>
-                                <div>
-                                    <p class="font-headline text-xs font-semibold text-primary dark:text-surface">TK-8942: Falla de Óptica y Calibración</p>
-                                    <p class="font-mono text-[11px] text-outline">Prioridad Crítica • Asignado a Ing. Valenzuela</p>
-                                </div>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full font-mono text-[11px] bg-error-container text-on-error-container font-semibold">
-                                En Reparación
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Derecha: Selector de Rol, Notificaciones, Modo Oscuro y Perfil -->
+            <!-- Acciones de sesión -->
             <div class="flex items-center gap-3">
                 <!-- Botón Acción Rápida (Ej: Registrar) -->
                 @yield('topbar_action')
-
-                <!-- Selector de Rol Activo -->
-                <div class="relative hidden sm:block">
-                    <button class="flex items-center gap-2 neu-inset px-3 py-1.5 rounded-xl text-xs hover:border-secondary transition-all cursor-pointer" id="role-menu-btn" type="button">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-live-dot"></span>
-                        <div class="text-left">
-                            <span class="block font-mono text-[10px] text-outline leading-none">Perfil</span>
-                            <span class="font-mono text-xs font-bold text-primary dark:text-surface" id="current-role-label">Administrador</span>
-                        </div>
-                        <span class="material-symbols-outlined text-outline text-base">expand_more</span>
-                    </button>
-                    <!-- Menú de roles -->
-                    <div class="hidden absolute right-0 top-12 w-52 rounded-2xl bg-surface dark:bg-primary neu-floating p-2 z-50 border border-outline-variant/30" id="role-menu-dropdown">
-                        <div class="font-mono text-[10px] text-outline px-3 py-1 font-bold uppercase tracking-wider">Cambiar Contexto</div>
-                        <button class="w-full text-left px-3 py-1.5 rounded-lg font-body text-xs hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="switchRole('Administrador')">
-                            <span>Administrador</span>
-                            <span class="material-symbols-outlined text-secondary text-sm">check</span>
-                        </button>
-                        <button class="w-full text-left px-3 py-1.5 rounded-lg font-body text-xs hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="switchRole('Encargado de Activos')">
-                            <span>Encargado de Activos</span>
-                        </button>
-                        <button class="w-full text-left px-3 py-1.5 rounded-lg font-body text-xs hover:bg-surface-container dark:hover:bg-primary-container flex items-center justify-between" onclick="switchRole('Técnico de Soporte')">
-                            <span>Técnico de Soporte</span>
-                        </button>
-                    </div>
-                </div>
 
                 <!-- Botón Conmutador de Tema -->
                 <button aria-label="Cambiar tema visual" class="w-9 h-9 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-secondary-container neu-btn cursor-pointer" id="private-theme-toggle" type="button" title="Alternar tema">
@@ -322,10 +283,6 @@
                             <p class="font-headline text-xs font-bold text-primary dark:text-surface">{{ Auth::user()->name ?? 'Administrador General' }}</p>
                             <p class="font-mono text-[11px] text-outline truncate">{{ Auth::user()->email ?? 'admin@institucion.edu' }}</p>
                         </div>
-                        <a href="{{ url('/perfil') }}" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg font-body text-xs text-on-surface-variant dark:text-surface hover:bg-surface-container dark:hover:bg-primary-container transition-colors">
-                            <span class="material-symbols-outlined text-base text-secondary">person</span>
-                            <span>Mi Perfil y Seguridad</span>
-                        </a>
                         <a href="{{ url('/') }}" target="_blank" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg font-body text-xs text-on-surface-variant dark:text-surface hover:bg-surface-container dark:hover:bg-primary-container transition-colors">
                             <span class="material-symbols-outlined text-base text-secondary">public</span>
                             <span>Ver Portal Público</span>
@@ -352,93 +309,7 @@
         </div>
     </header>
 
-    <!-- ========================================================================= -->
-    <!-- CONTENEDOR PRINCIPAL CON SIDEBAR NAVEGABLE                                -->
-    <!-- ========================================================================= -->
-    <div class="flex flex-1 relative overflow-x-hidden">
-
-        <!-- Backdrop para dispositivos móviles -->
-        <div class="fixed inset-0 z-40 bg-primary/40 backdrop-blur-xs hidden transition-opacity lg:hidden" id="private-sidebar-backdrop"></div>
-
-        <!-- ===================================================================== -->
-        <!-- SIDEBAR DE NAVEGACIÓN (Consola Operativa)                             -->
-        <!-- ===================================================================== -->
-        <aside class="fixed lg:sticky top-16 left-0 h-[calc(100vh-4rem)] w-64 sm:w-72 bg-surface dark:bg-primary-container border-r border-outline-variant/60 dark:border-primary shadow-xl lg:shadow-none z-50 flex flex-col justify-between p-4 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shrink-0 overflow-y-auto" id="private-sidebar">
-            
-            <div class="space-y-6">
-                <!-- Encabezado del Menú Lateral -->
-                <div class="flex items-center justify-between pb-3 border-b border-outline-variant/30">
-                    <span class="font-mono text-[11px] text-secondary uppercase font-bold tracking-wider">Módulos del Sistema</span>
-                    <button class="lg:hidden p-1 text-outline hover:text-primary dark:hover:text-surface" id="sidebar-close-btn" type="button">
-                        <span class="material-symbols-outlined text-xl">close</span>
-                    </button>
-                </div>
-
-                <!-- Lista de Navegación por Módulos -->
-                <nav class="space-y-1.5">
-                    <!-- Dashboard -->
-                    <a href="{{ url('/dashboard') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('dashboard*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('dashboard*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">dashboard</span>
-                        <span class="font-body text-sm">Dashboard</span>
-                    </a>
-
-                    <!-- Activos e Inventario -->
-                    <a href="{{ url('/activos') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('activos*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('activos*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">inventory_2</span>
-                        <span class="font-body text-sm">Control de Activos</span>
-                    </a>
-
-                    <!-- Préstamos y Devoluciones -->
-                    <a href="{{ url('/prestamos') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('prestamos*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('prestamos*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">handshake</span>
-                        <span class="font-body text-sm">Préstamos & Devoluciones</span>
-                    </a>
-
-                    <!-- Tickets & Mantenimiento -->
-                    <a href="{{ url('/tickets') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('tickets*') || request()->is('mantenimiento*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('tickets*') || request()->is('mantenimiento*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">build</span>
-                        <span class="font-body text-sm">Mantenimiento & Tickets</span>
-                    </a>
-
-                    <!-- Usuarios, Roles y Permisos -->
-                    <a href="{{ url('/usuarios') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('usuarios*') || request()->is('roles*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('usuarios*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">manage_accounts</span>
-                        <span class="font-body text-sm">Usuarios & Roles</span>
-                    </a>
-
-                    <!-- Bitácora y Auditoría Forense -->
-                    <a href="{{ url('/bitacora') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('bitacora*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('bitacora*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">verified_user</span>
-                        <span class="font-body text-sm">Bitácora & Auditoría</span>
-                    </a>
-
-                    <!-- Sanciones Disciplinarias -->
-                    <a href="{{ url('/sanciones') }}" class="group rounded-xl px-3.5 py-2.5 flex items-center gap-3 transition-all active:scale-[0.98] {{ request()->is('sanciones*') ? 'neu-raised bg-surface-container dark:bg-primary text-primary dark:text-surface font-bold' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/60 dark:hover:bg-primary/50 font-medium' }}">
-                        <span class="material-symbols-outlined text-xl text-secondary" style="{{ request()->is('sanciones*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">gavel</span>
-                        <span class="font-body text-sm">Sanciones & Bloqueos</span>
-                    </a>
-                </nav>
-            </div>
-
-            <!-- Telemetría y Pie del Sidebar -->
-            <div class="pt-4 border-t border-outline-variant/30 space-y-3">
-                <div class="p-3 rounded-xl neu-inset bg-surface-container-low dark:bg-primary flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-live-dot"></span>
-                        <span class="font-mono text-[11px] text-primary dark:text-surface font-semibold">Audit Stream Activo</span>
-                    </div>
-                    <span class="font-mono text-[10px] text-outline">WS: OK</span>
-                </div>
-                <p class="font-mono text-[10px] text-outline text-center">
-                    SIGA Enterprise • v4.2 PRO
-                </p>
-            </div>
-        </aside>
-
-        <!-- ===================================================================== -->
-        <!-- ÁREA DE TRABAJO DINÁMICA                                             -->
-        <!-- ===================================================================== -->
-        <main class="flex-1 w-full p-4 sm:p-6 lg:p-8 overflow-y-auto">
+    <main class="flex-1 w-full p-4 sm:p-6 lg:p-8 overflow-y-auto">
             
             <!-- Encabezado de Página (Si se define en la vista) -->
             @hasSection('header')
@@ -478,14 +349,13 @@
 
             <!-- Contenido Inyectado de la Vista -->
             @yield('content')
-        </main>
-    </div>
+    </main>
 
     <!-- Modales Globales -->
     @yield('modals')
 
     <!-- ========================================================================= -->
-    <!-- SCRIPTS BASE: MODO OSCURO, SIDEBAR TOGGLE & BUSCADOR                      -->
+    <!-- SCRIPTS BASE: TEMA Y PERFIL                                              -->
     <!-- ========================================================================= -->
     <script>
         // Manejo de Tema Claro/Oscuro
@@ -518,28 +388,6 @@
             });
         }
 
-        // Toggle del Sidebar en dispositivos móviles
-        const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
-        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-        const privateSidebar = document.getElementById('private-sidebar');
-        const privateBackdrop = document.getElementById('private-sidebar-backdrop');
-
-        function openPrivateSidebar() {
-            if (!privateSidebar || !privateBackdrop) return;
-            privateSidebar.classList.remove('-translate-x-full');
-            privateBackdrop.classList.remove('hidden');
-        }
-
-        function closePrivateSidebar() {
-            if (!privateSidebar || !privateBackdrop) return;
-            privateSidebar.classList.add('-translate-x-full');
-            privateBackdrop.classList.add('hidden');
-        }
-
-        if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', openPrivateSidebar);
-        if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closePrivateSidebar);
-        if (privateBackdrop) privateBackdrop.addEventListener('click', closePrivateSidebar);
-
         // Menú desplegable de perfil de usuario
         const userBtn = document.getElementById('user-profile-menu-btn');
         const userDropdown = document.getElementById('user-profile-dropdown');
@@ -550,59 +398,10 @@
             });
         }
 
-        // Menú selector de rol
-        const roleBtn = document.getElementById('role-menu-btn');
-        const roleDropdown = document.getElementById('role-menu-dropdown');
-        if (roleBtn && roleDropdown) {
-            roleBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                roleDropdown.classList.toggle('hidden');
-            });
-        }
-
-        function switchRole(roleName) {
-            const label = document.getElementById('current-role-label');
-            if (label) label.textContent = roleName;
-            if (roleDropdown) roleDropdown.classList.add('hidden');
-        }
-
-        // Buscador Predictivo (Ctrl + K)
-        const searchInput = document.getElementById('global-search-input');
-        const searchDropdown = document.getElementById('predictive-search-dropdown');
-
-        if (searchInput && searchDropdown) {
-            searchInput.addEventListener('focus', () => searchDropdown.classList.remove('hidden'));
-            searchInput.addEventListener('input', (e) => {
-                if (e.target.value.trim().length > 0) {
-                    searchDropdown.classList.remove('hidden');
-                }
-            });
-        }
-
-        // Atajos globales de teclado
-        window.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-                e.preventDefault();
-                if (searchInput) searchInput.focus();
-            }
-            if (e.key === 'Escape') {
-                if (searchDropdown) searchDropdown.classList.add('hidden');
-                if (userDropdown) userDropdown.classList.add('hidden');
-                if (roleDropdown) roleDropdown.classList.add('hidden');
-                closePrivateSidebar();
-            }
-        });
-
         // Cerrar dropdowns al hacer clic fuera
         window.addEventListener('click', (e) => {
             if (userDropdown && !userDropdown.contains(e.target) && userBtn && !userBtn.contains(e.target)) {
                 userDropdown.classList.add('hidden');
-            }
-            if (roleDropdown && !roleDropdown.contains(e.target) && roleBtn && !roleBtn.contains(e.target)) {
-                roleDropdown.classList.add('hidden');
-            }
-            if (searchDropdown && !searchDropdown.contains(e.target) && searchInput && !searchInput.contains(e.target)) {
-                searchDropdown.classList.add('hidden');
             }
         });
     </script>

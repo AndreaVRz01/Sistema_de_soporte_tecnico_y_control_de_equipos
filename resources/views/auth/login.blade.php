@@ -193,20 +193,8 @@
         <div class="max-w-xl mx-auto w-full">
             <div class="neu-raised rounded-2xl p-6 sm:p-8 relative overflow-hidden transition-all duration-200 shadow-md border border-white/70 dark:border-primary-container">
                     
-                    <!-- Pestañas Interactivas -->
-                    <div class="neu-inset p-1.5 rounded-xl flex items-center gap-1 mb-6">
-                        <button class="flex-1 py-2 px-4 rounded-lg font-mono text-xs font-bold flex items-center justify-center gap-2 neu-tab-active transition-all cursor-pointer" id="tab-login-btn" onclick="switchView('login')" type="button">
-                            <span class="material-symbols-outlined text-base">lock</span>
-                            <span>Iniciar Sesión</span>
-                        </button>
-                        <button class="flex-1 py-2 px-4 rounded-lg font-mono text-xs font-bold flex items-center justify-center gap-2 text-on-surface-variant hover:text-primary transition-all cursor-pointer" id="tab-recovery-btn" onclick="switchView('recovery')" type="button">
-                            <span class="material-symbols-outlined text-base">key</span>
-                            <span>Recuperar con Token</span>
-                        </button>
-                    </div>
-
                     <!-- VISTA 1: INICIAR SESIÓN -->
-                    <div class="space-y-6 {{ session('token_sent') ? 'hidden' : '' }}" id="view-login">
+                    <div class="space-y-6 {{ session('token_sent') || old('recovery_mode') ? 'hidden' : '' }}" id="view-login">
                         <div class="border-b border-outline-variant/30 pb-3">
                             <h2 class="font-headline text-xl font-bold text-primary dark:text-primary-fixed">
                                 Autenticación de Operador
@@ -235,7 +223,7 @@
                                         placeholder="ej. admin@universidad.edu.mx o EMP-00101" 
                                         required 
                                         type="text" 
-                                        value="{{ old('login', 'admin@universidad.edu.mx') }}"
+                                        value="{{ old('login') }}"
                                     />
                                 </div>
                             </div>
@@ -261,7 +249,6 @@
                                         placeholder="••••••••••••" 
                                         required 
                                         type="password" 
-                                        value="password123"
                                     />
                                     <button class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-on-surface-variant hover:text-primary cursor-pointer" onclick="togglePassVisibility()" type="button">
                                         <span class="material-symbols-outlined text-base" id="toggle-pass-icon">visibility</span>
@@ -286,7 +273,7 @@
                     </div>
 
                     <!-- VISTA 2: RECUPERACIÓN CON TOKEN -->
-                    <div class="space-y-6 {{ session('token_sent') ? '' : 'hidden' }}" id="view-recovery">
+                    <div class="space-y-6 {{ session('token_sent') || old('recovery_mode') ? '' : 'hidden' }}" id="view-recovery">
                         <div class="border-b border-outline-variant/30 pb-3">
                             <h2 class="font-headline text-xl font-bold text-primary dark:text-primary-fixed">
                                 Recuperación de Acceso con Token
@@ -299,6 +286,7 @@
                         <!-- PASO 1: SOLICITAR TOKEN -->
                         <form class="space-y-4" method="POST" action="{{ route('password.token') }}">
                             @csrf
+                            <input type="hidden" name="recovery_mode" value="1" />
                             <div class="space-y-1">
                                 <label class="block font-mono text-xs text-primary dark:text-primary-fixed font-bold">
                                     Paso 1: Solicitar Token de Autorización
@@ -310,7 +298,7 @@
                                         class="neu-inset flex-1 px-3.5 py-2.5 rounded-xl font-body text-xs text-primary placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-secondary" 
                                         placeholder="Correo institucional o Matrícula" 
                                         required 
-                                        value="{{ session('user_email', old('recovery_identifier', 'admin@universidad.edu.mx')) }}"
+                                        value="{{ session('user_email', old('recovery_identifier', '')) }}"
                                     />
                                     <button type="submit" class="neu-btn-secondary px-4 py-2.5 rounded-xl font-mono text-xs font-bold text-secondary flex items-center gap-1 cursor-pointer">
                                         <span class="material-symbols-outlined text-base">vpn_key</span>
@@ -330,7 +318,8 @@
                         <!-- PASO 2: RESTABLECER CON TOKEN -->
                         <form class="space-y-4 pt-2 border-t border-outline-variant/30" method="POST" action="{{ route('password.reset') }}">
                             @csrf
-                            <input type="hidden" name="email" value="{{ session('user_email', 'admin@universidad.edu.mx') }}" id="recovery-post-email" />
+                            <input type="hidden" name="recovery_mode" value="1" />
+                            <input type="hidden" name="email" value="{{ session('user_email', old('email', '')) }}" id="recovery-post-email" />
 
                             <div class="space-y-1">
                                 <label class="block font-mono text-xs text-primary font-bold">
@@ -384,19 +373,13 @@
         function switchView(view) {
             const loginView = document.getElementById('view-login');
             const recoveryView = document.getElementById('view-recovery');
-            const tabLogin = document.getElementById('tab-login-btn');
-            const tabRecovery = document.getElementById('tab-recovery-btn');
 
             if (view === 'login') {
                 loginView.classList.remove('hidden');
                 recoveryView.classList.add('hidden');
-                tabLogin.classList.add('neu-tab-active');
-                tabRecovery.classList.remove('neu-tab-active');
             } else {
                 loginView.classList.add('hidden');
                 recoveryView.classList.remove('hidden');
-                tabRecovery.classList.add('neu-tab-active');
-                tabLogin.classList.remove('neu-tab-active');
             }
         }
 

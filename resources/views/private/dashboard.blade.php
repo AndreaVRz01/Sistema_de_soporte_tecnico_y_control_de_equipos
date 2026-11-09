@@ -3,10 +3,12 @@
 @section('title', 'Dashboard Principal de Control y Operaciones')
 
 @section('topbar_action')
-<a href="{{ route('loans.index') }}" class="hidden sm:inline-flex items-center gap-1.5 neu-btn-primary px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold shadow-md cursor-pointer">
-    <span class="material-symbols-outlined text-base">add_circle</span>
-    <span>Nuevo Préstamo</span>
-</a>
+    @if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_prestamos'], true))
+        <a href="{{ route('loans.index') }}" class="hidden sm:inline-flex items-center gap-1.5 neu-btn-primary px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold shadow-md cursor-pointer">
+            <span class="material-symbols-outlined text-base">add_circle</span>
+            <span>Nuevo Préstamo</span>
+        </a>
+    @endif
 @endsection
 
 @section('header')
@@ -39,6 +41,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
     
     <!-- Métrica 1: Total de Activos -->
+    @if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_activos'], true))
     <a href="{{ route('equipment.index') }}" class="p-5 rounded-2xl neu-raised neu-card-interactive border border-white/70 dark:border-primary-container block">
         <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-xs text-outline font-semibold uppercase tracking-wider">Activos Patrimoniales</span>
@@ -54,8 +57,10 @@
         </div>
         <p class="font-body text-xs text-outline mt-2">Inventario catalogado y activo</p>
     </a>
+    @endif
 
     <!-- Métrica 2: En Préstamo Activo -->
+    @if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_prestamos'], true))
     <a href="{{ route('loans.index', ['status' => 'entregado']) }}" class="p-5 rounded-2xl neu-raised neu-card-interactive border border-white/70 dark:border-primary-container block">
         <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-xs text-secondary font-semibold uppercase tracking-wider">Préstamos Vigentes</span>
@@ -71,8 +76,10 @@
         </div>
         <p class="font-body text-xs text-outline mt-2">Bienes en custodia temporal</p>
     </a>
+    @endif
 
     <!-- Métrica 3: En Mantenimiento -->
+    @if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_activos'], true))
     <a href="{{ route('incidents.index') }}" class="p-5 rounded-2xl neu-raised neu-card-interactive border border-white/70 dark:border-primary-container block">
         <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-xs text-error font-semibold uppercase tracking-wider">Taller & Tickets</span>
@@ -88,8 +95,10 @@
         </div>
         <p class="font-body text-xs text-outline mt-2">En diagnóstico o reparación</p>
     </a>
+    @endif
 
     <!-- Métrica 4: Sanciones & Alertas -->
+    @if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_activos'], true))
     <a href="{{ route('sanctions.index') }}" class="p-5 rounded-2xl neu-raised neu-card-interactive border border-white/70 dark:border-primary-container block">
         <div class="flex items-center justify-between mb-3">
             <span class="font-mono text-xs text-outline font-semibold uppercase tracking-wider">Sanciones Activas</span>
@@ -105,11 +114,13 @@
         </div>
         <p class="font-body text-xs text-outline mt-2">Usuarios con suspensión preventiva</p>
     </a>
+    @endif
 </div>
 
 <!-- ========================================================================= -->
 <!-- SECCIÓN DE ALERTAS CRÍTICAS: PRÓXIMOS A VENCER O CON RETRASO            -->
 <!-- ========================================================================= -->
+@if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_prestamos'], true))
 <div class="p-6 rounded-2xl neu-raised border border-white/70 dark:border-primary-container mb-8">
     <div class="flex items-center justify-between flex-wrap gap-4 pb-4 border-b border-outline-variant/30 mb-4">
         <div>
@@ -192,14 +203,16 @@
         </table>
     </div>
 </div>
+@endif
 
 <!-- ========================================================================= -->
 <!-- CUADRÍCULA INFERIOR: DISTRIBUCIÓN POR ÁREAS & STREAM DE AUDITORÍA         -->
 <!-- ========================================================================= -->
+@if (in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_activos'], true))
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
     
     <!-- Distribución de Equipos por Categoría y Ubicación -->
-    <div class="lg:col-span-6 p-6 rounded-2xl neu-raised border border-white/70 dark:border-primary-container space-y-4">
+    <div class="{{ in_array(Auth::user()->role, ['admin', 'supervisor'], true) ? 'lg:col-span-6' : 'lg:col-span-12' }} p-6 rounded-2xl neu-raised border border-white/70 dark:border-primary-container space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-outline-variant/30">
             <h3 class="font-headline text-base font-bold text-primary dark:text-surface">Distribución por Categorías</h3>
             <a href="{{ route('equipment.index') }}" class="font-mono text-xs text-secondary hover:underline">Ver Inventario</a>
@@ -236,6 +249,7 @@
     </div>
 
     <!-- Bitácora y Auditoría en Tiempo Real -->
+    @if (in_array(Auth::user()->role, ['admin', 'supervisor'], true))
     <div class="lg:col-span-6 p-6 rounded-2xl neu-raised border border-white/70 dark:border-primary-container space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-outline-variant/30">
             <div class="flex items-center gap-2">
@@ -269,6 +283,8 @@
             @endforelse
         </div>
     </div>
+    @endif
 
 </div>
+@endif
 @endsection

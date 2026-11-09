@@ -89,20 +89,22 @@
                 @endif
 
                 <!-- Formulario Rápido de Asignación -->
-                <form method="POST" action="{{ route('incidents.assign', $incident) }}" class="flex gap-2 pt-1">
-                    @csrf
-                    <select name="assigned_technician_id" required class="neu-inset flex-1 px-3 py-1.5 rounded-xl text-xs">
-                        <option value="">Reasignar a otro técnico...</option>
-                        @foreach ($technicians as $tech)
-                            <option value="{{ $tech->id }}" {{ $incident->assigned_technician_id === $tech->id ? 'selected' : '' }}>
-                                {{ $tech->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="neu-btn-secondary px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-secondary hover:text-primary">
-                        Asignar
-                    </button>
-                </form>
+                @unless (Auth::user()->isTecnico())
+                    <form method="POST" action="{{ route('incidents.assign', $incident) }}" class="flex gap-2 pt-1">
+                        @csrf
+                        <select name="assigned_technician_id" required class="neu-inset flex-1 px-3 py-1.5 rounded-xl text-xs">
+                            <option value="">Reasignar a otro técnico...</option>
+                            @foreach ($technicians as $tech)
+                                <option value="{{ $tech->id }}" {{ $incident->assigned_technician_id === $tech->id ? 'selected' : '' }}>
+                                    {{ $tech->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="neu-btn-secondary px-3 py-1.5 rounded-xl font-mono text-xs font-bold text-secondary hover:text-primary">
+                            Asignar
+                        </button>
+                    </form>
+                @endunless
             </div>
         </div>
 

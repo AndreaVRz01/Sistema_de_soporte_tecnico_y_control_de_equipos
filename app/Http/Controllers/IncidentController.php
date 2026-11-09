@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class IncidentController extends Controller
@@ -22,7 +23,15 @@ class IncidentController extends Controller
      */
     public function index(Request $request): View
     {
+        $visibleIncidents = Incident::query();
+        if (Auth::user()->isTecnico()) {
+            $visibleIncidents->where('assigned_technician_id', Auth::id());
+        }
+
         $query = Incident::with(['equipment.category', 'technician', 'reportedBy', 'logs']);
+        if (Auth::user()->isTecnico()) {
+            $query->where('assigned_technician_id', Auth::id());
+        }
 
         // 1. Filtro por estatus de atención
         if ($status = $request->input('status')) {
@@ -63,10 +72,10 @@ class IncidentController extends Controller
 
         // Contadores de cabecera
         $counts = [
-            'total' => Incident::count(),
-            'taller' => Incident::whereIn('status', ['reportado', 'asignado', 'en_diagnostico', 'en_reparacion'])->count(),
-            'criticos' => Incident::whereIn('priority', ['alta', 'critica'])->whereNotIn('status', ['resuelto', 'cancelado'])->count(),
-            'resueltos' => Incident::where('status', 'resuelto')->count(),
+            'total' => (clone $visibleIncidents)->count(),
+            'taller' => (clone $visibleIncidents)->whereIn('status', ['reportado', 'asignado', 'en_diagnostico', 'en_reparacion'])->count(),
+            'criticos' => (clone $visibleIncidents)->whereIn('priority', ['alta', 'critica'])->whereNotIn('status', ['resuelto', 'cancelado'])->count(),
+            'resueltos' => (clone $visibleIncidents)->where('status', 'resuelto')->count(),
         ];
 
         $incidents = $query->orderByRaw("CASE priority WHEN 'critica' THEN 1 WHEN 'alta' THEN 2 WHEN 'media' THEN 3 ELSE 4 END")
@@ -74,7 +83,7 @@ class IncidentController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        $technicians = User::whereIn('role', [User::ROLE_TECNICO, User::ROLE_ADMIN, User::ROLE_ENCARGADO_ACTIVOS])
+        $technicians = User::where('role', User::ROLE_TECNICO)
             ->where('status', 'activo')
             ->orderBy('name')
             ->get();
@@ -97,7 +106,10 @@ class IncidentController extends Controller
             'description' => ['required', 'string'],
             'type' => ['required', 'in:hardware,software,daño_fisico,desgaste_natural,perdida_accesorio,mantenimiento_preventivo'],
             'priority' => ['required', 'in:baja,media,alta,critica'],
-            'assigned_technician_id' => ['nullable', 'exists:users,id'],
+            'assigned_technician_id' => [
+                'nullable',
+                Rule::exists('users', 'id')->where('role', User::ROLE_TECNICO)->where('status', 'activo'),
+            ],
             'estimated_cost' => ['nullable', 'numeric', 'min:0'],
         ], [
             'equipment_id.required' => 'Debe asociar un activo patrimonial al ticket.',
@@ -174,6 +186,8 @@ class IncidentController extends Controller
      */
     public function show(Incident $incident): View|JsonResponse
     {
+        $this->ensureTechnicianAssignment($incident);
+
         $incident->load([
             'equipment.category',
             'technician',
@@ -182,7 +196,7 @@ class IncidentController extends Controller
             'loanItem.loan.user'
         ]);
 
-        $technicians = User::whereIn('role', [User::ROLE_TECNICO, User::ROLE_ADMIN])
+        $technicians = User::where('role', User::ROLE_TECNICO)
             ->where('status', 'activo')
             ->orderBy('name')
             ->get();
@@ -231,10 +245,12 @@ class IncidentController extends Controller
      */
     public function addProgressLog(Request $request, Incident $incident): RedirectResponse
     {
+        $this->ensureTechnicianAssignment($incident);
+
         $validated = $request->validate([
             'activity' => ['required', 'string', 'max:150'],
             'notes' => ['nullable', 'string'],
-            'status_after' => ['nullable', 'in:asignado,en_diagnostico,en_reparacion,resuelto,baja_definitiva'],
+            'status_after' => ['nullable', 'in:asignado,en_diagnostico,en_reparacion'],
         ]);
 
         $statusBefore = $incident->status;
@@ -272,11 +288,16 @@ class IncidentController extends Controller
      */
     public function resolve(Request $request, Incident $incident): RedirectResponse
     {
+        $this->ensureTechnicianAssignment($incident);
+
         $validated = $request->validate([
             'diagnostic' => ['required', 'string'],
             'solution_applied' => ['required', 'string'],
             'actual_cost' => ['nullable', 'numeric', 'min:0'],
-            'equipment_status' => ['required', 'in:disponible,baja'],
+            'equipment_status' => [
+                'required',
+                Auth::user()->isTecnico() ? Rule::in(['disponible']) : Rule::in(['disponible', 'baja']),
+            ],
             'physical_condition' => ['required', 'in:excelente,bueno,regular,malo'],
         ]);
 
@@ -326,6 +347,13 @@ class IncidentController extends Controller
             DB::rollBack();
             report($e);
             return back()->with('error', 'Error al resolver el ticket: ' . $e->getMessage());
+        }
+    }
+
+    private function ensureTechnicianAssignment(Incident $incident): void
+    {
+        if (Auth::user()->isTecnico() && $incident->assigned_technician_id !== Auth::id()) {
+            abort(403, 'Solo puedes consultar y actualizar tickets asignados a tu cuenta.');
         }
     }
 }

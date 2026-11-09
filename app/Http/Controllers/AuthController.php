@@ -18,10 +18,10 @@ class AuthController extends Controller
      * Muestra la interfaz de inicio de sesión y recuperación con token.
      * Basado en: docs/stitch_asset_loan_maintenance_system/inicio_de_sesi_n_y_recuperaci_n_con_token
      */
-    public function showLoginForm(): View
+    public function showLoginForm(): View|RedirectResponse
     {
         if (Auth::check()) {
-            return view('private.dashboard');
+            return redirect()->to($this->destinationFor(Auth::user()));
         }
 
         return view('auth.login');
@@ -62,51 +62,13 @@ class AuthController extends Controller
 
             AuditService::log('Auth', $user->id, 'LOGIN', "Inicio de sesión exitoso ({$user->role}) desde {$request->ip()}", null, 'normal', $user->id);
 
-            // Redirección según rol institucional
-            if ($user->isUsuario() && $user->isAlumno()) {
-                return redirect()->intended(route('public.catalog'))->with('success', "Bienvenido(a), {$user->name}. Portal de Préstamos activo.");
-            }
-
-            return redirect()->intended(route('dashboard'))->with('success', "Acceso autorizado. Consola de operaciones SIGA Enterprise ({$user->role}).");
+            return redirect()->to($this->destinationFor($user))
+                ->with('success', "Bienvenido(a), {$user->name}. Acceso autorizado para {$user->role}.");
         }
 
         AuditService::log('Auth', $user->id, 'LOGIN_FAILED', "Contraseña incorrecta para el usuario: {$user->email}", null, 'advertencia', $user->id);
 
         return back()->withInput()->with('error', 'Contraseña incorrecta. Verifique sus credenciales o use la recuperación por token.');
-    }
-
-    /**
-     * Acceso rápido para demostración y evaluación de roles del sistema.
-     * Refleja los botones de cambio rápido de perfil en la interfaz de diseño.
-     */
-    public function quickLogin(Request $request): RedirectResponse
-    {
-        $roleTarget = $request->input('role', 'admin');
-
-        $user = match ($roleTarget) {
-            'supervisor' => User::where('role', User::ROLE_SUPERVISOR)->first(),
-            'encargado_activos' => User::where('role', User::ROLE_ENCARGADO_ACTIVOS)->first(),
-            'encargado_prestamos' => User::where('role', User::ROLE_ENCARGADO_PRESTAMOS)->first(),
-            'tecnico' => User::where('role', User::ROLE_TECNICO)->first(),
-            'docente' => User::where('user_type', User::TYPE_DOCENTE)->first(),
-            'alumno' => User::where('user_type', User::TYPE_ALUMNO)->first(),
-            default => User::where('role', User::ROLE_ADMIN)->first(),
-        };
-
-        if (!$user) {
-            // Si la base no tuviera aún ese usuario, tomar el primero disponible
-            $user = User::first();
-        }
-
-        if ($user) {
-            Auth::login($user);
-            $request->session()->regenerate();
-            AuditService::log('Auth', $user->id, 'QUICK_LOGIN', "Acceso rápido de evaluación como {$user->role} ({$user->name})", null, 'normal', $user->id);
-
-            return redirect()->route('dashboard')->with('success', "Sesión activa en modo demostración como: {$user->name} ({$user->role})");
-        }
-
-        return redirect()->route('login')->with('error', 'No se encontraron usuarios en la base de datos para inicio rápido.');
     }
 
     /**
@@ -218,6 +180,17 @@ class AuthController extends Controller
         }
 
         return redirect()->route('login')->with('success', 'Sesión cerrada de forma segura.');
+    }
+
+    private function destinationFor(User $user): string
+    {
+        return match ($user->role) {
+            User::ROLE_USUARIO => route('public.catalog'),
+            User::ROLE_ENCARGADO_ACTIVOS => route('equipment.index'),
+            User::ROLE_ENCARGADO_PRESTAMOS => route('loans.index'),
+            User::ROLE_TECNICO => route('incidents.index'),
+            default => route('dashboard'),
+        };
     }
 }
 

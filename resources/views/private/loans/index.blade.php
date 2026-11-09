@@ -13,6 +13,12 @@
     </div>
 
     <div class="flex items-center gap-2">
+        @if (Auth::user()->role === \App\Models\User::ROLE_ENCARGADO_PRESTAMOS)
+            <a href="{{ route('loans.borrowers.create') }}" class="neu-btn-secondary px-3.5 py-2 rounded-xl font-mono text-xs font-bold text-secondary flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-base">person_add</span>
+                <span>Registrar solicitante</span>
+            </a>
+        @endif
         <button type="button" onclick="openNewLoanModal()" class="neu-btn-primary px-4 py-2 rounded-xl font-headline font-semibold text-xs flex items-center gap-1.5 cursor-pointer">
             <span class="material-symbols-outlined text-base">add_circle</span>
             <span>+ Generar Préstamo</span>
@@ -279,7 +285,7 @@
                 <select name="user_id" required class="neu-inset w-full px-3 py-2 rounded-xl text-xs">
                     <option value="">Seleccione el usuario que recibirá el activo...</option>
                     @foreach ($eligibleUsers as $usr)
-                        <option value="{{ $usr->id }}">
+                        <option value="{{ $usr->id }}" {{ (string) $selectedBorrowerId === (string) $usr->id ? 'selected' : '' }}>
                             {{ $usr->name }} ({{ $usr->institutional_id }}) - {{ ucfirst($usr->user_type) }} [{{ $usr->career_or_department ?? 'General' }}]
                         </option>
                     @endforeach

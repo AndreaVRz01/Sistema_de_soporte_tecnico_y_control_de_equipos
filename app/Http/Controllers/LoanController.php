@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class LoanController extends Controller
@@ -65,10 +66,12 @@ class LoanController extends Controller
         $loans = $query->latest('request_date')->paginate(10)->withQueryString();
         
         // Usuarios que pueden recibir préstamos (sin sanciones activas)
-        $eligibleUsers = User::where('status', 'activo')
-            ->whereNotIn('role', [User::ROLE_ADMIN])
+        $eligibleUsers = User::where('role', User::ROLE_USUARIO)
+            ->where('status', 'activo')
             ->orderBy('name')
             ->get();
+
+        $selectedBorrowerId = $eligibleUsers->firstWhere('id', $request->input('new_user_id'))?->id;
 
         // Equipos disponibles para préstamo
         $availableEquipments = Equipment::where('status', 'disponible')
@@ -76,7 +79,7 @@ class LoanController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('private.loans.index', compact('loans', 'counts', 'eligibleUsers', 'availableEquipments'));
+        return view('private.loans.index', compact('loans', 'counts', 'eligibleUsers', 'availableEquipments', 'selectedBorrowerId'));
     }
 
     /**
@@ -85,7 +88,10 @@ class LoanController extends Controller
     public function store(Request $request): RedirectResponse|JsonResponse
     {
         $validated = $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => [
+                'required',
+                Rule::exists('users', 'id')->where('role', User::ROLE_USUARIO)->where('status', 'activo'),
+            ],
             'equipment_ids' => ['required', 'array', 'min:1'],
             'equipment_ids.*' => ['exists:equipment,id'],
             'purpose' => ['required', 'string', 'max:500'],

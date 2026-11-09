@@ -19,7 +19,7 @@
         </a>
         <button type="button" onclick="openCreateUserModal()" class="neu-btn-primary px-4 py-2 rounded-xl font-headline font-semibold text-xs flex items-center gap-1.5 cursor-pointer">
             <span class="material-symbols-outlined text-base">person_add</span>
-            <span>+ Registrar Usuario</span>
+            <span>+ Registrar Personal Operativo</span>
         </button>
     </div>
 @endsection
@@ -282,12 +282,9 @@
                     <input type="text" name="institutional_id" required placeholder="Ej. ALU-20240999 o EMP-00109" class="neu-inset w-full px-3 py-2 rounded-xl text-xs font-mono" />
                 </div>
                 <div class="space-y-1">
-                    <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Tipo Institucional *</label>
-                    <select name="user_type" required class="neu-inset w-full px-3 py-2 rounded-xl text-xs">
-                        <option value="alumno">Alumno Universitario</option>
-                        <option value="docente">Docente / Investigador</option>
-                        <option value="administrativo">Personal Administrativo</option>
-                    </select>
+                        <input type="hidden" name="user_type" value="administrativo" />
+                        <span class="block font-mono text-xs font-bold text-primary dark:text-surface">Personal administrativo</span>
+                        <span class="block font-body text-[11px] text-outline">Las cuentas creadas aquí tendrán acceso de operación.</span>
                 </div>
             </div>
 
@@ -306,12 +303,10 @@
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Rol en el Sistema *</label>
                     <select name="role" required class="neu-inset w-full px-3 py-2 rounded-xl text-xs">
-                        <option value="usuario">Usuario (Préstamos únicamente)</option>
-                        <option value="tecnico">Técnico de Taller y Soporte</option>
-                        <option value="encargado_prestamos">Encargado de Préstamos</option>
-                        <option value="encargado_activos">Encargado de Activos</option>
                         <option value="supervisor">Supervisor de Operaciones</option>
-                        <option value="admin">Administrador Total</option>
+                        <option value="encargado_activos">Encargado de Activos</option>
+                        <option value="encargado_prestamos">Encargado de Préstamos</option>
+                        <option value="tecnico">Técnico de Taller y Soporte</option>
                     </select>
                 </div>
                 <div class="space-y-1">
