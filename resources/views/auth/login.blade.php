@@ -126,6 +126,10 @@
                 .dark .text-secondary:not([class~="dark:text-secondary-fixed"]):not([class~="bg-secondary-container"]):not([class~="bg-amber-50"]):not(.neu-btn-secondary) { color: #ffd27b !important; }
                 .dark input::placeholder, .dark textarea::placeholder { color: #a9bac5 !important; opacity: 1; }
                 .dark select, .dark input, .dark textarea { color-scheme: dark; }
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-surface dark:bg-primary text-on-surface dark:text-surface antialiased min-h-screen flex flex-col justify-between selection:bg-secondary-container transition-colors duration-200 font-body">
@@ -140,7 +144,7 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="font-headline text-lg sm:text-xl font-bold text-primary dark:text-primary-fixed tracking-tight">SIGA Enterprise</span>
-                        <span class="px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-mono text-[10px] font-bold uppercase">v4.2 PRO</span>
+                        <span class="px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-mono text-[10px] font-bold uppercase"></span>
                     </div>
                     <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary hidden sm:block">Consola de Operaciones & Control Relacional</p>
                 </div>
@@ -258,7 +262,7 @@
                                         required 
                                         type="password" 
                                     />
-                                    <button class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-on-surface-variant hover:text-primary cursor-pointer" onclick="togglePassVisibility()" type="button">
+                                    <button aria-label="Mostrar contraseña" aria-pressed="false" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-on-surface-variant hover:text-primary cursor-pointer" onclick="togglePassVisibility()" type="button">
                                         <span class="material-symbols-outlined text-base" id="toggle-pass-icon">visibility</span>
                                     </button>
                                 </div>
@@ -364,9 +368,13 @@
             if (passInput.type === 'password') {
                 passInput.type = 'text';
                 passIcon.textContent = 'visibility_off';
+                passIcon.parentElement.setAttribute('aria-label', 'Ocultar contraseña');
+                passIcon.parentElement.setAttribute('aria-pressed', 'true');
             } else {
                 passInput.type = 'password';
                 passIcon.textContent = 'visibility';
+                passIcon.parentElement.setAttribute('aria-label', 'Mostrar contraseña');
+                passIcon.parentElement.setAttribute('aria-pressed', 'false');
             }
         }
 

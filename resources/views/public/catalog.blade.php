@@ -250,6 +250,90 @@
 </section>
 
 <!-- ========================================================================= -->
+<!-- HORARIOS DE ATENCIÓN Y ENTREGA                                            -->
+<!-- ========================================================================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="horarios">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div>
+            <span class="font-mono text-xs text-secondary uppercase tracking-widest font-bold">Ventanilla y bodega central</span>
+            <h2 class="font-headline text-2xl sm:text-3xl font-bold text-primary dark:text-surface mt-1 mb-4">Horarios de Atención y Entrega de Equipamiento</h2>
+            <p class="font-body text-sm text-on-surface-variant dark:text-inverse-primary leading-relaxed mb-6">Las entregas y devoluciones se realizan en los bloques autorizados para revisar la condición y los accesorios de cada activo.</p>
+            <div class="space-y-3">
+                <div class="neu-raised rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary">wb_sunny</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Turno Matutino</h3><p class="font-body text-xs text-outline">Lunes a viernes · Despacho principal</p></div></div>
+                    <span class="font-mono text-xs font-bold text-secondary">07:30 - 13:00 hrs</span>
+                </div>
+                <div class="neu-raised rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary">wb_twilight</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Turno Vespertino</h3><p class="font-body text-xs text-outline">Lunes a viernes · Devoluciones y cierre</p></div></div>
+                    <span class="font-mono text-xs font-bold text-secondary">14:30 - 18:30 hrs</span>
+                </div>
+                <div class="neu-raised rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-3"><span class="material-symbols-outlined text-secondary">notification_important</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Guardia Sabatina</h3><p class="font-body text-xs text-outline">Sábados · Solo urgencias TI con ticket aprobado</p></div></div>
+                    <span class="font-mono text-xs font-bold text-secondary">09:00 - 13:00 hrs</span>
+                </div>
+            </div>
+            <p class="mt-4 font-body text-xs text-on-surface-variant dark:text-inverse-primary"><strong>Ubicación:</strong> Edificio Central Corporativo, Planta Baja, Módulo C-12.</p>
+        </div>
+
+        <div class="neu-inset rounded-2xl p-6 sm:p-8">
+            <span class="font-mono text-xs text-secondary uppercase tracking-widest font-bold">Política de préstamo</span>
+            <h2 class="font-headline text-xl sm:text-2xl font-bold text-primary dark:text-surface mt-1 mb-6">Reglas y Políticas de Custodia de Equipos</h2>
+            <ol class="space-y-5">
+                <li class="flex gap-3"><span class="font-mono text-xs font-bold text-secondary">01</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Identificación obligatoria</h3><p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">La entrega requiere credencial institucional y firma de recepción. No se entregan activos a terceros sin autorización.</p></div></li>
+                <li class="flex gap-3"><span class="font-mono text-xs font-bold text-secondary">02</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Devolución en fecha</h3><p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">Laptops y proyectores: hasta 15 días, con una posible prórroga de 5 días. Las herramientas se devuelven al finalizar la jornada o el proyecto.</p></div></li>
+                <li class="flex gap-3"><span class="font-mono text-xs font-bold text-secondary">03</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Inspección de retorno</h3><p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">Al devolver el activo se revisan equipo, pantalla, accesorios y cables. Reporta cualquier falla mediante un ticket.</p></div></li>
+                <li class="flex gap-3"><span class="font-mono text-xs font-bold text-secondary">04</span><div><h3 class="font-headline text-sm font-bold text-primary dark:text-surface">Responsabilidad de resguardo</h3><p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">La persona solicitante es responsable del cuidado del bien durante el periodo del préstamo.</p></div></li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- ========================================================================= -->
+<!-- REGLAMENTO DE RESGUARDO Y PRIVACIDAD                                      -->
+<!-- ========================================================================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="terminos">
+    <div class="neu-raised rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+        <div>
+            <span class="font-mono text-xs text-secondary uppercase tracking-widest font-bold">Reglamento institucional</span>
+            <h2 class="font-headline text-xl sm:text-2xl font-bold text-primary dark:text-surface mt-1">Reglas de resguardo y uso responsable</h2>
+            <p class="font-body text-sm text-on-surface-variant dark:text-inverse-primary mt-2 max-w-2xl">Consulta las reglas de custodia aquí y abre los términos completos de privacidad y responsabilidad cuando necesites revisarlos.</p>
+        </div>
+        <button type="button" data-open-terms class="neu-btn-primary shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider">
+            <span class="material-symbols-outlined text-lg">description</span>
+            <span>Ver términos</span>
+        </button>
+    </div>
+</section>
+
+<!-- Modal de términos completos -->
+<div id="terms-modal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-primary/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
+    <div class="neu-raised neu-floating flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl">
+        <div class="flex items-start justify-between gap-4 border-b border-outline-variant/40 p-5 sm:p-6">
+            <div>
+                <span class="font-mono text-xs font-bold uppercase tracking-widest text-secondary">Reglamento institucional</span>
+                <h2 id="terms-modal-title" class="mt-1 font-headline text-xl font-bold text-primary dark:text-surface">Términos de Resguardo de Activos y Privacidad</h2>
+            </div>
+            <button type="button" data-close-terms aria-label="Cerrar términos" class="rounded-lg p-2 text-outline hover:bg-surface-container hover:text-primary dark:hover:bg-primary-container">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="space-y-6 overflow-y-auto p-5 font-body text-sm leading-relaxed text-on-surface-variant dark:text-inverse-primary sm:p-6">
+            <div><h3 class="mb-1 font-headline font-bold text-primary dark:text-surface">1. Objeto y Propiedad Institucional</h3><p>Todos los dispositivos electrónicos, equipos de cómputo portátil, periféricos, herramientas técnicas y accesorios disponibles en SIGA Enterprise son propiedad exclusiva de la empresa. El préstamo concede una custodia temporal estrictamente para actividades laborales inherentes al cargo del empleado.</p></div>
+            <div><h3 class="mb-1 font-headline font-bold text-primary dark:text-surface">2. Custodia, Cuidado y Pérdida</h3><p>El usuario solicitante es el único responsable legal y administrativo del resguardo físico del activo desde su retiro de ventanilla hasta su recepción formal en almacén. En caso de robo con violencia o extravío fuera de las instalaciones, se deberá tramitar de inmediato el acta judicial correspondiente y notificar a la mesa de control dentro de las primeras 12 horas.</p></div>
+            <div><h3 class="mb-1 font-headline font-bold text-primary dark:text-surface">3. Seguridad Informática y Datos Corporativos</h3><p>Queda prohibida la instalación de software no homologado, la desactivación de agentes de telemetría y antivirus, así como la transferencia de datos confidenciales a dispositivos de almacenamiento externos no encriptados. El área de Seguridad Informática se reserva el derecho de borrado remoto preventivo en casos de alerta de extravío.</p></div>
+            <div><h3 class="mb-1 font-headline font-bold text-primary dark:text-surface">4. Retorno y Sanciones por Incumplimiento</h3><p>La falta de devolución en la fecha estipulada derivará en el bloqueo de solicitudes posteriores y reporte automático a la Gerencia de Recursos Humanos y Auditoría Interna. Los daños ocasionados por dolo o negligencia comprobable podrán ser sujetos a deducción conforme a la legislación laboral aplicable.</p></div>
+            <div><h3 class="mb-1 font-headline font-bold text-primary dark:text-surface">5. Privacidad y Protección de Datos Personales</h3><p>Los datos recabados en los formularios (número de empleado, departamento, firmas biométricas) se almacenan bajo rigurosos protocolos de cifrado y se emplean exclusivamente para la trazabilidad operativa y el control patrimonial de la institución.</p></div>
+        </div>
+        <div class="flex justify-end border-t border-outline-variant/40 p-5 sm:p-6">
+            <button type="button" data-close-terms class="neu-btn-primary inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider">
+                <span class="material-symbols-outlined text-lg">check</span>
+                <span>Aceptar términos</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================================= -->
 <!-- MODAL: SOLICITUD DE PRÉSTAMO PÚBLICA                                      -->
 <!-- ========================================================================= -->
 <div id="modalPublicLoan" class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
@@ -317,6 +401,33 @@
 </div>
 
 <script>
+    const termsModal = document.getElementById('terms-modal');
+    const termsClosers = document.querySelectorAll('[data-close-terms]');
+
+    function openTermsModal() {
+        termsModal.classList.remove('hidden');
+        termsModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        termsClosers[0]?.focus();
+    }
+
+    function closeTermsModal() {
+        termsModal.classList.add('hidden');
+        termsModal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', (event) => {
+        if (event.target instanceof Element && event.target.closest('[data-open-terms]')) openTermsModal();
+    });
+    termsClosers.forEach((button) => button.addEventListener('click', closeTermsModal));
+    termsModal.addEventListener('click', (event) => {
+        if (event.target === termsModal) closeTermsModal();
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !termsModal.classList.contains('hidden')) closeTermsModal();
+    });
+
     function openPublicLoanModal(id, name, code) {
         document.getElementById('publicLoanEquipId').value = id;
         document.getElementById('publicLoanEquipName').textContent = name;

@@ -195,6 +195,7 @@
         .dark ::-webkit-scrollbar-thumb {
             background: #003049;
         }
+
     </style>
 
     @stack('styles')
@@ -204,12 +205,15 @@
     <!-- ========================================================================= -->
     <!-- TOP APP BAR INSTITUCIONAL (Barra Superior Fija)                           -->
     <!-- ========================================================================= -->
-    <header class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200 min-h-16">
-        <div class="w-full px-4 sm:px-6 lg:px-8 min-h-16 flex flex-wrap items-center justify-between gap-y-1">
+    <header id="private-topbar" class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200 min-h-16 lg:ml-72 lg:w-[calc(100%-18rem)]">
+        <div class="w-full px-4 sm:px-6 lg:px-8 min-h-16 flex items-center justify-between">
             
             <!-- Identidad institucional -->
             <div class="flex items-center gap-3">
-                <a href="{{ Auth::user()->role === 'tecnico' ? route('incidents.index') : route('dashboard') }}" class="flex flex-col">
+                <button aria-label="Cerrar menú de navegación" aria-controls="private-side-drawer" aria-expanded="true" class="fixed left-4 top-3 z-[60] p-2 rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container neu-raised" id="private-drawer-toggle" type="button" title="Mostrar u ocultar menú">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <a href="{{ Auth::user()->role === 'tecnico' ? route('incidents.index') : route('dashboard') }}" class="flex flex-col pl-12">
                     <span class="font-headline text-lg sm:text-xl font-bold text-primary dark:text-surface tracking-tight leading-none">SIGA Enterprise</span>
                     <span class="font-mono text-[10px] text-secondary dark:text-secondary-fixed uppercase tracking-wider font-semibold">Consola Operativa Institucional</span>
                 </a>
@@ -256,17 +260,8 @@
                     default => [],
                 };
             @endphp
-            <nav aria-label="Navegación principal" class="order-3 w-full flex items-center gap-1 overflow-x-auto border-t border-outline-variant/30 py-2 lg:order-2 lg:w-auto lg:flex-1 lg:justify-center lg:border-0 lg:py-0">
-                @foreach ($roleNavigation as $item)
-                    <a href="{{ route($item['route']) }}" class="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-2 font-body text-xs font-semibold transition-colors {{ request()->routeIs($item['active']) ? 'bg-surface-container text-primary dark:bg-primary-container dark:text-surface' : 'text-on-surface-variant dark:text-inverse-primary hover:bg-surface-container/70 dark:hover:bg-primary-container/60' }}">
-                        <span class="material-symbols-outlined text-base">{{ $item['icon'] }}</span>
-                        <span>{{ $item['label'] }}</span>
-                    </a>
-                @endforeach
-            </nav>
-
             <!-- Acciones de sesión -->
-            <div class="flex items-center gap-3">
+            <div class="ml-auto flex shrink-0 items-center gap-3">
                 <!-- Botón Acción Rápida (Ej: Registrar) -->
                 @yield('topbar_action')
 
@@ -286,6 +281,10 @@
                 <!-- Perfil y Menú de Usuario -->
                 <div class="relative pl-2 border-l border-outline-variant/30">
                     <button class="flex items-center gap-2 cursor-pointer group" id="user-profile-menu-btn" type="button">
+                        <span class="hidden max-w-32 text-right sm:block">
+                            <span class="block truncate font-body text-xs font-semibold text-primary dark:text-surface">{{ Auth::user()->name ?? 'Usuario' }}</span>
+                            <span class="block font-mono text-[10px] text-outline">Mi cuenta</span>
+                        </span>
                         <div class="w-9 h-9 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center font-headline font-bold text-sm ring-2 ring-secondary/40 neu-raised">
                             {{ substr(Auth::user()->name ?? 'Admin', 0, 1) }}
                         </div>
@@ -322,7 +321,49 @@
         </div>
     </header>
 
-    <main class="flex-1 w-full p-4 sm:p-6 lg:p-8 overflow-y-auto">
+    <div class="fixed inset-0 z-40 hidden bg-primary/45 backdrop-blur-sm lg:hidden" id="private-drawer-backdrop"></div>
+    <aside aria-label="Menú principal de navegación" aria-hidden="true" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col border-r border-outline-variant/50 bg-surface p-5 shadow-2xl transition-transform duration-300 dark:border-primary-container dark:bg-primary-container lg:translate-x-0" id="private-side-drawer">
+        <div class="flex items-center justify-between border-b border-outline-variant/40 pb-5 dark:border-primary">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-container text-secondary-container dark:bg-primary">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                </div>
+                <div>
+                    <p class="font-headline text-sm font-bold text-primary dark:text-surface">SIGA Enterprise</p>
+                    <p class="font-mono text-[10px] uppercase tracking-wider text-secondary">{{ ucfirst(str_replace('_', ' ', Auth::user()->role)) }}</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-1">
+                <button aria-label="Fijar menú" aria-pressed="false" class="rounded-lg p-2 text-outline hover:bg-surface-container hover:text-secondary" id="private-drawer-pin" type="button" title="Fijar menú">
+                    <span class="material-symbols-outlined">push_pin</span>
+                </button>
+                <button aria-label="Cerrar menú de navegación" class="rounded-lg p-2 text-outline hover:bg-surface-container lg:hidden" id="private-drawer-close" type="button">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+        </div>
+
+        <nav aria-label="Secciones del sistema" class="mt-7 flex-1 space-y-2 overflow-y-auto">
+            @foreach ($roleNavigation as $item)
+                <a href="{{ route($item['route']) }}" class="group flex items-center gap-3 rounded-xl border px-3 py-3 transition-colors {{ request()->routeIs($item['active']) ? 'border-secondary/50 bg-surface-container text-primary dark:bg-primary dark:text-surface' : 'border-transparent text-on-surface-variant hover:border-outline-variant/50 hover:bg-surface-container/70 dark:text-inverse-primary dark:hover:bg-primary/60' }}">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-container-low text-secondary dark:bg-primary-container">
+                        <span class="material-symbols-outlined">{{ $item['icon'] }}</span>
+                    </span>
+                    <span class="min-w-0 flex-1">
+                        <span class="mt-0.5 block truncate font-body text-sm font-semibold">{{ $item['label'] }}</span>
+                    </span>
+                    <span class="material-symbols-outlined text-base text-outline">chevron_right</span>
+                </a>
+            @endforeach
+        </nav>
+
+        <div class="mt-5 border-t border-outline-variant/40 pt-4 dark:border-primary">
+            <p class="font-mono text-[10px] uppercase tracking-widest text-outline">Consola Operativa</p>
+            <p class="mt-1 truncate font-body text-xs font-semibold text-primary dark:text-surface">{{ Auth::user()->name }}</p>
+        </div>
+    </aside>
+
+    <main id="private-main" class="ml-0 w-full flex-1 overflow-y-auto p-4 sm:p-6 lg:ml-72 lg:w-[calc(100%-18rem)] lg:p-8">
             
             <!-- Encabezado de Página (Si se define en la vista) -->
             @hasSection('header')
@@ -401,6 +442,83 @@
                 localStorage.setItem('siga_theme', newTheme ? 'dark' : 'light');
             });
         }
+
+        const privateDrawerToggle = document.getElementById('private-drawer-toggle');
+        const privateDrawerClose = document.getElementById('private-drawer-close');
+        const privateDrawerPin = document.getElementById('private-drawer-pin');
+        const privateDrawer = document.getElementById('private-side-drawer');
+        const privateDrawerBackdrop = document.getElementById('private-drawer-backdrop');
+        const privateTopbar = document.getElementById('private-topbar');
+        const privateMain = document.getElementById('private-main');
+        const privateDesktopMenu = window.matchMedia('(min-width: 1024px)');
+        const privatePinnedMenuKey = 'siga_private_menu_pinned';
+        const privateOpenMenuKey = 'siga_private_menu_open';
+        let privateMenuPinned = localStorage.getItem(privatePinnedMenuKey) === 'true';
+
+        function setPrivateDrawerOpen(isOpen, persist = true) {
+            if (!privateDrawer || !privateDrawerBackdrop) return;
+            privateDrawer.classList.toggle('-translate-x-full', !isOpen);
+            privateDrawer.style.translate = isOpen ? '0 0' : '-100% 0';
+            privateDrawer.setAttribute('aria-hidden', String(!isOpen));
+            privateDrawerToggle?.setAttribute('aria-expanded', String(isOpen));
+            privateDrawerToggle?.setAttribute('aria-label', isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+            if (privateDesktopMenu.matches) {
+                document.body.classList.toggle('private-menu-collapsed', !isOpen);
+                [privateTopbar, privateMain].forEach((element) => {
+                    if (!element) return;
+                    element.style.marginLeft = isOpen ? '18rem' : '0';
+                    element.style.width = isOpen ? 'calc(100% - 18rem)' : '100%';
+                });
+                privateDrawerBackdrop.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                [privateTopbar, privateMain].forEach((element) => {
+                    if (!element) return;
+                    element.style.marginLeft = '';
+                    element.style.width = '';
+                });
+                privateDrawerBackdrop.classList.toggle('hidden', !isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+            if (persist) localStorage.setItem(privateOpenMenuKey, String(isOpen));
+        }
+
+        function isPrivateDrawerOpen() {
+            return privateDesktopMenu.matches
+                ? !document.body.classList.contains('private-menu-collapsed')
+                : !privateDrawer.classList.contains('-translate-x-full');
+        }
+
+        function updatePrivatePinButton() {
+            privateDrawerPin?.setAttribute('aria-pressed', String(privateMenuPinned));
+            privateDrawerPin?.setAttribute('aria-label', privateMenuPinned ? 'Quitar fijado al menú' : 'Fijar menú');
+            privateDrawerPin?.setAttribute('title', privateMenuPinned ? 'Quitar fijado al menú' : 'Fijar menú');
+            privateDrawerPin?.classList.toggle('text-secondary', privateMenuPinned);
+        }
+
+        const savedPrivateMenuOpen = localStorage.getItem(privateOpenMenuKey);
+        setPrivateDrawerOpen(privateDesktopMenu.matches && (privateMenuPinned || savedPrivateMenuOpen !== 'false'), false);
+        updatePrivatePinButton();
+
+        if (privateDrawerToggle) privateDrawerToggle.addEventListener('click', () => setPrivateDrawerOpen(!isPrivateDrawerOpen()));
+        if (privateDrawerClose) privateDrawerClose.addEventListener('click', () => setPrivateDrawerOpen(false));
+        if (privateDrawerBackdrop) privateDrawerBackdrop.addEventListener('click', () => setPrivateDrawerOpen(false));
+        if (privateDrawerPin) privateDrawerPin.addEventListener('click', () => {
+            privateMenuPinned = !privateMenuPinned;
+            localStorage.setItem(privatePinnedMenuKey, String(privateMenuPinned));
+            updatePrivatePinButton();
+            if (privateMenuPinned) setPrivateDrawerOpen(true);
+        });
+        if (privateDrawer) privateDrawer.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+            if (!privateDesktopMenu.matches || !privateMenuPinned) setPrivateDrawerOpen(false);
+        }));
+        window.addEventListener('resize', () => {
+            if (privateDesktopMenu.matches) setPrivateDrawerOpen(privateMenuPinned || localStorage.getItem(privateOpenMenuKey) !== 'false', false);
+            else setPrivateDrawerOpen(false, false);
+        });
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && isPrivateDrawerOpen()) setPrivateDrawerOpen(false);
+        });
 
         // Menú desplegable de perfil de usuario
         const userBtn = document.getElementById('user-profile-menu-btn');
