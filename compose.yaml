@@ -1,0 +1,191 @@
+# =============================================================================
+# SIGA Enterprise — Docker Compose
+# Servicios: bd (PostgreSQL), app (Laravel+PHP-FPM+Nginx), vite (Node assets),
+#            frontend (Nginx proxy reverso)
+# Sin root en ningún contenedor | Variables desde .env
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # BD: PostgreSQL 16 Alpine
+  # Usuario no-root: 'postgres' se ejecuta como uid 999 en la imagen oficial
+  # ---------------------------------------------------------------------------
+  bd:
+    image: postgres:16-alpine
+    container_name: siga_bd
+    restart: unless-stopped
+
+    # Usuario no-root (postgres uid=70 en alpine, el proceso interno usa setuid)
+    # La imagen oficial ya gestiona esto de forma segura
+    environment:
+      POSTGRES_DB:       ${DB_DATABASE:-siga_db}
+      POSTGRES_USER:     ${DB_USERNAME:-siga_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-siga_pass_2024}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.utf8"
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: America/Mexico_City
+
+    volumes:
+      # Datos persistentes de PostgreSQL
+      - siga_pgdata:/var/lib/postgresql/data
+      # Script de inicialización (se ejecuta una sola vez al crear el volumen)
+      - ./docker/bd/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+      # Configuración personalizada
+      - ./docker/bd/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+
+    # PostgreSQL NO expone puerto al host en producción (solo red interna)
+    # Descomenta para acceso directo con DBeaver/TablePlus:
+    # ports:
+    #   - "${DB_EXPOSE_PORT:-5432}:5432"
+
+    networks:
+      - siga_network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-siga_user} -d ${DB_DATABASE:-siga_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ---------------------------------------------------------------------------
+  # VITE: Compilación de assets (Node 20 Alpine)
+  # Solo corre durante el build; en producción los assets quedan en /public/build
+  # ---------------------------------------------------------------------------
+  vite:
+    build:
+      context: .
+      dockerfile: docker/vite/Dockerfile
+      target: vite-builder
+    container_name: siga_vite
+    # Vite solo compila y sale — no es un servicio permanente
+    command: sh -c "npm run build && echo 'Assets compilados correctamente.'"
+    profiles:
+      - build         # Solo se ejecuta con: docker compose --profile build up vite
+    user: "1000:1000" # usuario node (no-root)
+
+    volumes:
+      # Montar public/ para que los assets compilados lleguen al contenedor app
+      - ./public:/app/public
+      - ./resources:/app/resources:ro
+      - vite_node_modules:/app/node_modules
+
+    networks:
+      - siga_network
+
+  # ---------------------------------------------------------------------------
+  # APP: Laravel 12 + PHP 8.2-FPM + Nginx interno (puerto 8080)
+  # Depende de que bd (PostgreSQL) esté healthy
+  # ---------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: siga_app
+    restart: unless-stopped
+    user: "1000:1000"
+
+    # Variables desde .env del proyecto
+    env_file:
+      - .env
+
+    # Sobrescrituras para Docker
+    environment:
+      APP_ENV:        ${APP_ENV:-production}
+      APP_URL:        ${APP_URL:-http://localhost:8000}
+      DB_CONNECTION:  pgsql
+      DB_HOST:        bd
+      DB_PORT:        5432
+      DB_DATABASE:    ${DB_DATABASE:-siga_db}
+      DB_USERNAME:    ${DB_USERNAME:-siga_user}
+      DB_PASSWORD:    ${DB_PASSWORD:-siga_pass_2024}
+      SESSION_DRIVER: database
+      CACHE_STORE:    database
+      LOG_CHANNEL:    stderr
+      LOG_LEVEL:      ${LOG_LEVEL:-error}
+
+    volumes:
+      # Storage de Laravel (sesiones, uploads, logs)
+      - siga_storage:/var/www/siga/storage
+      # Caché de bootstrap
+      - siga_bootstrap_cache:/var/www/siga/bootstrap/cache
+      # Assets compilados por Vite (solo lectura)
+      - ./public/build:/var/www/siga/public/build:ro
+
+    # Solo expone directamente para debugging (el tráfico público va por frontend)
+    ports:
+      - "${APP_PORT:-8080}:8080"
+
+    depends_on:
+      bd:
+        condition: service_healthy
+
+    networks:
+      - siga_network
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ---------------------------------------------------------------------------
+  # FRONTEND: Nginx proxy reverso público (puerto 8000)
+  # Recibe tráfico del host y lo reenvía al servicio app:8080
+  # ---------------------------------------------------------------------------
+  frontend:
+    image: nginx:1.27-alpine
+    container_name: siga_frontend
+    restart: unless-stopped
+    user: "101:101"  # usuario nginx en imagen alpine (no-root)
+
+    volumes:
+      - ./docker/nginx/frontend.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./public:/var/www/siga/public:ro
+
+    ports:
+      - "${FRONTEND_PORT:-8000}:8088"
+
+    depends_on:
+      app:
+        condition: service_healthy
+
+    networks:
+      - siga_network
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8088/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+# =============================================================================
+# REDES
+# =============================================================================
+networks:
+  siga_network:
+    driver: bridge
+    name: siga_network
+
+# =============================================================================
+# VOLÚMENES PERSISTENTES
+# =============================================================================
+volumes:
+  # Base de datos PostgreSQL — NUNCA borrar sin respaldar
+  siga_pgdata:
+    name: siga_pgdata
+
+  # Storage de Laravel
+  siga_storage:
+    name: siga_storage_data
+
+  # Caché de bootstrap compilada
+  siga_bootstrap_cache:
+    name: siga_bootstrap_cache
+
+  # node_modules de Vite (evita reinstalar en cada build)
+  vite_node_modules:
+    name: siga_vite_node_modules
