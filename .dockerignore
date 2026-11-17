@@ -1,7 +1,6 @@
 # =============================================================================
 # .dockerignore — SIGA Enterprise
 # Excluye archivos innecesarios del contexto de build de Docker.
-# Reduce tamaño del contexto y evita exponer datos sensibles.
 # =============================================================================
 
 # ----- Control de versiones -----
@@ -14,7 +13,7 @@
 /vendor
 /node_modules
 
-# ----- Assets compilados por Vite (CDN se usa en este proyecto) -----
+# ----- Assets compilados por Vite -----
 /public/build
 /public/hot
 
@@ -25,10 +24,8 @@
 .env.staging
 .env.backup
 
-# ----- Base de datos local (se genera en volumen Docker) -----
-/database/database.sqlite
-/database/database.sqlite-shm
-/database/database.sqlite-wal
+# ----- Base de datos local SQLite -----
+/database/database.sqlite*
 
 # ----- Logs y caché local -----
 /storage/logs/*.log
@@ -42,7 +39,7 @@
 /phpunit.xml
 phpunit.xml.dist
 
-# ----- Herramientas de desarrollo (no van a producción) -----
+# ----- Herramientas de desarrollo -----
 /.pint.json
 /psalm.xml
 /.phpactor.json
@@ -52,11 +49,12 @@ phpunit.xml.dist
 *.md
 !README.md
 
-# ----- Docker files propios (evitar recursión) -----
+# ----- Docker files (evitar recursión, pero PERMITIR la carpeta docker/) -----
 Dockerfile*
 compose.yaml
 docker-compose*.yml
 .dockerignore
+!docker/**
 
 # ----- IDEs y editores -----
 .vscode
@@ -78,11 +76,10 @@ tailwind.config.js
 .travis.yml
 .circleci
 Jenkinsfile
-*.sh
-!docker/entrypoint.sh
 
-# ----- Archivos de caché de Composer -----
-.composer
+# ----- Scripts (no ignorar los de docker/) -----
+*.sh
+!docker/app/entrypoint.sh
 
 # ----- Archivos temporales -----
 /tmp
