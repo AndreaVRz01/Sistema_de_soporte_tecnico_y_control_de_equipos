@@ -80,8 +80,8 @@ services:
       APP_ENV:        ${APP_ENV:-production}
       APP_URL:        ${APP_URL:-http://localhost:8000}
       DB_CONNECTION:  ${DB_CONNECTION:-pgsql}
-      DB_HOST:        ${DB_HOST:-bd}
-      DB_PORT:        ${DB_PORT:-5432}
+      DB_HOST:        bd
+      DB_PORT:        5432
       DB_DATABASE:    ${DB_DATABASE:-siga_db}
       DB_USERNAME:    ${DB_USERNAME:-siga_user}
       DB_PASSWORD:    ${DB_PASSWORD:-siga_pass_2024}

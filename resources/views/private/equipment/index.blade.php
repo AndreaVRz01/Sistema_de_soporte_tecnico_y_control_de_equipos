@@ -59,7 +59,7 @@
 
     <!-- Barra de Filtros y Búsqueda Relacional -->
     <div class="neu-raised rounded-2xl p-4">
-        <form method="GET" action="{{ route('equipment.index') }}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+        <form method="GET" action="{{ route('equipment.index') }}" data-ajax-filter data-filter-target="#filter-results" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             
             <!-- Campo Buscador -->
             <div class="sm:col-span-4 neu-inset rounded-xl flex items-center px-3 py-1.5">
@@ -111,7 +111,7 @@
     </div>
 
     <!-- Tabla Maestra de Activos -->
-    <div class="neu-raised rounded-2xl overflow-hidden shadow-xs">
+    <div id="filter-results" class="neu-raised rounded-2xl overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse font-body text-xs">
                 <thead>
