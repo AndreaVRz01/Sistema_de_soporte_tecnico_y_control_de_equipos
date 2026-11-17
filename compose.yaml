@@ -30,6 +30,9 @@ services:
       - ./docker/bd/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
       - ./docker/bd/postgresql.conf:/etc/postgresql/postgresql.conf:ro
 
+    ports:
+      - "${DB_EXPOSE_PORT:-5432}:5432"
+
     networks:
       - siga_network
 
