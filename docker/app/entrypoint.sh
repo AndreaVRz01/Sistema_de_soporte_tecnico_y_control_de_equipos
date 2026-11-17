@@ -61,9 +61,12 @@ while [ $RETRIES -gt 0 ]; do
     sleep 2
 done
 
-# ----- 4. Ejecutar migraciones -----
+# ----- 4. Ejecutar migraciones y seeders -----
 echo "[INFO] Ejecutando migraciones..."
 php "$APP_DIR/artisan" migrate --force --no-interaction || echo "[WARN] Migraciones omitidas o ya aplicadas."
+
+echo "[INFO] Ejecutando seeders..."
+php "$APP_DIR/artisan" db:seed --force --no-interaction || echo "[WARN] No fue posible ejecutar los seeders."
 
 # ----- 5. Limpiar cachés para asegurar que Laravel use las variables de entorno actuales -----
 echo "[INFO] Limpiando cachés de configuración..."
