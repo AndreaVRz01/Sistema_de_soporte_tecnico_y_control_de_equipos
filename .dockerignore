@@ -1,0 +1,91 @@
+# =============================================================================
+# .dockerignore — SIGA Enterprise
+# Excluye archivos innecesarios del contexto de build de Docker.
+# Reduce tamaño del contexto y evita exponer datos sensibles.
+# =============================================================================
+
+# ----- Control de versiones -----
+.git
+.gitignore
+.gitattributes
+.github
+
+# ----- Dependencias locales (se instalan en el build) -----
+/vendor
+/node_modules
+
+# ----- Assets compilados por Vite (CDN se usa en este proyecto) -----
+/public/build
+/public/hot
+
+# ----- Archivos de entorno sensibles -----
+.env.local
+.env.*.local
+.env.testing
+.env.staging
+.env.backup
+
+# ----- Base de datos local (se genera en volumen Docker) -----
+/database/database.sqlite
+/database/database.sqlite-shm
+/database/database.sqlite-wal
+
+# ----- Logs y caché local -----
+/storage/logs/*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*.php
+
+# ----- Archivos de desarrollo y testing -----
+/tests
+/phpunit.xml
+phpunit.xml.dist
+
+# ----- Herramientas de desarrollo (no van a producción) -----
+/.pint.json
+/psalm.xml
+/.phpactor.json
+
+# ----- Documentación interna -----
+/docs
+*.md
+!README.md
+
+# ----- Docker files propios (evitar recursión) -----
+Dockerfile*
+compose.yaml
+docker-compose*.yml
+.dockerignore
+
+# ----- IDEs y editores -----
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ----- Node / Frontend -----
+package.json
+package-lock.json
+vite.config.js
+postcss.config.js
+tailwind.config.js
+
+# ----- CI/CD -----
+.travis.yml
+.circleci
+Jenkinsfile
+*.sh
+!docker/entrypoint.sh
+
+# ----- Archivos de caché de Composer -----
+.composer
+
+# ----- Archivos temporales -----
+/tmp
+*.tmp
+*.bak
+*.orig
