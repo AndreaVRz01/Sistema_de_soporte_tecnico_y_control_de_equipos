@@ -1,12 +1,6 @@
 # =============================================================================
 # SIGA Enterprise — Dockerfile Principal (Multi-stage)
 # PHP 8.2-FPM + Nginx + PostgreSQL | Sin root | Alpine
-#
-# FIX aplicado:
-#   - Añadido sqlite-dev y postgresql-dev ANTES de docker-php-ext-install
-#   - Eliminado -j$(nproc) para evitar condiciones de carrera en el build
-#   - Separadas extensiones en grupos para identificar errores fácilmente
-#   - Movida config a docker/app/ para mejor organización
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -16,10 +10,10 @@ FROM composer:2.8 AS composer-builder
 
 WORKDIR /app
 
-# Copiar solo manifiestos primero → mejor caché de capas Docker
+# Copiar manifiestos primero para caché de capas
 COPY composer.json composer.lock ./
 
-# Instalar dependencias sin dev ni scripts
+# Instalar dependencias sin scripts de desarrollo
 RUN composer install \
         --no-dev \
         --no-interaction \
@@ -28,10 +22,10 @@ RUN composer install \
         --prefer-dist \
         --optimize-autoloader
 
-# Copiar código fuente completo
+# Copiar código fuente
 COPY . .
 
-# Regenerar autoload con el código fuente real
+# Optimizar autoload
 RUN composer dump-autoload --optimize --no-dev
 
 # -----------------------------------------------------------------------------
@@ -44,7 +38,6 @@ LABEL description="Sistema de Gestión de Activos, Préstamos y Mantenimiento"
 LABEL version="4.2"
 
 # ----- PASO 1: Paquetes del sistema operativo -----
-# IMPORTANTE: sqlite-dev y postgresql-dev deben estar ANTES de docker-php-ext-install
 RUN apk update && apk add --no-cache \
         nginx \
         supervisor \
@@ -56,33 +49,39 @@ RUN apk update && apk add --no-cache \
         postgresql-dev \
         libzip-dev
 
-# ----- PASO 2: Extensiones PDO (una por una para diagnóstico claro) -----
-RUN docker-php-ext-install pdo
-RUN docker-php-ext-install pdo_pgsql
-RUN docker-php-ext-install pdo_sqlite
-
-# ----- PASO 3: Resto de extensiones PHP -----
-RUN docker-php-ext-install zip opcache pcntl bcmath \
+# ----- PASO 2: Extensiones PDO y utilidades de PHP -----
+RUN docker-php-ext-install pdo \
+    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-install pdo_sqlite \
+    && docker-php-ext-install zip opcache pcntl bcmath \
     && rm -rf /tmp/pear /var/cache/apk/*
 
-# ----- PASO 4: Configuración PHP y Nginx -----
-COPY docker/app/php.ini      /usr/local/etc/php/conf.d/siga.ini
-COPY docker/app/opcache.ini  /usr/local/etc/php/conf.d/opcache.ini
-COPY docker/nginx/nginx.conf      /etc/nginx/nginx.conf
-COPY docker/nginx/default.conf    /etc/nginx/http.d/default.conf
-COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# ----- PASO 5: Usuario no-root 'www' (Alpine nativo, sin paquete shadow) -----
+# ----- PASO 3: Crear usuario no-root 'www' (uid 1000) -----
 RUN addgroup -g 1000 -S www \
     && adduser -u 1000 -S -G www -s /bin/sh www
+
+# ----- PASO 4: Configurar PHP-FPM para usuario no-root 'www' (como root durante build) -----
+RUN sed -i 's/user = www-data/user = www/g' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's/group = www-data/group = www/g' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's/listen = 127.0.0.1:9000/listen = 127.0.0.1:9000/g' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's|;pid = run/php-fpm.pid|pid = /tmp/php-fpm.pid|g' /usr/local/etc/php-fpm.conf \
+    && mkdir -p /usr/local/var/log /usr/local/var/run \
+    && chown -R www:www /usr/local/var /usr/local/etc/php-fpm.d /usr/local/etc/php-fpm.conf
+
+# ----- PASO 5: Copiar configuraciones personalizadas -----
+COPY docker/app/php.ini                /usr/local/etc/php/conf.d/siga.ini
+COPY docker/app/opcache.ini            /usr/local/etc/php/conf.d/opcache.ini
+COPY docker/nginx/nginx.conf           /etc/nginx/nginx.conf
+COPY docker/nginx/default.conf         /etc/nginx/http.d/default.conf
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # ----- PASO 6: Directorio de la aplicación -----
 WORKDIR /var/www/siga
 
-# Vendor del stage builder
+# Copiar dependencias del builder
 COPY --from=composer-builder --chown=www:www /app/vendor ./vendor
 
-# Código fuente
+# Copiar código fuente
 COPY --chown=www:www . .
 
 # ----- PASO 7: Permisos de directorios de Laravel -----
