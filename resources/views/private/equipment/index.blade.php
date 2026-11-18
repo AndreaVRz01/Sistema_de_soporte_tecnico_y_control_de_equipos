@@ -25,7 +25,7 @@
 @endsection
 
 @section('content')
-<div class="space-y-6">
+<div id="filter-results" data-ajax-filter-results class="space-y-6">
 
     <!-- Tarjetas de Conteo Rápido por Estatus -->
     <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -75,7 +75,7 @@
 
             <!-- Filtro Categoría -->
             <div class="sm:col-span-3">
-                <select name="category_id" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="category_id" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Todas las Categorías</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
@@ -87,7 +87,7 @@
 
             <!-- Filtro Condición Física -->
             <div class="sm:col-span-3">
-                <select name="physical_condition" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="physical_condition" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Cualquier Condición</option>
                     <option value="excelente" {{ request('physical_condition') === 'excelente' ? 'selected' : '' }}>Excelente</option>
                     <option value="bueno" {{ request('physical_condition') === 'bueno' ? 'selected' : '' }}>Bueno</option>
@@ -111,7 +111,7 @@
     </div>
 
     <!-- Tabla Maestra de Activos -->
-    <div id="filter-results" class="neu-raised rounded-2xl overflow-hidden shadow-xs">
+    <div class="neu-raised rounded-2xl overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse font-body text-xs">
                 <thead>

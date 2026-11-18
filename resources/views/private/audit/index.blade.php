@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-<div class="space-y-6">
+<div id="filter-results" data-ajax-filter-results class="space-y-6">
 
     <!-- Tarjetas de Métricas de Auditoría -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -51,7 +51,7 @@
 
     <!-- Barra de Búsqueda Multifactorial -->
     <div class="neu-raised rounded-2xl p-4">
-        <form method="GET" action="{{ route('audit.index') }}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+        <form method="GET" action="{{ route('audit.index') }}" data-ajax-filter data-filter-target="#filter-results" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             
             <div class="sm:col-span-4 neu-inset rounded-xl flex items-center px-3 py-1.5">
                 <span class="material-symbols-outlined text-secondary mr-2 text-lg">search</span>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="sm:col-span-3">
-                <select name="entity_type" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="entity_type" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Todas las Entidades ER</option>
                     <option value="Equipment" {{ request('entity_type') === 'Equipment' ? 'selected' : '' }}>Activos (Equipment)</option>
                     <option value="Loan" {{ request('entity_type') === 'Loan' ? 'selected' : '' }}>Préstamos (Loan)</option>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="sm:col-span-3">
-                <select name="timeframe" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="timeframe" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Cualquier Fecha</option>
                     <option value="24h" {{ request('timeframe') === '24h' ? 'selected' : '' }}>Jornada Actual (24h)</option>
                     <option value="7d" {{ request('timeframe') === '7d' ? 'selected' : '' }}>Últimos 7 días</option>

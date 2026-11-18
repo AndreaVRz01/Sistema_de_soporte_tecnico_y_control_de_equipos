@@ -23,7 +23,7 @@
 @endsection
 
 @section('content')
-<div class="space-y-6">
+<div id="filter-results" data-ajax-filter-results class="space-y-6">
 
     <!-- Tarjetas de Conteo Rápido de Tickets -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -53,7 +53,7 @@
 
     <!-- Barra de Filtros y Búsqueda -->
     <div class="neu-raised rounded-2xl p-4">
-        <form method="GET" action="{{ route('incidents.index') }}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+        <form method="GET" action="{{ route('incidents.index') }}" data-ajax-filter data-filter-target="#filter-results" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             
             <div class="sm:col-span-4 neu-inset rounded-xl flex items-center px-3 py-1.5">
                 <span class="material-symbols-outlined text-secondary mr-2 text-lg">search</span>
@@ -67,7 +67,7 @@
             </div>
 
             <div class="sm:col-span-3">
-                <select name="priority" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="priority" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Todas las Prioridades</option>
                     <option value="critica" {{ request('priority') === 'critica' ? 'selected' : '' }}>Crítica (Atención Inmediata)</option>
                     <option value="alta" {{ request('priority') === 'alta' ? 'selected' : '' }}>Alta</option>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="sm:col-span-3">
-                <select name="status" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="status" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Todos los Estados</option>
                     <option value="taller" {{ request('status') === 'taller' ? 'selected' : '' }}>Activos en Taller</option>
                     <option value="reportado" {{ request('status') === 'reportado' ? 'selected' : '' }}>Reportado</option>

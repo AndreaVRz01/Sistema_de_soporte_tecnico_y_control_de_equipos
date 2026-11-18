@@ -25,9 +25,14 @@ class PublicCatalogController extends Controller
         $query = Equipment::with('category')->where('status', '!=', 'baja');
 
         // 1. Filtro por Categoría
-        if ($catCode = $request->input('category')) {
+        $catCode = $request->input('category');
+        if (is_string($catCode) && $catCode !== '') {
             $query->whereHas('category', function ($cq) use ($catCode) {
-                $cq->where('code', $catCode)->orWhere('id', $catCode);
+                $cq->where('code', $catCode);
+
+                if (ctype_digit($catCode)) {
+                    $cq->orWhere('id', (int) $catCode);
+                }
             });
         }
 

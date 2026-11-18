@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-<div class="space-y-6">
+<div id="filter-results" data-ajax-filter-results class="space-y-6">
 
     <!-- Tarjetas de Conteo de Sanciones -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">

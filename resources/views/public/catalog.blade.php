@@ -55,7 +55,7 @@
             </p>
 
             <!-- Buscador Táctil -->
-            <form method="GET" action="{{ route('public.catalog') }}" class="pt-2 max-w-2xl">
+            <form method="GET" action="{{ route('public.catalog') }}" data-ajax-filter data-filter-target="#catalogo" class="pt-2 max-w-2xl">
                 <div class="neu-inset rounded-2xl p-2 flex flex-col sm:flex-row items-center gap-2">
                     <div class="flex items-center gap-2 w-full px-3 py-1">
                         <span class="material-symbols-outlined text-secondary text-2xl">search</span>
@@ -79,7 +79,7 @@
 <!-- ========================================================================= -->
 <!-- FILTROS Y CATÁLOGO DE EQUIPOS                                             -->
 <!-- ========================================================================= -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4" id="catalogo">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4" id="catalogo" data-ajax-filter-results>
     
     <!-- Filtros de Categorías Táctiles -->
     <div class="flex items-center justify-between flex-wrap gap-4 mb-8">
@@ -89,11 +89,11 @@
         </div>
 
         <div class="flex items-center gap-2 overflow-x-auto pb-2">
-            <a href="{{ route('public.catalog') }}" class="px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all {{ !request('category') ? 'neu-raised text-primary dark:text-surface font-extrabold border-2 border-secondary' : 'neu-inset text-on-surface-variant' }}">
+            <a href="{{ route('public.catalog') }}" data-filter-target="#catalogo" class="px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all {{ !request('category') ? 'neu-raised text-primary dark:text-surface font-extrabold border-2 border-secondary' : 'neu-inset text-on-surface-variant' }}">
                 Todos los Equipos
             </a>
             @foreach ($categories as $cat)
-                <a href="{{ route('public.catalog', ['category' => $cat->code]) }}" class="px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all {{ request('category') === $cat->code ? 'neu-raised text-primary dark:text-surface font-extrabold border-2 border-secondary' : 'neu-inset text-on-surface-variant' }}">
+                <a href="{{ route('public.catalog', ['category' => $cat->code]) }}" data-filter-target="#catalogo" class="px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all {{ request('category') === $cat->code ? 'neu-raised text-primary dark:text-surface font-extrabold border-2 border-secondary' : 'neu-inset text-on-surface-variant' }}">
                     {{ $cat->name }} ({{ $cat->available_equipment_count }})
                 </a>
             @endforeach

@@ -25,7 +25,7 @@
 @endsection
 
 @section('content')
-<div class="space-y-6">
+<div id="filter-results" data-ajax-filter-results class="space-y-6">
 
     <!-- Tarjetas de Conteo de Usuarios -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -55,7 +55,7 @@
 
     <!-- Filtros de Búsqueda de Usuarios -->
     <div class="neu-raised rounded-2xl p-4">
-        <form method="GET" action="{{ route('users.index') }}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+        <form method="GET" action="{{ route('users.index') }}" data-ajax-filter data-filter-target="#filter-results" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             
             <div class="sm:col-span-5 neu-inset rounded-xl flex items-center px-3 py-1.5">
                 <span class="material-symbols-outlined text-secondary mr-2 text-lg">search</span>
@@ -69,7 +69,7 @@
             </div>
 
             <div class="sm:col-span-3">
-                <select name="role" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="role" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Todos los Roles</option>
                     <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Administrador</option>
                     <option value="supervisor" {{ request('role') === 'supervisor' ? 'selected' : '' }}>Supervisor</option>
@@ -81,7 +81,7 @@
             </div>
 
             <div class="sm:col-span-2">
-                <select name="status" onchange="this.form.submit()" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="status" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Cualquier Estado</option>
                     <option value="activo" {{ request('status') === 'activo' ? 'selected' : '' }}>Activo</option>
                     <option value="inactivo" {{ request('status') === 'inactivo' ? 'selected' : '' }}>Inactivo</option>
