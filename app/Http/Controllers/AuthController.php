@@ -49,6 +49,16 @@ class AuthController extends Controller
             return back()->withInput()->with('error', 'Las credenciales proporcionadas no corresponden a un operador o usuario registrado.');
         }
 
+        if ($user->registration_status === User::REGISTRATION_PENDING) {
+            AuditService::log('Auth', $user->id, 'LOGIN_PENDING_APPROVAL', "Intento de acceso con registro pendiente: {$user->email}", null, 'advertencia', $user->id);
+            return back()->withInput()->with('error', 'Tu solicitud de registro aún está pendiente de aprobación.');
+        }
+
+        if ($user->registration_status === User::REGISTRATION_REJECTED) {
+            AuditService::log('Auth', $user->id, 'LOGIN_REJECTED_REGISTRATION', "Intento de acceso con registro rechazado: {$user->email}", null, 'advertencia', $user->id);
+            return back()->withInput()->with('error', 'Tu solicitud de registro no fue aprobada. Contacta al área de préstamos para más información.');
+        }
+
         if ($user->status === 'inactivo') {
             AuditService::log('Auth', $user->id, 'LOGIN_BLOCKED', "Intento de acceso de cuenta inactiva: {$user->email}", null, 'advertencia', $user->id);
             return back()->withInput()->with('error', 'Su cuenta institucional está temporalmente inactiva. Solicite su reactivación al Administrador.');

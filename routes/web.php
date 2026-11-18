@@ -7,6 +7,7 @@ use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PublicCatalogController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SanctionController;
 use App\Http\Controllers\UserPortalController;
 use App\Http\Controllers\UserController;
@@ -28,7 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicCatalogController::class, 'index'])->name('public.home');
 Route::get('/catalogo', [PublicCatalogController::class, 'index'])->name('public.catalog');
 Route::get('/catalogo/activo/{equipment}', [PublicCatalogController::class, 'show'])->name('public.catalog.show');
-Route::post('/catalogo/solicitar', [PublicCatalogController::class, 'requestLoan'])->name('public.catalog.request');
+Route::get('/registro', [RegistrationController::class, 'create'])->name('register');
+Route::post('/registro', [RegistrationController::class, 'store'])->middleware('throttle:5,1')->name('register.store');
 
 // =========================================================================
 // 2. AUTENTICACIÓN Y RECUPERACIÓN CON TOKEN
@@ -45,6 +47,16 @@ Route::post('/restablecer-password', [AuthController::class, 'resetPassword'])->
 // 3. CONSOLA OPERATIVA PRIVADA (DASHBOARD & MÓDULOS DE GESTIÓN)
 // =========================================================================
 Route::middleware('auth')->group(function () {
+    Route::post('/catalogo/solicitar', [PublicCatalogController::class, 'requestLoan'])
+        ->middleware('role:usuario')->name('public.catalog.request');
+
+    Route::prefix('solicitudes-cuenta')->name('users.registrations.')
+        ->middleware('role:admin,supervisor,encargado_prestamos')->group(function () {
+            Route::get('/', [UserController::class, 'registrations'])->name('index');
+            Route::post('/{user}/aprobar', [UserController::class, 'approveRegistration'])->name('approve');
+            Route::post('/{user}/rechazar', [UserController::class, 'rejectRegistration'])->name('reject');
+        });
+
     Route::middleware('role:admin,supervisor,encargado_activos,encargado_prestamos,usuario')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     });

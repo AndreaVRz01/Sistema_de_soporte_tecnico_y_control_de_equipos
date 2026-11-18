@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -68,6 +69,81 @@ class UserController extends Controller
         ];
 
         return view('private.users.index', compact('users', 'counts', 'permissionsMatrix'));
+    }
+
+    public function registrations(): View
+    {
+        $pendingRegistrations = User::query()
+            ->where('registration_status', User::REGISTRATION_PENDING)
+            ->where('role', User::ROLE_USUARIO)
+            ->oldest()
+            ->paginate(15);
+
+        return view('private.users.registrations', compact('pendingRegistrations'));
+    }
+
+    public function approveRegistration(Request $request, User $user): RedirectResponse
+    {
+        return $this->reviewRegistration($request, $user, User::REGISTRATION_APPROVED);
+    }
+
+    public function rejectRegistration(Request $request, User $user): RedirectResponse
+    {
+        return $this->reviewRegistration($request, $user, User::REGISTRATION_REJECTED);
+    }
+
+    private function reviewRegistration(Request $request, User $user, string $decision): RedirectResponse
+    {
+        $reviewed = DB::transaction(function () use ($request, $user, $decision): bool {
+            $registration = User::query()->lockForUpdate()->findOrFail($user->id);
+
+            if (
+                $registration->role !== User::ROLE_USUARIO
+                || $registration->registration_status !== User::REGISTRATION_PENDING
+            ) {
+                return false;
+            }
+
+            $registration->update([
+                'registration_status' => $decision,
+                'status' => $decision === User::REGISTRATION_APPROVED ? 'activo' : 'inactivo',
+                'registration_reviewed_by_id' => $request->user()->id,
+                'registration_reviewed_at' => now(),
+            ]);
+
+            $event = $decision === User::REGISTRATION_APPROVED
+                ? 'usuario.registro_aprobado'
+                : 'usuario.registro_rechazado';
+            $action = $decision === User::REGISTRATION_APPROVED
+                ? 'REGISTRO_APROBADO'
+                : 'REGISTRO_RECHAZADO';
+
+            app(\App\Services\ActivityLogService::class)->record(
+                $request->user(),
+                $event,
+                $registration,
+                ['decision' => $decision]
+            );
+            AuditService::log(
+                'User',
+                $registration->id,
+                $action,
+                "Registro {$decision} para {$registration->name} por {$request->user()->name}",
+                ['decision' => $decision, 'reviewer_id' => $request->user()->id]
+            );
+
+            return true;
+        });
+
+        if (!$reviewed) {
+            return back()->with('error', 'Esta solicitud ya fue atendida o no corresponde a una cuenta solicitante.');
+        }
+
+        $message = $decision === User::REGISTRATION_APPROVED
+            ? 'La cuenta fue aprobada y ya puede iniciar sesión.'
+            : 'La solicitud fue rechazada; la cuenta no podrá iniciar sesión.';
+
+        return back()->with('success', $message);
     }
 
     /**

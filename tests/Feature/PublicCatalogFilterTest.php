@@ -38,3 +38,34 @@ test('public catalog filters by category code and numeric category id', function
         ->assertSee('Proyector de prueba')
         ->assertDontSee('Equipo portátil de prueba');
 });
+
+test('public catalog only lists available equipment and counts available items by category', function () {
+    $laptops = Category::create(['name' => 'Laptops', 'code' => 'LAP']);
+
+    Equipment::create([
+        'category_id' => $laptops->id,
+        'inventory_code' => 'LAP-AVAILABLE-001',
+        'serial_number' => 'LAP-SERIAL-AVAILABLE',
+        'name' => 'Laptop disponible',
+        'brand' => 'Marca',
+        'model' => 'Modelo',
+        'status' => 'disponible',
+    ]);
+
+    Equipment::create([
+        'category_id' => $laptops->id,
+        'inventory_code' => 'LAP-LOANED-001',
+        'serial_number' => 'LAP-SERIAL-LOANED',
+        'name' => 'Laptop prestada',
+        'brand' => 'Marca',
+        'model' => 'Modelo',
+        'status' => 'prestado',
+    ]);
+
+    $this->get(route('public.catalog', ['category' => $laptops->code]))
+        ->assertOk()
+        ->assertSee('Laptop disponible')
+        ->assertDontSee('Laptop prestada')
+        ->assertSee('Catálogo institucional')
+        ->assertSee('1 resultado');
+});

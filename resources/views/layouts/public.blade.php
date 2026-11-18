@@ -201,9 +201,13 @@
                             <span class="hidden sm:inline">Ir al Panel</span>
                         </a>
                     @else
+                        <a href="{{ route('register') }}" class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-primary/20 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-primary transition-all hover:bg-surface-container dark:border-secondary-container/30 dark:text-surface dark:hover:bg-primary-container">
+                            <span class="material-symbols-outlined text-base">person_add</span>
+                            <span>Crear cuenta</span>
+                        </a>
                         <a href="{{ route('login') }}" class="inline-flex items-center gap-2 neu-btn-primary px-4 py-2 rounded-xl font-mono text-xs font-bold tracking-wider uppercase transition-all">
                             <span class="material-symbols-outlined text-base">lock_open</span>
-                            <span>Acceso Personal</span>
+                            <span>Iniciar sesión</span>
                         </a>
                     @endauth
                 @else

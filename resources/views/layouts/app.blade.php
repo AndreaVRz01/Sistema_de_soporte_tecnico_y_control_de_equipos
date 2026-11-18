@@ -227,7 +227,8 @@
                         ['label' => 'Activos', 'route' => 'equipment.index', 'active' => 'equipment.*', 'icon' => 'inventory_2'],
                         ['label' => 'Préstamos', 'route' => 'loans.index', 'active' => 'loans.*', 'icon' => 'handshake'],
                         ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
-                        ['label' => 'Usuarios', 'route' => 'users.index', 'active' => 'users.*', 'icon' => 'manage_accounts'],
+                        ['label' => 'Usuarios', 'route' => 'users.index', 'active' => 'users.index', 'icon' => 'manage_accounts'],
+                        ['label' => 'Solicitudes de registro', 'route' => 'users.registrations.index', 'active' => 'users.registrations.*', 'icon' => 'person_check'],
                         ['label' => 'Bitácora', 'route' => 'audit.index', 'active' => 'audit.*', 'icon' => 'verified_user'],
                         ['label' => 'Sanciones', 'route' => 'sanctions.index', 'active' => 'sanctions.*', 'icon' => 'gavel'],
                     ],
@@ -235,6 +236,7 @@
                         ['label' => 'Panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
                         ['label' => 'Activos', 'route' => 'equipment.index', 'active' => 'equipment.*', 'icon' => 'inventory_2'],
                         ['label' => 'Préstamos', 'route' => 'loans.index', 'active' => 'loans.*', 'icon' => 'handshake'],
+                        ['label' => 'Solicitudes de registro', 'route' => 'users.registrations.index', 'active' => 'users.registrations.*', 'icon' => 'person_check'],
                         ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],
                         ['label' => 'Bitácora', 'route' => 'audit.index', 'active' => 'audit.*', 'icon' => 'verified_user'],
                         ['label' => 'Sanciones', 'route' => 'sanctions.index', 'active' => 'sanctions.*', 'icon' => 'gavel'],
@@ -248,6 +250,7 @@
                     'encargado_prestamos' => [
                         ['label' => 'Panel', 'route' => 'dashboard', 'active' => 'dashboard', 'icon' => 'dashboard'],
                         ['label' => 'Préstamos', 'route' => 'loans.index', 'active' => 'loans.*', 'icon' => 'handshake'],
+                        ['label' => 'Solicitudes de registro', 'route' => 'users.registrations.index', 'active' => 'users.registrations.*', 'icon' => 'person_check'],
                     ],
                     'tecnico' => [
                         ['label' => 'Tickets', 'route' => 'incidents.index', 'active' => 'incidents.*', 'icon' => 'build'],

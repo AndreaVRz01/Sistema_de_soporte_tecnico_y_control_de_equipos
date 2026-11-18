@@ -22,7 +22,7 @@ class PublicCatalogController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Equipment::with('category')->where('status', '!=', 'baja');
+        $query = Equipment::available()->with('category');
 
         // 1. Filtro por Categoría
         $catCode = $request->input('category');
@@ -47,21 +47,16 @@ class PublicCatalogController extends Controller
             });
         }
 
-        // 3. Filtro solo disponibles
-        if ($request->boolean('available_only')) {
-            $query->where('status', 'disponible');
-        }
-
-        $equipment = $query->orderByRaw("CASE status WHEN 'disponible' THEN 1 WHEN 'reservado' THEN 2 ELSE 3 END")
-            ->latest()
+        $equipment = $query->latest()
             ->paginate(12)
             ->withQueryString();
 
         $categories = Category::where('is_active', true)
             ->withCount(['equipment', 'availableEquipment'])
             ->get();
+        $availableEquipmentCount = Equipment::available()->count();
 
-        return view('public.catalog', compact('equipment', 'categories'));
+        return view('public.catalog', compact('equipment', 'categories', 'availableEquipmentCount'));
     }
 
     /**
@@ -90,35 +85,32 @@ class PublicCatalogController extends Controller
      */
     public function requestLoan(Request $request): RedirectResponse|JsonResponse
     {
+        $user = $request->user();
+        abort_unless(
+            $user instanceof User
+                && $user->isUsuario()
+                && $user->status === 'activo'
+                && $user->registration_status === User::REGISTRATION_APPROVED,
+            403
+        );
+
         $validated = $request->validate([
-            'institutional_id' => ['required', 'string'],
-            'email' => ['required', 'email'],
             'equipment_id' => ['required', 'exists:equipment,id'],
             'purpose' => ['required', 'string', 'max:500'],
             'expected_return_date' => ['required', 'date', 'after:now'],
             'location_of_use' => ['nullable', 'string', 'max:120'],
         ], [
-            'institutional_id.required' => 'Ingrese su matrícula de estudiante o clave de docente.',
-            'email.required' => 'El correo institucional es obligatorio.',
             'equipment_id.required' => 'Seleccione el activo deseado.',
             'expected_return_date.after' => 'La fecha acordada de devolución debe ser futura.',
         ]);
-
-        $user = User::where('institutional_id', $validated['institutional_id'])
-            ->where('email', $validated['email'])
-            ->first();
-
-        if (!$user) {
-            return back()->withInput()->with('error', 'Los datos institucionales (matrícula y correo) no coinciden con ningún usuario registrado en la universidad.');
-        }
 
         if (!$user->canBorrow()) {
             return back()->withInput()->with('error', "El usuario {$user->name} presenta sanciones disciplinarias activas. Solicitud denegada.");
         }
 
-        $equipment = Equipment::findOrFail($validated['equipment_id']);
-        if ($equipment->status !== 'disponible') {
-            return back()->withInput()->with('error', "El equipo {$equipment->name} no se encuentra disponible para préstamo en este momento.");
+        $equipment = Equipment::available()->find($validated['equipment_id']);
+        if (!$equipment) {
+            return back()->withInput()->with('error', 'El equipo seleccionado ya no está disponible para préstamo.');
         }
 
         // Generar folio de solicitud

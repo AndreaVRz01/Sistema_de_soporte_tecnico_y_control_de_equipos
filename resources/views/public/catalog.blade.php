@@ -32,43 +32,32 @@
     </div>
 @endif
 
-<!-- ========================================================================= -->
-<!-- SECCIÓN HERO: BIENVENIDA Y BUSCADOR DE EQUIPOS DISPONIBLES               -->
-<!-- ========================================================================= -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10" id="hero">
-    <div class="p-6 sm:p-10 rounded-3xl neu-raised border border-white/80 dark:border-primary-container relative overflow-hidden">
-        
-        <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-secondary-container/10 blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-3xl space-y-4">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full neu-inset text-xs font-mono text-secondary font-bold">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-live-dot"></span>
-                <span>CATÁLOGO DE INVENTARIO VIGENTE • SISTEMA SIGA</span>
-            </div>
-            
-            <h1 class="font-headline text-3xl sm:text-5xl font-bold text-primary dark:text-surface tracking-tight leading-tight">
-                Préstamo de Activos y Equipamiento Técnico
-            </h1>
-            
-            <p class="font-body text-sm sm:text-base text-on-surface-variant dark:text-inverse-primary leading-relaxed">
-                Consulta en tiempo real la disponibilidad de laptops, equipo especializado de laboratorio, proyectores y telecomunicaciones para la comunidad universitaria.
+<section class="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8" id="hero">
+    <div class="overflow-hidden rounded-3xl bg-primary-container px-6 py-8 text-white shadow-lg sm:px-10 sm:py-10">
+        <div class="max-w-3xl">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary-container">
+                <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                Catálogo institucional · {{ $availableEquipmentCount }} equipos disponibles
+            </span>
+            <h1 class="mt-4 font-headline text-3xl font-bold tracking-tight sm:text-5xl">Encuentra el equipo que necesitas</h1>
+            <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
+                Explora el inventario disponible por categoría y solicita un préstamo desde tu cuenta institucional aprobada.
             </p>
-
-            <!-- Buscador Táctil -->
-            <form method="GET" action="{{ route('public.catalog') }}" data-ajax-filter data-filter-target="#catalogo" class="pt-2 max-w-2xl">
-                <div class="neu-inset rounded-2xl p-2 flex flex-col sm:flex-row items-center gap-2">
-                    <div class="flex items-center gap-2 w-full px-3 py-1">
-                        <span class="material-symbols-outlined text-secondary text-2xl">search</span>
-                        <input 
-                            type="text" 
-                            name="q" 
-                            value="{{ request('q') }}" 
-                            placeholder="Buscar por nombre, marca, serie o especificación..." 
-                            class="w-full bg-transparent border-0 font-body text-sm text-on-surface dark:text-surface focus:outline-none focus:ring-0 placeholder:text-outline p-0"
+            <form method="GET" action="{{ route('public.catalog') }}" data-ajax-filter data-filter-target="#catalogo" class="mt-6 max-w-2xl">
+                <div class="flex flex-col gap-2 rounded-2xl bg-white p-2 shadow-lg sm:flex-row">
+                    <label class="flex min-w-0 flex-1 items-center gap-2 px-3">
+                        <span class="material-symbols-outlined text-outline">search</span>
+                        <input
+                            type="search"
+                            name="q"
+                            value="{{ request('q') }}"
+                            placeholder="Buscar equipos, marcas o especificaciones"
+                            aria-label="Buscar equipos disponibles"
+                            class="w-full border-0 bg-transparent text-sm text-primary placeholder:text-outline focus:ring-0"
                         />
-                    </div>
-                    <button type="submit" class="w-full sm:w-auto neu-btn-primary px-6 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider shrink-0 cursor-pointer">
-                        Buscar
+                    </label>
+                    <button type="submit" class="rounded-xl bg-secondary-container px-6 py-3 font-headline text-sm font-bold text-primary transition hover:brightness-95">
+                        Buscar equipos
                     </button>
                 </div>
             </form>
@@ -76,133 +65,114 @@
     </div>
 </section>
 
-<!-- ========================================================================= -->
-<!-- FILTROS Y CATÁLOGO DE EQUIPOS                                             -->
-<!-- ========================================================================= -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4" id="catalogo" data-ajax-filter-results>
-    
-    <!-- Filtros de Categorías Táctiles -->
-    <div class="flex items-center justify-between flex-wrap gap-4 mb-8">
-        <div>
-            <h2 class="font-headline text-2xl font-bold text-primary dark:text-surface">Catálogo de Activos</h2>
-            <p class="font-mono text-xs text-outline">Listado patrimonial sincronizado con el modelo relacional</p>
-        </div>
-
-        <div class="flex items-center gap-2 overflow-x-auto pb-2">
-            <a href="{{ route('public.catalog') }}" data-filter-target="#catalogo" class="px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all {{ !request('category') ? 'neu-raised text-primary dark:text-surface font-extrabold border-2 border-secondary' : 'neu-inset text-on-surface-variant' }}">
-                Todos los Equipos
-            </a>
-            @foreach ($categories as $cat)
-                <a href="{{ route('public.catalog', ['category' => $cat->code]) }}" data-filter-target="#catalogo" class="px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all {{ request('category') === $cat->code ? 'neu-raised text-primary dark:text-surface font-extrabold border-2 border-secondary' : 'neu-inset text-on-surface-variant' }}">
-                    {{ $cat->name }} ({{ $cat->available_equipment_count }})
+<section class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8" id="catalogo" data-ajax-filter-results>
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
+        <aside aria-label="Categorías de equipos" class="h-fit rounded-2xl border border-outline-variant/50 bg-white p-4 shadow-sm dark:bg-primary-container">
+            <div class="mb-3 flex items-center gap-2 border-b border-outline-variant/40 pb-3">
+                <span class="material-symbols-outlined text-secondary">category</span>
+                <h2 class="font-headline text-base font-bold text-primary dark:text-surface">Categorías</h2>
+            </div>
+            <nav class="space-y-1">
+                <a
+                    href="{{ route('public.catalog', ['q' => request('q')]) }}"
+                    data-filter-target="#catalogo"
+                    @if (!request('category')) aria-current="page" @endif
+                    class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition {{ !request('category') ? 'bg-primary-container font-bold text-white' : 'text-on-surface-variant hover:bg-surface-container-low dark:text-inverse-primary dark:hover:bg-primary/60' }}"
+                >
+                    <span class="flex items-center gap-2"><span class="material-symbols-outlined text-lg">apps</span>Todos los equipos</span>
+                    <span class="font-mono text-xs">{{ $availableEquipmentCount }}</span>
                 </a>
-            @endforeach
-        </div>
-    </div>
+                @foreach ($categories as $cat)
+                    <a
+                        href="{{ route('public.catalog', ['category' => $cat->code, 'q' => request('q')]) }}"
+                        data-filter-target="#catalogo"
+                        @if (request('category') === $cat->code) aria-current="page" @endif
+                        class="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm transition {{ request('category') === $cat->code ? 'bg-primary-container font-bold text-white' : 'text-on-surface-variant hover:bg-surface-container-low dark:text-inverse-primary dark:hover:bg-primary/60' }}"
+                    >
+                        <span class="min-w-0 truncate">{{ $cat->name }}</span>
+                        <span class="shrink-0 rounded-full bg-surface-container-low px-2 py-0.5 font-mono text-[10px] text-primary dark:bg-primary dark:text-surface">{{ $cat->available_equipment_count }}</span>
+                    </a>
+                @endforeach
+            </nav>
+            <div class="mt-4 rounded-xl bg-surface-container-low p-3 dark:bg-primary">
+                <p class="font-mono text-[10px] font-bold uppercase tracking-wider text-secondary">¿Aún no tienes cuenta?</p>
+                <p class="mt-1 text-xs text-on-surface-variant dark:text-inverse-primary">Regístrate y espera la aprobación del personal institucional.</p>
+                <a href="{{ route('register') }}" class="mt-3 inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline dark:text-secondary-container">
+                    Crear cuenta <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+        </aside>
 
-    <!-- Rejilla de Tarjetas de Activos Dinámicas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @forelse ($equipment as $item)
-            @php
-                $isAvailable = $item->status === 'disponible';
-            @endphp
-            <div class="rounded-2xl neu-raised p-6 flex flex-col justify-between neu-card-interactive border border-white/70 dark:border-primary-container">
+        <div class="min-w-0">
+            <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
                 <div>
-                    <!-- Encabezado de la Tarjeta -->
-                    <div class="flex items-center justify-between mb-4">
-                        @if ($isAvailable)
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#E6F4EA] text-[#137333] border border-[#34A853]">
-                                <span class="w-2 h-2 rounded-full bg-[#137333] animate-live-dot"></span>
-                                Disponible
-                            </span>
-                        @elseif ($item->status === 'prestado')
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#FFF8E1] text-[#B06000] border border-[#E09F3E]">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                En Préstamo
-                            </span>
-                        @elseif ($item->status === 'en_mantenimiento')
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-error-container text-on-error-container border border-error/30">
-                                <span class="material-symbols-outlined text-sm">build</span>
-                                En Taller
-                            </span>
-                        @else
-                            <span class="px-3 py-1 rounded-full text-xs font-mono bg-surface-container text-outline">
-                                {{ ucfirst($item->status) }}
-                            </span>
-                        @endif
-
-                        <span class="font-mono text-xs text-outline font-semibold">
-                            {{ $item->inventory_code }}
-                        </span>
-                    </div>
-
-                    <!-- Icono según categoría -->
-                    <div class="w-12 h-12 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center neu-inset mb-4">
-                        <span class="material-symbols-outlined text-2xl">
-                            @if ($item->category && str_contains(strtolower($item->category->code), 'lap')) laptop_mac
-                            @elseif ($item->category && str_contains(strtolower($item->category->code), 'proy')) videocam
-                            @elseif ($item->category && str_contains(strtolower($item->category->code), 'aud')) volume_up
-                            @elseif ($item->category && str_contains(strtolower($item->category->code), 'red')) router
-                            @else science
-                            @endif
-                        </span>
-                    </div>
-
-                    <!-- Nombre & Modelo -->
-                    <h3 class="font-headline text-lg font-bold text-primary dark:text-surface mb-1">
-                        {{ $item->name }}
-                    </h3>
-                    <p class="font-mono text-[11px] text-secondary mb-2">{{ $item->brand }} • {{ $item->model }}</p>
-                    
-                    <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary mb-4 leading-relaxed line-clamp-2">
-                        {{ $item->specifications ?: 'Equipo técnico institucional en resguardo para actividades académicas.' }}
-                    </p>
-
-                    <!-- Ficha Rápida -->
-                    <div class="space-y-1.5 text-xs font-mono text-outline pb-4 border-b border-outline-variant/30">
-                        <div class="flex justify-between">
-                            <span>Ubicación:</span>
-                            <span class="font-bold text-primary dark:text-surface">{{ $item->location }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Condición Física:</span>
-                            <span class="font-bold text-secondary capitalize">{{ $item->physical_condition }}</span>
-                        </div>
-                    </div>
+                    <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-secondary">Inventario en préstamo</p>
+                    <h2 class="font-headline text-2xl font-bold text-primary dark:text-surface">
+                        {{ request('category') ? ($categories->firstWhere('code', request('category'))?->name ?? 'Equipos disponibles') : 'Equipos disponibles' }}
+                    </h2>
                 </div>
-
-                <!-- Footer de la Tarjeta con Acción de Solicitud -->
-                <div class="pt-4 flex items-center justify-between">
-                    <span class="font-mono text-[11px] text-outline">
-                        SN: {{ $item->serial_number }}
-                    </span>
-
-                    @if ($isAvailable)
-                        <button type="button" onclick="openPublicLoanModal({{ $item->id }}, '{{ $item->name }}', '{{ $item->inventory_code }}')" class="neu-btn-primary px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider cursor-pointer">
-                            Solicitar Préstamo
-                        </button>
-                    @else
-                        <button class="neu-btn-secondary px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider opacity-60 cursor-not-allowed" disabled>
-                            No Disponible
-                        </button>
-                    @endif
-                </div>
+                <p class="font-body text-xs text-outline">{{ $equipment->total() }} {{ $equipment->total() === 1 ? 'resultado' : 'resultados' }}</p>
             </div>
-        @empty
-            <div class="col-span-full p-12 text-center text-outline neu-raised rounded-2xl">
-                <span class="material-symbols-outlined text-4xl mb-2 block">devices</span>
-                <p class="font-headline font-semibold text-base text-primary dark:text-surface">No se encontraron equipos en esta categoría.</p>
-                <p class="font-body text-xs mt-1">Modifique los términos de búsqueda o seleccione otra categoría.</p>
-            </div>
-        @endforelse
-    </div>
 
-    <!-- Paginación -->
-    @if ($equipment->hasPages())
-        <div class="pt-8 flex justify-center">
-            {{ $equipment->links() }}
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                @forelse ($equipment as $item)
+                    <article class="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-outline-variant/50 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:bg-primary-container">
+                        <div class="relative flex h-44 items-center justify-center bg-surface-container-low dark:bg-primary/70">
+                            <span class="material-symbols-outlined text-7xl text-primary/70 dark:text-secondary-container">
+                                @if ($item->category && str_contains(strtolower($item->category->code), 'lap')) laptop_mac
+                                @elseif ($item->category && str_contains(strtolower($item->category->code), 'proy')) videocam
+                                @elseif ($item->category && str_contains(strtolower($item->category->code), 'aud')) volume_up
+                                @elseif ($item->category && str_contains(strtolower($item->category->code), 'red')) router
+                                @else devices
+                                @endif
+                            </span>
+                            <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 font-mono text-[10px] font-bold uppercase text-emerald-800">
+                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span> Disponible
+                            </span>
+                            <span class="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-1 font-mono text-[10px] font-bold text-primary">{{ $item->inventory_code }}</span>
+                        </div>
+                        <div class="flex flex-1 flex-col p-4">
+                            <p class="font-mono text-[10px] uppercase tracking-wide text-outline">{{ $item->category->name ?? 'Equipo institucional' }}</p>
+                            <h3 class="mt-1 font-headline text-base font-bold leading-snug text-primary dark:text-surface">{{ $item->name }}</h3>
+                            <p class="mt-1 font-body text-xs text-on-surface-variant dark:text-inverse-primary">{{ $item->brand }} · {{ $item->model }}</p>
+                            <p class="mt-3 line-clamp-3 flex-1 text-xs leading-relaxed text-on-surface-variant dark:text-inverse-primary">
+                                {{ $item->specifications ?: 'Equipo técnico institucional disponible para actividades académicas.' }}
+                            </p>
+                            <div class="mt-4 space-y-1 border-t border-outline-variant/40 pt-3 text-[11px] text-outline">
+                                <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">location_on</span>{{ $item->location }}</p>
+                                <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">verified</span>Condición: {{ ucfirst($item->physical_condition) }}</p>
+                            </div>
+                            <div class="mt-4">
+                                @auth
+                                    @if (Auth::user()->isUsuario())
+                                        <button type="button" onclick="openPublicLoanModal({{ $item->id }}, @js($item->name), @js($item->inventory_code))" class="w-full rounded-xl bg-primary-container px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wide text-white transition hover:bg-primary">
+                                            Solicitar préstamo
+                                        </button>
+                                    @else
+                                        <p class="rounded-xl bg-surface-container-low px-3 py-2.5 text-center text-xs text-outline dark:bg-primary">Inicia sesión con una cuenta solicitante para pedirlo.</p>
+                                    @endif
+                                @else
+                                    <a href="{{ route('login') }}" class="block w-full rounded-xl bg-primary-container px-4 py-2.5 text-center font-mono text-xs font-bold uppercase tracking-wide text-white transition hover:bg-primary">
+                                        Inicia sesión para solicitar
+                                    </a>
+                                @endauth
+                            </div>
+                        </div>
+                    </article>
+                @empty
+                    <div class="col-span-full rounded-2xl border border-outline-variant/50 bg-white px-6 py-14 text-center shadow-sm dark:bg-primary-container">
+                        <span class="material-symbols-outlined text-5xl text-outline">inventory_2</span>
+                        <p class="mt-3 font-headline text-lg font-bold text-primary dark:text-surface">No hay equipos disponibles con estos filtros.</p>
+                        <p class="mt-1 text-sm text-on-surface-variant dark:text-inverse-primary">Prueba otra categoría o elimina el texto de búsqueda.</p>
+                    </div>
+                @endforelse
+            </div>
+
+            @if ($equipment->hasPages())
+                <div class="pt-8">{{ $equipment->links() }}</div>
+            @endif
         </div>
-    @endif
+    </div>
 </section>
 
 <!-- ========================================================================= -->
@@ -336,6 +306,7 @@
 <!-- ========================================================================= -->
 <!-- MODAL: SOLICITUD DE PRÉSTAMO PÚBLICA                                      -->
 <!-- ========================================================================= -->
+@auth
 <div id="modalPublicLoan" class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
     <div class="neu-raised rounded-2xl w-full max-w-lg p-6 border border-outline-variant/40 shadow-xl">
         <div class="flex items-center justify-between pb-3 border-b border-outline-variant/30 mb-4">
@@ -360,15 +331,10 @@
                 <span class="font-mono text-xs text-secondary" id="publicLoanEquipCode"></span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div class="space-y-1">
-                    <label class="block font-mono text-xs font-bold text-primary">Matrícula o Clave *</label>
-                    <input type="text" name="institutional_id" required placeholder="Ej. ALU-20240189" class="neu-inset w-full px-3 py-2 rounded-xl text-xs font-mono" />
-                </div>
-                <div class="space-y-1">
-                    <label class="block font-mono text-xs font-bold text-primary">Correo Institucional *</label>
-                    <input type="email" name="email" required placeholder="ejemplo@universidad.edu.mx" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
-                </div>
+            <div class="rounded-xl bg-surface-container-low p-3 dark:bg-primary">
+                <span class="font-mono text-[10px] font-bold uppercase text-outline">Solicitante</span>
+                <p class="mt-1 font-headline text-sm font-bold text-primary dark:text-surface">{{ Auth::user()->name }}</p>
+                <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">La solicitud se vinculará a tu cuenta aprobada.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -399,6 +365,7 @@
         </form>
     </div>
 </div>
+@endauth
 
 <script>
     const termsModal = document.getElementById('terms-modal');

@@ -209,7 +209,7 @@
                     <div class="space-y-6 {{ session('token_sent') || old('recovery_mode') ? 'hidden' : '' }}" id="view-login">
                         <div class="border-b border-outline-variant/30 pb-3">
                             <h2 class="font-headline text-xl font-bold text-primary dark:text-primary-fixed">
-                                Autenticación de Operador
+                                Inicia sesión en SIGA
                             </h2>
                             <p class="font-body text-xs text-on-surface-variant">
                                 Ingrese con sus credenciales institucionales registradas en el sistema.
@@ -282,6 +282,14 @@
                                 <span class="material-symbols-outlined text-lg">arrow_forward</span>
                             </button>
                         </form>
+
+                        <div class="border-t border-outline-variant/30 pt-4 text-center">
+                            <p class="font-body text-xs text-on-surface-variant">
+                                ¿Aún no tienes cuenta?
+                                <a href="{{ route('register') }}" class="font-bold text-secondary hover:underline">Regístrate aquí</a>
+                            </p>
+                            <p class="mt-1 font-body text-[11px] text-outline">Las cuentas nuevas requieren aprobación antes de poder iniciar sesión.</p>
+                        </div>
                     </div>
 
                     <!-- VISTA 2: RECUPERACIÓN CON TOKEN -->

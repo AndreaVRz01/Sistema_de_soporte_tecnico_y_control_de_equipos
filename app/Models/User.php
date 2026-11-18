@@ -30,6 +30,10 @@ class User extends Authenticatable
     public const TYPE_DOCENTE = 'docente';
     public const TYPE_ADMINISTRATIVO = 'administrativo';
 
+    public const REGISTRATION_PENDING = 'pending';
+    public const REGISTRATION_APPROVED = 'approved';
+    public const REGISTRATION_REJECTED = 'rejected';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -45,6 +49,9 @@ class User extends Authenticatable
         'career_or_department',
         'phone',
         'status',
+        'registration_status',
+        'registration_reviewed_by_id',
+        'registration_reviewed_at',
     ];
 
     /**
@@ -111,6 +118,11 @@ class User extends Authenticatable
     public function isAlumno(): bool
     {
         return $this->user_type === self::TYPE_ALUMNO;
+    }
+
+    public function registrationReviewer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(self::class, 'registration_reviewed_by_id');
     }
 
     public function canBorrow(): bool
