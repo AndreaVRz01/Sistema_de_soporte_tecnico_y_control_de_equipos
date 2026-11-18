@@ -18,6 +18,9 @@
 /public/hot
 
 # ----- Archivos de entorno sensibles -----
+.env
+.env.*
+!.env.example
 .env.local
 .env.*.local
 .env.testing
@@ -64,13 +67,6 @@ docker-compose*.yml
 *~
 .DS_Store
 Thumbs.db
-
-# ----- Node / Frontend -----
-package.json
-package-lock.json
-vite.config.js
-postcss.config.js
-tailwind.config.js
 
 # ----- CI/CD -----
 .travis.yml

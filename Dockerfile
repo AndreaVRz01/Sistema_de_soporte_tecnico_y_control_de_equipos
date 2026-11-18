@@ -29,7 +29,22 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev
 
 # -----------------------------------------------------------------------------
-# STAGE 2: Imagen final PHP-FPM + Nginx (Alpine, sin root)
+# STAGE 2: Compilación de assets (Vite)
+# -----------------------------------------------------------------------------
+FROM node:20-alpine AS vite-builder
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --prefer-offline
+
+COPY vite.config.js ./
+COPY resources/ ./resources/
+COPY public/ ./public/
+RUN npm run build
+
+# -----------------------------------------------------------------------------
+# STAGE 3: Imagen final PHP-FPM + Nginx (Alpine, sin root)
 # -----------------------------------------------------------------------------
 FROM php:8.2-fpm-alpine AS production
 
@@ -84,8 +99,12 @@ COPY --from=composer-builder --chown=www:www /app/vendor ./vendor
 # Copiar código fuente
 COPY --chown=www:www . .
 
+# Copiar assets compilados para que Laravel encuentre el manifiesto de Vite
+COPY --from=vite-builder --chown=www:www /app/public/build ./public/build
+
 # ----- PASO 7: Permisos de directorios de Laravel -----
-RUN mkdir -p \
+RUN chown www:www /var/www/siga \
+    && mkdir -p \
         /var/www/siga/storage/app/public \
         /var/www/siga/storage/framework/cache/data \
         /var/www/siga/storage/framework/sessions \

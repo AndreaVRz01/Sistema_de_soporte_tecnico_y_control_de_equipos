@@ -21,15 +21,28 @@ mkdir -p "$APP_DIR/storage/app/public" \
 
 # ----- 2. Verificar/generar APP_KEY -----
 if [ ! -f "$APP_DIR/.env" ]; then
-    echo "[WARN] .env no encontrado, copiando .env.example..."
-    cp "$APP_DIR/.env.example" "$APP_DIR/.env" 2>/dev/null || true
+    echo "[INFO] .env no encontrado, inicializando configuración local..."
+    if [ -f "$APP_DIR/.env.example" ]; then
+        cp "$APP_DIR/.env.example" "$APP_DIR/.env"
+    else
+        : > "$APP_DIR/.env"
+    fi
 fi
 
-APP_KEY_VALUE=$(grep "^APP_KEY=" "$APP_DIR/.env" 2>/dev/null | cut -d= -f2- | tr -d '"') || true
+APP_KEY_VALUE="${APP_KEY:-}"
+if [ -z "$APP_KEY_VALUE" ]; then
+    APP_KEY_VALUE=$(grep "^APP_KEY=" "$APP_DIR/.env" 2>/dev/null | cut -d= -f2- | tr -d '"') || true
+fi
 if [ -z "$APP_KEY_VALUE" ]; then
     echo "[INFO] Generando APP_KEY..."
     php "$APP_DIR/artisan" key:generate --force
+    APP_KEY_VALUE=$(grep "^APP_KEY=" "$APP_DIR/.env" 2>/dev/null | cut -d= -f2- | tr -d '"') || true
 fi
+if [ -z "$APP_KEY_VALUE" ]; then
+    echo "[ERROR] No fue posible generar APP_KEY." >&2
+    exit 1
+fi
+export APP_KEY="$APP_KEY_VALUE"
 
 # ----- 3. Esperar a PostgreSQL (con credenciales unificadas) -----
 DB_H="${DB_HOST:-bd}"

@@ -7,6 +7,39 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Levantar el proyecto con Docker
+
+Este repositorio ya incluye una configuración Docker Compose propia: PostgreSQL, Laravel/PHP-FPM con Nginx y un proxy Nginx. No se usa el servicio `laravel.test` de Sail; los servicios aquí se llaman `bd`, `app` y `frontend`.
+
+Requisitos: Docker Desktop iniciado y Docker Compose v2.
+
+```powershell
+docker compose config --quiet
+docker compose up -d --build
+docker compose ps
+```
+
+Abre <http://localhost:8000>. El puerto directo de la aplicación es <http://localhost:8080>. Los assets de Vite se compilan durante la construcción de la imagen; no ejecutes `npm install` dentro de `app`, porque ese contenedor no incluye Node.js.
+
+Si necesitas ejecutar manualmente las migraciones o datos de ejemplo:
+
+```powershell
+docker compose exec app php artisan migrate --force
+docker compose exec app php artisan db:seed --force
+```
+
+El contenedor `app` también intenta ejecutar migraciones y seeders al iniciar.
+
+La base de datos es PostgreSQL y escucha en el puerto `5432` dentro de Docker. En el `.env` local, `DB_EXPOSE_PORT=3307` publica PostgreSQL en el puerto `3307` del equipo; el contenedor sigue conectándose a `bd:5432`. Este Compose usa `DB_EXPOSE_PORT`, no `FORWARD_DB_PORT` de Sail.
+
+Para detener los servicios sin borrar los datos persistidos:
+
+```powershell
+docker compose down
+```
+
+No agregues `-v` a `down` salvo que quieras eliminar también los volúmenes de PostgreSQL y almacenamiento.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
