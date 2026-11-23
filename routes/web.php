@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicCatalogController::class, 'index'])->name('public.home');
 Route::get('/catalogo', [PublicCatalogController::class, 'index'])->name('public.catalog');
 Route::get('/catalogo/activo/{equipment}', [PublicCatalogController::class, 'show'])->name('public.catalog.show');
+Route::get('/catalogo/sugerencias', [PublicCatalogController::class, 'suggestions'])->name('public.catalog.suggestions');
 Route::get('/registro', [RegistrationController::class, 'create'])->name('register');
 Route::post('/registro', [RegistrationController::class, 'store'])->middleware('throttle:5,1')->name('register.store');
 

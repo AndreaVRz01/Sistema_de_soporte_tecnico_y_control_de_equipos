@@ -123,12 +123,12 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Categorías de equipos institucionales
+        // 2. Categorías de equipos institucionales con nombres comprensibles y sin tecnicismos
         $catLaptops = Category::firstOrCreate(
             ['code' => 'LAP'],
             [
-                'name' => 'Laptops y Portátiles',
-                'description' => 'Computadoras portátiles para prácticas de laboratorio, docencia y presentaciones.',
+                'name' => 'Laptops y Computadoras',
+                'description' => 'Equipos portátiles para trabajo, clases y presentaciones.',
                 'is_active' => true,
             ]
         );
@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
             ['code' => 'PROY'],
             [
                 'name' => 'Proyectores y Pantallas',
-                'description' => 'Equipos de proyección audiovisual para aulas y auditorios.',
+                'description' => 'Equipos para proyectar video y presentaciones en salas y aulas.',
                 'is_active' => true,
             ]
         );
@@ -145,8 +145,8 @@ class DatabaseSeeder extends Seeder
         $catAudio = Category::firstOrCreate(
             ['code' => 'AUD'],
             [
-                'name' => 'Audio y Microfonía',
-                'description' => 'Micrófonos inalámbricos, bocinas portátiles e interfaces de audio.',
+                'name' => 'Bocinas y Micrófonos',
+                'description' => 'Equipo de audio, micrófonos y sonido para eventos y conferencias.',
                 'is_active' => true,
             ]
         );
@@ -154,8 +154,8 @@ class DatabaseSeeder extends Seeder
         $catRedes = Category::firstOrCreate(
             ['code' => 'RED'],
             [
-                'name' => 'Equipos de Redes y Telecomunicaciones',
-                'description' => 'Switches, routers y puntos de acceso para prácticas de laboratorio de redes.',
+                'name' => 'Redes e Internet',
+                'description' => 'Routers, switches y cables para conexión de red.',
                 'is_active' => true,
             ]
         );
@@ -163,13 +163,13 @@ class DatabaseSeeder extends Seeder
         $catPerifericos = Category::firstOrCreate(
             ['code' => 'PER'],
             [
-                'name' => 'Periféricos y Accesorios',
-                'description' => 'Teclados, mouse, adaptadores HDMI/USB-C y tabletas digitalizadoras.',
+                'name' => 'Accesorios y Cables',
+                'description' => 'Teclados, mouse, adaptadores HDMI, cables y extensiones.',
                 'is_active' => true,
             ]
         );
 
-        // 3. Equipos físicos con número de serie e inventario universitario
+        // 3. Equipos físicos con imágenes y nombres lógicos
         $lap1 = Equipment::firstOrCreate(
             ['inventory_code' => 'ACT-LAP-001'],
             [
@@ -179,6 +179,7 @@ class DatabaseSeeder extends Seeder
                 'brand' => 'Dell',
                 'model' => 'Latitude 5420',
                 'specifications' => 'Intel Core i7 11va Gen, 16GB RAM, SSD 512GB NVMe, Pantalla 14" FHD. Incluye cargador tipo C.',
+                'image_url' => 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80',
                 'status' => 'disponible',
                 'physical_condition' => 'excelente',
                 'location' => 'Módulo de Préstamos Edificio A',
@@ -195,6 +196,7 @@ class DatabaseSeeder extends Seeder
                 'brand' => 'Lenovo',
                 'model' => 'ThinkPad L14',
                 'specifications' => 'AMD Ryzen 5 Pro, 16GB RAM, SSD 512GB, Cargador original de 65W.',
+                'image_url' => 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=800&q=80',
                 'status' => 'prestado',
                 'physical_condition' => 'bueno',
                 'location' => 'Laboratorio de Cómputo 2',
@@ -211,6 +213,7 @@ class DatabaseSeeder extends Seeder
                 'brand' => 'HP',
                 'model' => 'ProBook 450 G8',
                 'specifications' => 'Intel Core i5, 8GB RAM, SSD 256GB.',
+                'image_url' => 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80',
                 'status' => 'en_mantenimiento',
                 'physical_condition' => 'regular',
                 'location' => 'Taller de Soporte Técnico',
@@ -227,6 +230,7 @@ class DatabaseSeeder extends Seeder
                 'brand' => 'Epson',
                 'model' => 'PowerLite E20',
                 'specifications' => '3400 Lúmenes, Resolución XGA, Entrada HDMI y VGA. Incluye cable HDMI, cable de poder y control remoto.',
+                'image_url' => 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
                 'status' => 'disponible',
                 'physical_condition' => 'excelente',
                 'location' => 'Módulo de Préstamos Edificio A',
@@ -243,6 +247,7 @@ class DatabaseSeeder extends Seeder
                 'brand' => 'BenQ',
                 'model' => 'MX560',
                 'specifications' => '4000 Lúmenes DLP, Doble HDMI, bocina integrada 10W.',
+                'image_url' => 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80',
                 'status' => 'disponible',
                 'physical_condition' => 'bueno',
                 'location' => 'Módulo de Préstamos Edificio B',
@@ -259,6 +264,7 @@ class DatabaseSeeder extends Seeder
                 'brand' => 'Cisco',
                 'model' => 'ISR 1100',
                 'specifications' => '8 puertos Gigabit Ethernet, Soporte VPN y OSPF para prácticas de telecomunicaciones.',
+                'image_url' => 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80',
                 'status' => 'disponible',
                 'physical_condition' => 'excelente',
                 'location' => 'Laboratorio de Redes - Estante 4',

@@ -311,8 +311,14 @@
             </div>
 
             <div class="space-y-1">
-                <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Especificaciones Técnicas</label>
-                <textarea name="specifications" rows="2" placeholder="CPU, Memoria RAM, Almacenamiento, Conectividad..." class="neu-inset w-full px-3 py-2 rounded-xl text-xs"></textarea>
+                <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Enlace de Imagen / Fotografía del Producto (URL)</label>
+                <input type="url" name="image_url" placeholder="https://ejemplo.com/foto-equipo.jpg" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                <p class="text-[10px] text-outline font-body">Pega el enlace a una imagen para que los solicitantes vean el producto en el catálogo público.</p>
+            </div>
+
+            <div class="space-y-1">
+                <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Detalles y Especificaciones del Equipo</label>
+                <textarea name="specifications" rows="2" placeholder="CPU, Memoria RAM, Almacenamiento, Accesorios incluidos..." class="neu-inset w-full px-3 py-2 rounded-xl text-xs"></textarea>
             </div>
 
             <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-2">

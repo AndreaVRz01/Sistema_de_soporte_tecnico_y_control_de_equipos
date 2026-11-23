@@ -109,11 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
         updateFilterResults(url, target);
     });
 
-    document.addEventListener('change', (event) => {
-        if (event.target.matches('form[data-ajax-filter] select')) {
-            event.target.form.requestSubmit();
-        }
-    });
+    // Se eliminó el auto-submit en evento 'change' para que los filtros requieran pulsar el botón de Filtrar/Buscar.
 
     document.addEventListener('click', (event) => {
         const link = event.target.closest('a[href]');

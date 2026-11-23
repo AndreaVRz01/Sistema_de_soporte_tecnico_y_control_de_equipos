@@ -22,6 +22,7 @@ class Equipment extends Model
         'brand',
         'model',
         'specifications',
+        'image_url',
         'status',
         'functional_status',
         'physical_condition',

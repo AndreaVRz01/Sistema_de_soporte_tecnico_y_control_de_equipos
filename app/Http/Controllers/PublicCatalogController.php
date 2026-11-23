@@ -17,8 +17,19 @@ use Illuminate\View\View;
 class PublicCatalogController extends Controller
 {
     /**
+     * Nombres amigables para las categorías (sin tecnicismos).
+     * Se usan en sugerencias y en la vista del catálogo.
+     */
+    public static array $friendlyCategoryNames = [
+        'LAP'  => 'Laptops y Computadoras',
+        'PROY' => 'Proyectores y Pantallas',
+        'AUD'  => 'Bocinas y Micrófonos',
+        'RED'  => 'Redes y Conectividad',
+        'PER'  => 'Accesorios y Periféricos',
+    ];
+
+    /**
      * Muestra el portal público de consulta de activos y catálogo institucional.
-     * Basado en: docs/stitch_asset_loan_maintenance_system/portal_p_blico_y_cat_logo_de_equipos
      */
     public function index(Request $request): View
     {
@@ -36,14 +47,15 @@ class PublicCatalogController extends Controller
             });
         }
 
-        // 2. Filtro de Búsqueda
-        if ($search = $request->input('q')) {
+        // 2. Filtro de Búsqueda (sólo si viene texto, insensible a mayúsculas/minúsculas)
+        $search = trim((string) $request->input('q', ''));
+        if ($search !== '') {
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('brand', 'like', "%{$search}%")
-                  ->orWhere('model', 'like', "%{$search}%")
-                  ->orWhere('inventory_code', 'like', "%{$search}%")
-                  ->orWhere('specifications', 'like', "%{$search}%");
+                $q->where('name', 'ilike', "%{$search}%")
+                  ->orWhere('brand', 'ilike', "%{$search}%")
+                  ->orWhere('model', 'ilike', "%{$search}%")
+                  ->orWhere('inventory_code', 'ilike', "%{$search}%")
+                  ->orWhere('specifications', 'ilike', "%{$search}%");
             });
         }
 
@@ -55,8 +67,46 @@ class PublicCatalogController extends Controller
             ->withCount(['equipment', 'availableEquipment'])
             ->get();
         $availableEquipmentCount = Equipment::available()->count();
+        $friendlyNames = self::$friendlyCategoryNames;
 
-        return view('public.catalog', compact('equipment', 'categories', 'availableEquipmentCount'));
+        return view('public.catalog', compact('equipment', 'categories', 'availableEquipmentCount', 'friendlyNames'));
+    }
+
+    /**
+     * Endpoint AJAX: devuelve sugerencias de búsqueda en tiempo real.
+     * GET /catalogo/sugerencias?q=laptop
+     */
+    public function suggestions(Request $request): JsonResponse
+    {
+        $q = trim((string) $request->input('q', ''));
+
+        if (mb_strlen($q) < 2) {
+            return response()->json([]);
+        }
+
+        $results = Equipment::available()
+            ->with('category')
+            ->where(function ($query) use ($q) {
+                $query->where('name', 'ilike', "%{$q}%")
+                      ->orWhere('brand', 'ilike', "%{$q}%")
+                      ->orWhere('model', 'ilike', "%{$q}%")
+                      ->orWhere('inventory_code', 'ilike', "%{$q}%");
+            })
+            ->select('id', 'name', 'brand', 'model', 'inventory_code', 'category_id', 'image_url')
+            ->limit(8)
+            ->get()
+            ->map(fn ($item) => [
+                'id'             => $item->id,
+                'name'           => $item->name,
+                'brand'          => $item->brand,
+                'model'          => $item->model,
+                'inventory_code' => $item->inventory_code,
+                'category_name'  => self::$friendlyCategoryNames[$item->category?->code ?? ''] ?? ($item->category?->name ?? 'Equipo'),
+                'category_code'  => $item->category?->code ?? '',
+                'image_url'      => $item->image_url,
+            ]);
+
+        return response()->json($results);
     }
 
     /**
