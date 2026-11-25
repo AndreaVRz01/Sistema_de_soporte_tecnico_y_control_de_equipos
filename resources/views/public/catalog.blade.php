@@ -47,11 +47,11 @@
             {{-- ============================================================ --}}
             {{-- BARRA DE BÚSQUEDA CON SUGERENCIAS (sólo aplica con el botón) --}}
             {{-- ============================================================ --}}
-            <form method="GET" action="{{ route('public.catalog') }}" id="catalogSearchForm" class="mt-6 max-w-2xl relative">
+            <form method="GET" action="{{ route('public.catalog') }}" id="catalogSearchForm" data-equipment-search data-suggestions-url="{{ route('public.catalog.suggestions') }}" class="mt-6 max-w-2xl relative">
                 @if(request('category'))
                     <input type="hidden" name="category" value="{{ request('category') }}">
                 @endif
-                <div class="relative flex flex-col gap-2 rounded-2xl bg-white p-2 shadow-lg sm:flex-row">
+                <div class="relative flex flex-col gap-2 rounded-2xl bg-surface p-2 shadow-lg dark:bg-primary sm:flex-row">
                     <label class="flex min-w-0 flex-1 items-center gap-2 px-3">
                         <span class="material-symbols-outlined text-outline">search</span>
                         <input
@@ -61,12 +61,16 @@
                             value="{{ request('q') }}"
                             placeholder="Buscar por nombre, marca o tipo de equipo…"
                             aria-label="Buscar equipos disponibles"
+                            aria-controls="searchSuggestions"
+                            aria-expanded="false"
+                            aria-autocomplete="list"
+                            aria-haspopup="listbox"
                             autocomplete="off"
-                            class="w-full border-0 bg-transparent text-sm text-primary placeholder:text-outline focus:ring-0"
+                            class="w-full border-0 bg-transparent text-sm text-primary placeholder:text-outline focus:ring-0 dark:text-surface dark:placeholder:text-inverse-primary"
                         />
                         {{-- Botón limpiar búsqueda --}}
                         <button type="button" id="clearSearchBtn"
-                            onclick="clearSearchInput()"
+                            data-clear-equipment-search
                             class="{{ request('q') ? '' : 'hidden' }} text-outline hover:text-primary p-1 rounded-lg transition"
                             aria-label="Limpiar búsqueda"
                             title="Limpiar búsqueda">
@@ -81,7 +85,9 @@
 
                 {{-- Menú desplegable de sugerencias y semejanzas en tiempo real --}}
                 <div id="searchSuggestions"
-                     class="hidden absolute z-50 left-0 right-0 top-full mt-2 rounded-2xl bg-white shadow-2xl border border-outline-variant/40 overflow-hidden divide-y divide-outline-variant/20 max-h-80 overflow-y-auto">
+                     data-equipment-suggestions
+                     aria-label="Sugerencias de equipos"
+                     class="neu-floating hidden absolute z-50 left-0 right-0 top-full mt-2 rounded-2xl bg-surface dark:bg-primary-container border border-outline-variant/40 overflow-hidden divide-y divide-outline-variant/20 max-h-80 overflow-y-auto">
                 </div>
             </form>
         </div>
@@ -94,7 +100,7 @@
         {{-- ============================================================ --}}
         {{-- PANEL LATERAL DE CATEGORÍAS (nombres amigables y claros)     --}}
         {{-- ============================================================ --}}
-        <aside aria-label="Categorías de equipos" class="h-fit rounded-2xl border border-outline-variant/50 bg-white p-4 shadow-sm dark:bg-primary-container">
+        <aside aria-label="Categorías de equipos" class="h-fit rounded-2xl border border-outline-variant/50 bg-surface p-4 shadow-sm dark:bg-primary-container">
             <div class="mb-3 flex items-center gap-2 border-b border-outline-variant/40 pb-3">
                 <span class="material-symbols-outlined text-secondary">category</span>
                 <h2 class="font-headline text-base font-bold text-primary dark:text-surface">Tipo de equipo</h2>
@@ -169,11 +175,11 @@
                     </h2>
                     @if(request('q'))
                         <div class="mt-2 flex items-center gap-2 flex-wrap">
-                            <span class="text-xs text-on-surface-variant">Búsqueda activa:</span>
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/20 border border-secondary text-primary font-mono text-xs font-semibold">
+                            <span class="text-xs text-on-surface-variant dark:text-inverse-primary">Búsqueda activa:</span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/20 border border-secondary text-primary dark:text-surface font-mono text-xs font-semibold">
                                 "{{ request('q') }}"
                                 <a href="{{ route('public.catalog', array_filter(['category' => request('category')])) }}"
-                                   class="text-primary hover:text-error ml-1" title="Eliminar filtro de búsqueda">
+                                   class="text-primary hover:text-error dark:text-surface ml-1" title="Eliminar filtro de búsqueda">
                                     <span class="material-symbols-outlined text-sm">cancel</span>
                                 </a>
                             </span>
@@ -183,8 +189,14 @@
                         </div>
                     @endif
                 </div>
-                <p class="font-body text-xs text-outline">{{ $equipment->total() }} {{ $equipment->total() === 1 ? 'resultado' : 'resultados' }}</p>
+                <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">{{ $equipment->total() }} {{ $equipment->total() === 1 ? 'resultado' : 'resultados' }}</p>
             </div>
+
+            @if ($isFuzzySearch)
+                <p role="status" class="mb-4 rounded-xl border border-secondary/30 bg-secondary-container/15 px-4 py-3 text-sm text-on-surface-variant dark:text-inverse-primary">
+                    No encontramos una coincidencia exacta para <strong class="text-primary dark:text-surface">“{{ request('q') }}”</strong>; mostramos equipos similares.
+                </p>
+            @endif
 
             @php
                 $catPlaceholderBg = [
@@ -218,7 +230,7 @@
                         $condInfo        = $conditionLabels[$item->physical_condition] ?? ['label' => ucfirst($item->physical_condition), 'class' => 'bg-gray-100 text-gray-700 border-gray-300'];
                         $friendlyCategory = $friendlyNames[$code] ?? ($item->category->name ?? 'Equipo institucional');
                     @endphp
-                    <article class="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-outline-variant/50 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:bg-primary-container">
+                    <article class="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-outline-variant/50 bg-surface shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:bg-primary-container">
 
                         {{-- Imagen del producto --}}
                         <div class="relative flex h-52 items-center justify-center {{ $placeholderBg }} dark:bg-primary/70 overflow-hidden border-b border-outline-variant/30">
@@ -317,7 +329,7 @@
                         </div>
                     </article>
                 @empty
-                    <div class="col-span-full rounded-3xl border border-outline-variant/50 bg-white p-10 text-center shadow-sm dark:bg-primary-container">
+                    <div class="col-span-full rounded-3xl border border-outline-variant/50 bg-surface p-10 text-center shadow-sm dark:bg-primary-container">
                         <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-surface-container-low text-secondary mb-4">
                             <span class="material-symbols-outlined text-4xl">search_off</span>
                         </div>
@@ -325,11 +337,18 @@
                         <p class="mt-1 text-sm text-on-surface-variant dark:text-inverse-primary max-w-md mx-auto">
                             No hay resultados para la búsqueda actual. Puedes intentar con otras palabras o restablecer los filtros para ver todo el inventario disponible.
                         </p>
-                        <div class="mt-5 flex items-center justify-center gap-3">
-                            <a href="{{ route('public.catalog') }}" class="inline-flex items-center gap-2 rounded-xl bg-primary-container px-5 py-2.5 font-mono text-xs font-bold uppercase text-white transition hover:bg-primary shadow-xs">
-                                <span class="material-symbols-outlined text-base">restart_alt</span>
-                                <span>Ver todos los equipos</span>
-                            </a>
+                        <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+                            @if (request()->hasAny(['q', 'category']))
+                                <a href="{{ route('public.catalog') }}" class="inline-flex items-center gap-2 rounded-xl border border-outline-variant px-5 py-2.5 font-mono text-xs font-bold uppercase text-on-surface-variant transition hover:bg-surface-container dark:text-inverse-primary dark:hover:bg-primary">
+                                    <span class="material-symbols-outlined text-base">filter_alt_off</span>
+                                    <span>Limpiar filtros</span>
+                                </a>
+                            @else
+                                <a href="{{ route('public.catalog') }}" class="inline-flex items-center gap-2 rounded-xl border border-outline-variant px-5 py-2.5 font-mono text-xs font-bold uppercase text-on-surface-variant transition hover:bg-surface-container dark:text-inverse-primary dark:hover:bg-primary">
+                                    <span class="material-symbols-outlined text-base">restart_alt</span>
+                                    <span>Ver catálogo completo</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @endforelse
@@ -578,107 +597,5 @@
         document.getElementById('modalPublicLoan').classList.add('hidden');
     }
 
-    // =========================================================================
-    // LÓGICA DE BÚSQUEDA Y SUGERENCIAS EN TIEMPO REAL (con semejanzas)
-    // =========================================================================
-    const searchInput = document.getElementById('catalogSearchInput');
-    const searchSuggestions = document.getElementById('searchSuggestions');
-    const clearSearchBtn = document.getElementById('clearSearchBtn');
-    let debounceTimer = null;
-
-    function clearSearchInput() {
-        if (!searchInput) return;
-        searchInput.value = '';
-        if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
-        if (searchSuggestions) searchSuggestions.classList.add('hidden');
-        // Enviar formulario para recargar resultados limpios
-        document.getElementById('catalogSearchForm').submit();
-    }
-
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const query = this.value.trim();
-
-            // Mostrar/ocultar botón de limpiar
-            if (clearSearchBtn) {
-                clearSearchBtn.classList.toggle('hidden', query.length === 0);
-            }
-
-            clearTimeout(debounceTimer);
-
-            if (query.length < 2) {
-                if (searchSuggestions) searchSuggestions.classList.add('hidden');
-                return;
-            }
-
-            // Consultar sugerencias y semejanzas vía endpoint
-            debounceTimer = setTimeout(() => {
-                fetch(`{{ route('public.catalog.suggestions') }}?q=${encodeURIComponent(query)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!data || data.length === 0) {
-                            searchSuggestions.innerHTML = `
-                                <div class="p-4 text-center text-xs text-outline font-body">
-                                    No se encontraron semejanzas directas para "<span class="font-semibold text-primary">${query}</span>".
-                                    <br><span class="text-[11px]">Pulsa "Buscar equipos" para hacer una búsqueda amplia.</span>
-                                </div>
-                            `;
-                            searchSuggestions.classList.remove('hidden');
-                            return;
-                        }
-
-                        let html = `
-                            <div class="px-4 py-2 bg-surface-container-low text-[10px] font-mono uppercase tracking-wider text-secondary font-bold flex items-center justify-between">
-                                <span>Sugerencias y semejanzas (${data.length})</span>
-                                <span class="text-[10px] lowercase text-outline">clic para autocompletar</span>
-                            </div>
-                        `;
-
-                        data.forEach(item => {
-                            const imgHtml = item.image_url
-                                ? `<img src="${item.image_url}" class="w-9 h-9 rounded-lg object-cover shrink-0 border border-outline-variant/30" />`
-                                : `<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-secondary"><span class="material-symbols-outlined text-lg">devices</span></div>`;
-
-                            html += `
-                                <div class="px-4 py-2.5 hover:bg-surface-container flex items-center gap-3 cursor-pointer transition-colors"
-                                     onclick="selectSuggestion('${item.name.replace(/'/g, "\\'")}')">
-                                    ${imgHtml}
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-xs font-bold text-primary truncate">${item.name}</p>
-                                        <p class="text-[11px] text-outline flex items-center gap-2">
-                                            <span>${item.brand} ${item.model}</span>
-                                            <span>·</span>
-                                            <span class="text-secondary font-mono">${item.category_name}</span>
-                                        </p>
-                                    </div>
-                                    <span class="font-mono text-[10px] bg-surface-container-low px-2 py-0.5 rounded text-outline">${item.inventory_code}</span>
-                                </div>
-                            `;
-                        });
-
-                        searchSuggestions.innerHTML = html;
-                        searchSuggestions.classList.remove('hidden');
-                    })
-                    .catch(() => {
-                        searchSuggestions.classList.add('hidden');
-                    });
-            }, 250);
-        });
-
-        // Ocultar sugerencias al hacer clic afuera
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
-                searchSuggestions.classList.add('hidden');
-            }
-        });
-    }
-
-    function selectSuggestion(name) {
-        if (!searchInput) return;
-        searchInput.value = name;
-        if (searchSuggestions) searchSuggestions.classList.add('hidden');
-        if (clearSearchBtn) clearSearchBtn.classList.remove('hidden');
-        document.getElementById('catalogSearchForm').submit();
-    }
 </script>
 @endsection

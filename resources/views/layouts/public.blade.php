@@ -166,16 +166,16 @@
     <!-- ========================================================================= -->
     <!-- HEADER PÚBLICO INSTITUCIONAL (TopNavBar)                                  -->
     <!-- ========================================================================= -->
-    <header id="public-topbar" class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200 lg:ml-72 lg:w-[calc(100%-18rem)]">
+    <header id="public-topbar" class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             
             <!-- Marca y Disparador Menú Móvil -->
             <div class="flex items-center gap-3">
-                <button aria-label="Cerrar menú de navegación" aria-controls="public-side-drawer" aria-expanded="true" class="fixed left-4 top-3 z-[60] p-2 rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container dark:hover:bg-primary-container neu-raised transition-all active:scale-95 flex items-center justify-center cursor-pointer" id="public-drawer-toggle" type="button" title="Mostrar u ocultar menú">
+                <button aria-label="Abrir menú de navegación" aria-controls="public-side-drawer" aria-expanded="false" class="fixed left-4 top-3 z-[60] flex items-center justify-center rounded-xl p-2 text-primary transition-all hover:bg-surface-container active:scale-95 neu-raised dark:text-inverse-primary dark:hover:bg-primary-container lg:hidden" id="public-drawer-toggle" type="button" title="Mostrar u ocultar menú">
                     <span class="material-symbols-outlined text-2xl">menu</span>
                 </button>
 
-                <a href="{{ url('/') }}" class="flex items-center gap-2.5 pl-12 group">
+                <a href="{{ url('/') }}" class="group flex items-center gap-2.5 pl-12 lg:pl-0">
                     <div class="w-10 h-10 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center font-headline font-bold neu-raised group-hover:scale-105 transition-transform">
                         <span class="material-symbols-outlined text-2xl text-secondary-container" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
                     </div>
@@ -185,6 +185,13 @@
                     </div>
                 </a>
             </div>
+
+            <nav aria-label="Navegación principal" class="hidden items-center gap-5 lg:flex">
+                <a href="{{ url('/') }}#catalogo" class="font-mono text-xs font-semibold text-on-surface-variant transition-colors hover:text-secondary dark:text-inverse-primary">Catálogo</a>
+                <a href="{{ url('/') }}#como-funciona" class="font-mono text-xs font-semibold text-on-surface-variant transition-colors hover:text-secondary dark:text-inverse-primary">Cómo solicitar</a>
+                <a href="{{ url('/') }}#horarios" class="font-mono text-xs font-semibold text-on-surface-variant transition-colors hover:text-secondary dark:text-inverse-primary">Horarios</a>
+                <a href="{{ url('/') }}#terminos" class="font-mono text-xs font-semibold text-on-surface-variant transition-colors hover:text-secondary dark:text-inverse-primary">Políticas</a>
+            </nav>
 
             <!-- Acciones de Cabecera: Modo Oscuro & Botón de Acceso Privado -->
             <div class="flex items-center gap-3">
@@ -224,7 +231,7 @@
     <!-- DRAWER LATERAL OFFCANVAS (Móvil y Navegación Rápida)                       -->
     <!-- ========================================================================= -->
     <div class="fixed inset-0 z-40 hidden bg-primary/40 backdrop-blur-xs transition-opacity lg:hidden" id="drawer-backdrop"></div>
-    <aside aria-label="Menú principal de navegación" aria-hidden="false" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col justify-between overflow-y-auto border-r border-outline-variant/60 bg-surface p-5 shadow-2xl transition-transform duration-300 ease-in-out dark:border-primary dark:bg-primary-container lg:translate-x-0 lg:shadow-none" id="public-side-drawer">
+    <aside aria-label="Menú principal de navegación" aria-hidden="true" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col justify-between overflow-y-auto border-r border-outline-variant/60 bg-surface p-5 shadow-2xl transition-transform duration-300 ease-in-out dark:border-primary dark:bg-primary-container lg:hidden" id="public-side-drawer">
         <div>
             <!-- Cabecera del Drawer -->
             <div class="flex items-center justify-between pb-4 border-b border-outline-variant/30 dark:border-primary">
@@ -238,9 +245,6 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-1">
-                    <button aria-label="Fijar menú" aria-pressed="false" class="rounded-xl p-2 text-outline hover:bg-surface-container hover:text-secondary dark:hover:bg-primary" id="public-drawer-pin" type="button" title="Fijar menú">
-                        <span class="material-symbols-outlined">push_pin</span>
-                    </button>
                     <button aria-label="Cerrar panel lateral" class="p-2 rounded-xl text-outline hover:text-primary dark:hover:text-surface cursor-pointer lg:hidden" id="public-drawer-close" type="button">
                         <span class="material-symbols-outlined text-2xl">close</span>
                     </button>
@@ -297,14 +301,14 @@
     <!-- ========================================================================= -->
     <!-- CONTENIDO PRINCIPAL                                                       -->
     <!-- ========================================================================= -->
-    <main id="public-main" class="ml-0 w-full flex-1 lg:ml-72 lg:w-[calc(100%-18rem)]">
+    <main id="public-main" class="ml-0 w-full flex-1">
         @yield('content')
     </main>
 
     <!-- ========================================================================= -->
     <!-- FOOTER INSTITUCIONAL PÚBLICO                                              -->
     <!-- ========================================================================= -->
-    <footer id="public-footer" class="mt-16 w-full border-t border-outline-variant/60 bg-surface transition-colors duration-200 dark:border-primary-container dark:bg-primary lg:ml-72 lg:w-[calc(100%-18rem)]">
+    <footer id="public-footer" class="mt-16 w-full border-t border-outline-variant/60 bg-surface transition-colors duration-200 dark:border-primary-container dark:bg-primary">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <!-- Columna 1: Identidad -->
@@ -411,77 +415,31 @@
         // Control del Drawer Móvil
         const drawerToggle = document.getElementById('public-drawer-toggle');
         const drawerClose = document.getElementById('public-drawer-close');
-        const drawerPin = document.getElementById('public-drawer-pin');
         const drawer = document.getElementById('public-side-drawer');
         const backdrop = document.getElementById('drawer-backdrop');
-        const topbar = document.getElementById('public-topbar');
-        const main = document.getElementById('public-main');
-        const footer = document.getElementById('public-footer');
-        const desktopMenu = window.matchMedia('(min-width: 1024px)');
-        const pinnedMenuKey = 'siga_public_menu_pinned';
-        const openMenuKey = 'siga_public_menu_open';
-        let menuPinned = localStorage.getItem(pinnedMenuKey) === 'true';
 
-        function setDrawerOpen(isOpen, persist = true) {
+        function setDrawerOpen(isOpen) {
             if (!drawer || !backdrop) return;
             drawer.classList.toggle('-translate-x-full', !isOpen);
-            drawer.style.translate = isOpen ? '0 0' : '-100% 0';
             drawer.setAttribute('aria-hidden', String(!isOpen));
             drawerToggle?.setAttribute('aria-expanded', String(isOpen));
             drawerToggle?.setAttribute('aria-label', isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
-            if (desktopMenu.matches) {
-                document.body.classList.toggle('public-menu-collapsed', !isOpen);
-                [topbar, main, footer].forEach((element) => {
-                    if (!element) return;
-                    element.style.marginLeft = isOpen ? '18rem' : '0';
-                    element.style.width = isOpen ? 'calc(100% - 18rem)' : '100%';
-                });
-                backdrop.classList.add('hidden');
-                document.body.style.overflow = '';
-            } else {
-                [topbar, main, footer].forEach((element) => {
-                    if (!element) return;
-                    element.style.marginLeft = '';
-                    element.style.width = '';
-                });
-                backdrop.classList.toggle('hidden', !isOpen);
-                document.body.style.overflow = isOpen ? 'hidden' : '';
-            }
-            if (persist) localStorage.setItem(openMenuKey, String(isOpen));
+            backdrop.classList.toggle('hidden', !isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         }
 
         function isDrawerOpen() {
-            return desktopMenu.matches
-                ? !document.body.classList.contains('public-menu-collapsed')
-                : !drawer.classList.contains('-translate-x-full');
+            return drawer && !drawer.classList.contains('-translate-x-full');
         }
-
-        function updatePinButton() {
-            drawerPin?.setAttribute('aria-pressed', String(menuPinned));
-            drawerPin?.setAttribute('aria-label', menuPinned ? 'Quitar fijado al menú' : 'Fijar menú');
-            drawerPin?.setAttribute('title', menuPinned ? 'Quitar fijado al menú' : 'Fijar menú');
-            drawerPin?.classList.toggle('text-secondary', menuPinned);
-        }
-
-        const savedMenuOpen = localStorage.getItem(openMenuKey);
-        setDrawerOpen(desktopMenu.matches && (menuPinned || savedMenuOpen !== 'false'), false);
-        updatePinButton();
 
         if (drawerToggle) drawerToggle.addEventListener('click', () => setDrawerOpen(!isDrawerOpen()));
         if (drawerClose) drawerClose.addEventListener('click', () => setDrawerOpen(false));
         if (backdrop) backdrop.addEventListener('click', () => setDrawerOpen(false));
-        if (drawerPin) drawerPin.addEventListener('click', () => {
-            menuPinned = !menuPinned;
-            localStorage.setItem(pinnedMenuKey, String(menuPinned));
-            updatePinButton();
-            if (menuPinned) setDrawerOpen(true);
-        });
-        if (drawer) drawer.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-            if (!desktopMenu.matches || !menuPinned) setDrawerOpen(false);
-        }));
-        window.addEventListener('resize', () => {
-            if (desktopMenu.matches) setDrawerOpen(menuPinned || localStorage.getItem(openMenuKey) !== 'false', false);
-            else setDrawerOpen(false, false);
+        if (drawer) drawer.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setDrawerOpen(false)));
+        document.addEventListener('click', (event) => {
+            if (isDrawerOpen() && !drawer.contains(event.target) && !drawerToggle?.contains(event.target)) {
+                setDrawerOpen(false);
+            }
         });
 
         // Cerrar con Escape

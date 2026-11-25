@@ -8,6 +8,8 @@ use App\Models\Loan;
 use App\Models\LoanItem;
 use App\Models\User;
 use App\Services\AuditService;
+use App\Services\EquipmentSearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,9 +33,10 @@ class PublicCatalogController extends Controller
     /**
      * Muestra el portal público de consulta de activos y catálogo institucional.
      */
-    public function index(Request $request): View
+    public function index(Request $request, EquipmentSearchService $searchService): View
     {
         $query = Equipment::available()->with('category');
+        $isFuzzySearch = false;
 
         // 1. Filtro por Categoría
         $catCode = $request->input('category');
@@ -47,16 +50,19 @@ class PublicCatalogController extends Controller
             });
         }
 
-        // 2. Filtro de Búsqueda (sólo si viene texto, insensible a mayúsculas/minúsculas)
-        $search = trim((string) $request->input('q', ''));
+        // 2. Filtro de búsqueda por datos del activo y su categoría.
+        $search = trim($request->validate(['q' => ['nullable', 'string', 'max:100']])['q'] ?? '');
         if ($search !== '') {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'ilike', "%{$search}%")
-                  ->orWhere('brand', 'ilike', "%{$search}%")
-                  ->orWhere('model', 'ilike', "%{$search}%")
-                  ->orWhere('inventory_code', 'ilike', "%{$search}%")
-                  ->orWhere('specifications', 'ilike', "%{$search}%");
-            });
+            $exactQuery = clone $query;
+            $this->applySearch($exactQuery, $search);
+
+            if ($exactQuery->exists()) {
+                $query = $exactQuery;
+            } else {
+                $similar = $searchService->similar($search, availableOnly: true);
+                $query->whereIn('id', $similar->pluck('id'));
+                $isFuzzySearch = $similar->isNotEmpty() && $query->exists();
+            }
         }
 
         $equipment = $query->latest()
@@ -69,32 +75,52 @@ class PublicCatalogController extends Controller
         $availableEquipmentCount = Equipment::available()->count();
         $friendlyNames = self::$friendlyCategoryNames;
 
-        return view('public.catalog', compact('equipment', 'categories', 'availableEquipmentCount', 'friendlyNames'));
+        return view('public.catalog', compact('equipment', 'categories', 'availableEquipmentCount', 'friendlyNames', 'isFuzzySearch'));
     }
 
     /**
      * Endpoint AJAX: devuelve sugerencias de búsqueda en tiempo real.
      * GET /catalogo/sugerencias?q=laptop
      */
-    public function suggestions(Request $request): JsonResponse
+    public function suggestions(Request $request, EquipmentSearchService $searchService): JsonResponse
     {
-        $q = trim((string) $request->input('q', ''));
+        $validated = $request->validate([
+            'q' => ['nullable', 'string', 'max:100'],
+            'category' => ['nullable', 'string', 'max:50'],
+        ]);
+        $q = trim($validated['q'] ?? '');
 
         if (mb_strlen($q) < 2) {
             return response()->json([]);
         }
 
-        $results = Equipment::available()
-            ->with('category')
-            ->where(function ($query) use ($q) {
-                $query->where('name', 'ilike', "%{$q}%")
-                      ->orWhere('brand', 'ilike', "%{$q}%")
-                      ->orWhere('model', 'ilike', "%{$q}%")
-                      ->orWhere('inventory_code', 'ilike', "%{$q}%");
-            })
-            ->select('id', 'name', 'brand', 'model', 'inventory_code', 'category_id', 'image_url')
-            ->limit(8)
-            ->get()
+        $category = trim($validated['category'] ?? '');
+        $categoryId = $category === ''
+            ? null
+            : (is_numeric($category)
+                ? (int) $category
+                : (Category::where('code', $category)->value('id') ?? -1));
+        $exactQuery = Equipment::available()->with('category');
+        if ($category !== '') {
+            $exactQuery->whereHas('category', function (Builder $query) use ($category) {
+                $query->where('code', $category);
+
+                if (ctype_digit($category)) {
+                    $query->orWhere('id', (int) $category);
+                }
+            });
+        }
+        $this->applySearch($exactQuery, $q);
+        $exact = $exactQuery->orderBy('name')->limit(8)->get();
+        $similar = $exact->isEmpty()
+            ? $searchService->similar(
+                $q,
+                availableOnly: true,
+                categoryId: $categoryId
+            )
+            : collect();
+
+        $results = $exact->concat($similar)->take(8)
             ->map(fn ($item) => [
                 'id'             => $item->id,
                 'name'           => $item->name,
@@ -103,10 +129,25 @@ class PublicCatalogController extends Controller
                 'inventory_code' => $item->inventory_code,
                 'category_name'  => self::$friendlyCategoryNames[$item->category?->code ?? ''] ?? ($item->category?->name ?? 'Equipo'),
                 'category_code'  => $item->category?->code ?? '',
-                'image_url'      => $item->image_url,
+                'is_similar'     => !$exact->contains('id', $item->id),
             ]);
 
         return response()->json($results);
+    }
+
+    private function applySearch(Builder $query, string $search): void
+    {
+        $query->where(function (Builder $matches) use ($search) {
+            $pattern = "%{$search}%";
+            $matches->whereRaw('LOWER(name) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(brand) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(model) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(inventory_code) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(specifications) LIKE LOWER(?)', [$pattern])
+                ->orWhereHas('category', fn (Builder $category) => $category
+                    ->whereRaw('LOWER(name) LIKE LOWER(?)', [$pattern])
+                    ->orWhereRaw('LOWER(code) LIKE LOWER(?)', [$pattern]));
+        });
     }
 
     /**

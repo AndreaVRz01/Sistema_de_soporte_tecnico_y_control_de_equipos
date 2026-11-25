@@ -69,3 +69,44 @@ test('public catalog only lists available equipment and counts available items b
         ->assertSee('Catálogo institucional')
         ->assertSee('1 resultado');
 });
+
+test('public catalog suggestions match category names and tolerate transposed letters', function () {
+    $category = Category::create(['name' => 'Computadoras portátiles', 'code' => 'LAP']);
+
+    Equipment::create([
+        'category_id' => $category->id,
+        'inventory_code' => 'LAP-SUGGEST-001',
+        'serial_number' => 'LAP-SUGGEST-SERIAL',
+        'name' => 'Laptop ThinkPad',
+        'brand' => 'Lenovo',
+        'model' => 'T14',
+    ]);
+
+    $this->getJson(route('public.catalog.suggestions', ['q' => 'computadoras']))
+        ->assertOk()
+        ->assertJsonPath('0.name', 'Laptop ThinkPad')
+        ->assertJsonPath('0.is_similar', false);
+
+    $this->getJson(route('public.catalog.suggestions', ['q' => 'laptpo']))
+        ->assertOk()
+        ->assertJsonPath('0.name', 'Laptop ThinkPad')
+        ->assertJsonPath('0.is_similar', true);
+});
+
+test('public catalog displays nearby results when the search has a typo', function () {
+    $category = Category::create(['name' => 'Computadoras', 'code' => 'LAP']);
+
+    Equipment::create([
+        'category_id' => $category->id,
+        'inventory_code' => 'LAP-FUZZY-001',
+        'serial_number' => 'LAP-FUZZY-SERIAL',
+        'name' => 'Laptop ThinkPad',
+        'brand' => 'Lenovo',
+        'model' => 'T14',
+    ]);
+
+    $this->get(route('public.catalog', ['q' => 'laptpo']))
+        ->assertOk()
+        ->assertSee('Laptop ThinkPad')
+        ->assertSee('mostramos equipos similares');
+});
