@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Equipment;
+use App\Rules\ValidOperativeDate;
 use App\Services\AuditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -96,7 +97,7 @@ class EquipmentController extends Controller
             'status' => ['nullable', 'in:disponible,prestado,en_mantenimiento,baja,reservado'],
             'physical_condition' => ['required', 'in:excelente,bueno,regular,malo'],
             'location' => ['required', 'string', 'max:100'],
-            'acquisition_date' => ['nullable', 'date'],
+            'acquisition_date' => ['nullable', 'date', new ValidOperativeDate()],
             'notes' => ['nullable', 'string'],
         ], [
             'serial_number.unique' => 'El número de serie de fabricante ya se encuentra registrado en el sistema.',
@@ -161,6 +162,11 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment): RedirectResponse|JsonResponse
     {
+        $acquisitionRules = ['nullable', 'date'];
+        if ($request->filled('acquisition_date') && $request->input('acquisition_date') !== $equipment->acquisition_date?->format('Y-m-d')) {
+            $acquisitionRules[] = new ValidOperativeDate();
+        }
+
         $validated = $request->validate([
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:255'],
@@ -173,7 +179,7 @@ class EquipmentController extends Controller
             'status' => ['required', 'in:disponible,prestado,en_mantenimiento,baja,reservado'],
             'physical_condition' => ['required', 'in:excelente,bueno,regular,malo'],
             'location' => ['required', 'string', 'max:100'],
-            'acquisition_date' => ['nullable', 'date'],
+            'acquisition_date' => $acquisitionRules,
             'notes' => ['nullable', 'string'],
         ]);
 

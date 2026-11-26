@@ -214,10 +214,19 @@
                                     @if ($loan->status === 'solicitado')
                                         <form method="POST" action="{{ route('loans.approve', $loan) }}" class="inline">
                                             @csrf
-                                            <button type="submit" class="p-1 rounded-lg hover:bg-emerald-50 text-emerald-700 transition-colors" title="Autorizar préstamo">
+                                            <button type="submit" class="p-1 rounded-lg hover:bg-emerald-50 text-emerald-700 transition-colors cursor-pointer" title="Autorizar préstamo" aria-label="Autorizar préstamo">
                                                 <span class="material-symbols-outlined text-base">check_circle</span>
                                             </button>
                                         </form>
+                                        <button
+                                            type="button"
+                                            onclick="openRejectLoanModal({{ $loan->id }}, @js($loan->folio), @js($loan->user->name ?? 'Solicitante'))"
+                                            class="p-1 rounded-lg hover:bg-error-container/50 text-error transition-colors cursor-pointer"
+                                            title="Negar préstamo"
+                                            aria-label="Negar préstamo"
+                                        >
+                                            <span class="material-symbols-outlined text-base font-bold">close</span>
+                                        </button>
                                     @endif
 
                                     <!-- Si está aprobado: Despachar / Entregar -->
@@ -321,7 +330,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Fecha & Hora Límite de Retorno *</label>
-                    <input type="datetime-local" name="expected_return_date" required value="{{ now()->addDays(2)->format('Y-m-d\TH:i') }}" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                    <x-schedule-picker
+                        name="expected_return_date"
+                        mode="datetime"
+                        :required="true"
+                        :value="old('expected_return_date', \App\Support\OperatingSchedule::defaultReturnDateTime()->format('Y-m-d\TH:i'))"
+                    />
                 </div>
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Accesorios Incluidos</label>
@@ -391,12 +405,80 @@
     </div>
 </div>
 
+<!-- ========================================================================= -->
+<!-- MODAL: NEGAR / RECHAZAR SOLICITUD DE PRÉSTAMO                             -->
+<!-- ========================================================================= -->
+<div id="modalRejectLoan" class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="neu-raised rounded-2xl w-full max-w-md p-6 border border-outline-variant/40 shadow-xl">
+        <div class="flex items-center justify-between pb-3 border-b border-outline-variant/30 mb-4">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-error text-xl">cancel</span>
+                <h3 class="font-headline text-lg font-bold text-primary dark:text-surface">
+                    Negar Préstamo: <span id="rejectModalFolio" class="font-mono text-error"></span>
+                </h3>
+            </div>
+            <button type="button" onclick="closeRejectLoanModal()" class="text-outline hover:text-primary cursor-pointer">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <form id="rejectLoanForm" method="POST" action="" class="space-y-4">
+            @csrf
+
+            <div class="p-3 rounded-xl neu-inset bg-surface-container-low space-y-1">
+                <p class="font-mono text-[10px] text-outline uppercase font-bold">Solicitante</p>
+                <p id="rejectModalBorrower" class="font-headline text-sm font-bold text-primary dark:text-surface"></p>
+                <p class="font-body text-xs text-on-surface-variant">
+                    El solicitante verá que su préstamo no fue aceptado junto con el motivo indicado.
+                </p>
+            </div>
+
+            <div class="space-y-1">
+                <label for="rejectReasonInput" class="block font-mono text-xs font-bold text-primary dark:text-surface">Motivo de la Negativa / Observación *</label>
+                <textarea
+                    id="rejectReasonInput"
+                    name="rejection_reason"
+                    required
+                    maxlength="500"
+                    rows="3"
+                    placeholder="Ej. El equipo requerido entró a mantenimiento o no hay disponibilidad en el horario solicitado."
+                    class="neu-inset w-full px-3 py-2 rounded-xl text-xs"
+                ></textarea>
+            </div>
+
+            <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-2">
+                <button type="button" onclick="closeRejectLoanModal()" class="neu-btn-secondary px-4 py-2 rounded-xl font-mono text-xs font-bold text-outline cursor-pointer">
+                    Cancelar
+                </button>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-error text-on-error hover:brightness-95 font-headline font-semibold text-xs flex items-center gap-1.5 cursor-pointer shadow-sm">
+                    <span class="material-symbols-outlined text-base">close</span>
+                    <span>Negar Préstamo</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     function openNewLoanModal() {
         document.getElementById('newLoanModal').classList.remove('hidden');
+        if (window.sigaInitSchedulePickers) window.sigaInitSchedulePickers();
     }
     function closeNewLoanModal() {
         document.getElementById('newLoanModal').classList.add('hidden');
+    }
+
+    function openRejectLoanModal(loanId, folio, borrowerName) {
+        document.getElementById('rejectModalFolio').textContent = folio;
+        document.getElementById('rejectModalBorrower').textContent = borrowerName || 'Solicitante';
+        document.getElementById('rejectLoanForm').action = `/prestamos/${loanId}/rechazar`;
+        document.getElementById('rejectReasonInput').value = '';
+        document.getElementById('modalRejectLoan').classList.remove('hidden');
+        document.getElementById('rejectReasonInput').focus();
+    }
+
+    function closeRejectLoanModal() {
+        document.getElementById('modalRejectLoan').classList.add('hidden');
     }
 
     function openReturnModal(loanId, folio, items) {

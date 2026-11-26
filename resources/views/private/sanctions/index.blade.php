@@ -197,11 +197,22 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary">Fecha Inicio *</label>
-                    <input type="date" name="start_date" value="{{ date('Y-m-d') }}" required class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                    <x-schedule-picker
+                        name="start_date"
+                        mode="date"
+                        :required="true"
+                        :value="old('start_date', \App\Support\OperatingSchedule::nextValidDate()->format('Y-m-d'))"
+                    />
                 </div>
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary">Fecha Fin Suspensión</label>
-                    <input type="date" name="end_date" value="{{ date('Y-m-d', strtotime('+7 days')) }}" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                    <x-schedule-picker
+                        name="end_date"
+                        mode="date"
+                        :required="false"
+                        min-date-field="start_date"
+                        :value="old('end_date', \App\Support\OperatingSchedule::nextValidDate(now()->addDays(7))->format('Y-m-d'))"
+                    />
                 </div>
             </div>
 
@@ -280,6 +291,7 @@
 <script>
     function openCreateSanctionModal() {
         document.getElementById('modalCreateSanction').classList.remove('hidden');
+        if (window.sigaInitSchedulePickers) window.sigaInitSchedulePickers();
     }
     function closeCreateSanctionModal() {
         document.getElementById('modalCreateSanction').classList.add('hidden');

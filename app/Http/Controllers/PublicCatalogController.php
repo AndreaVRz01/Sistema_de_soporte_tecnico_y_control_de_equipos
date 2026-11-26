@@ -7,6 +7,7 @@ use App\Models\Equipment;
 use App\Models\Loan;
 use App\Models\LoanItem;
 use App\Models\User;
+use App\Rules\ValidLoanSchedule;
 use App\Services\AuditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -147,11 +148,12 @@ class PublicCatalogController extends Controller
         $validated = $request->validate([
             'equipment_id' => ['required', 'exists:equipment,id'],
             'purpose' => ['required', 'string', 'max:500'],
-            'expected_return_date' => ['required', 'date', 'after:now'],
+            'expected_return_date' => ['required', 'date', new ValidLoanSchedule()],
             'location_of_use' => ['nullable', 'string', 'max:120'],
         ], [
             'equipment_id.required' => 'Seleccione el activo deseado.',
-            'expected_return_date.after' => 'La fecha acordada de devolución debe ser futura.',
+            'expected_return_date.required' => 'Debe seleccionar una fecha y hora de devolución.',
+            'expected_return_date.date' => 'La fecha y hora de devolución no tiene un formato válido.',
         ]);
 
         if (!$user->canBorrow()) {

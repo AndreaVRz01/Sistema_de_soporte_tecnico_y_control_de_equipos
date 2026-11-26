@@ -17,6 +17,7 @@
             <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold
                 @if ($loan->status === 'entregado') bg-emerald-100 text-emerald-800
                 @elseif ($loan->status === 'solicitado') bg-amber-100 text-amber-800
+                @elseif ($loan->status === 'rechazado') bg-error-container text-on-error-container
                 @elseif ($loan->status === 'devuelto') bg-gray-100 text-gray-800
                 @else bg-surface-container text-primary @endif">
                 {{ strtoupper(str_replace('_', ' ', $loan->status)) }}
@@ -24,7 +25,20 @@
         </h1>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 print:hidden">
+        @if ($loan->status === 'solicitado' && in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_prestamos'], true))
+            <form method="POST" action="{{ route('loans.approve', $loan) }}" class="inline">
+                @csrf
+                <button type="submit" class="px-3.5 py-2 rounded-xl bg-emerald-700 text-white hover:bg-emerald-800 font-mono text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <span class="material-symbols-outlined text-base">check_circle</span>
+                    <span>Autorizar</span>
+                </button>
+            </form>
+            <button type="button" onclick="document.getElementById('modalRejectLoanShow').classList.remove('hidden')" class="px-3.5 py-2 rounded-xl bg-error text-on-error hover:brightness-95 font-mono text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                <span class="material-symbols-outlined text-base">close</span>
+                <span>Negar</span>
+            </button>
+        @endif
         <button onclick="window.print()" class="neu-btn-secondary px-3.5 py-2 rounded-xl font-mono text-xs font-bold text-secondary flex items-center gap-1.5 cursor-pointer">
             <span class="material-symbols-outlined text-base">print</span>
             <span>Imprimir Acta</span>
@@ -34,6 +48,21 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
+
+    @if ($loan->status === 'rechazado')
+        <div class="p-4 rounded-2xl bg-error-container border border-error/40 text-on-error-container neu-raised flex items-start gap-3">
+            <span class="material-symbols-outlined text-error text-2xl shrink-0">cancel</span>
+            <div class="space-y-1">
+                <h2 class="font-headline text-sm font-bold">Solicitud de préstamo no aceptada (Rechazada)</h2>
+                <p class="font-body text-xs">
+                    <strong>Motivo registrado:</strong> {{ $loan->rejection_reason ?: 'No especificado.' }}
+                </p>
+                @if ($loan->authorizedBy)
+                    <p class="font-mono text-[11px] opacity-80">Revisado por: {{ $loan->authorizedBy->name }}</p>
+                @endif
+            </div>
+        </div>
+    @endif
 
     <!-- Tarjeta Principal del Acta -->
     <div class="neu-raised rounded-2xl p-6 sm:p-8 space-y-6">
@@ -135,5 +164,37 @@
     </div>
 
 </div>
+
+@if ($loan->status === 'solicitado' && in_array(Auth::user()->role, ['admin', 'supervisor', 'encargado_prestamos'], true))
+    <div id="modalRejectLoanShow" class="fixed inset-0 z-50 bg-primary/60 backdrop-blur-xs hidden flex items-center justify-center p-4 print:hidden">
+        <div class="neu-raised rounded-2xl w-full max-w-md p-6 border border-outline-variant/40 shadow-xl">
+            <div class="flex items-center justify-between pb-3 border-b border-outline-variant/30 mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-error text-xl">cancel</span>
+                    <h3 class="font-headline text-lg font-bold text-primary dark:text-surface">
+                        Negar Préstamo: <span class="font-mono text-error">{{ $loan->folio }}</span>
+                    </h3>
+                </div>
+                <button type="button" onclick="document.getElementById('modalRejectLoanShow').classList.add('hidden')" class="text-outline hover:text-primary cursor-pointer">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form method="POST" action="{{ route('loans.reject', $loan) }}" class="space-y-4">
+                @csrf
+                <div class="space-y-1">
+                    <label for="rejectReasonShow" class="block font-mono text-xs font-bold text-primary dark:text-surface">Motivo de la Negativa / Observación *</label>
+                    <textarea id="rejectReasonShow" name="rejection_reason" required maxlength="500" rows="3" placeholder="Indique el motivo por el cual no se acepta la solicitud..." class="neu-inset w-full px-3 py-2 rounded-xl text-xs"></textarea>
+                </div>
+                <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-2">
+                    <button type="button" onclick="document.getElementById('modalRejectLoanShow').classList.add('hidden')" class="neu-btn-secondary px-4 py-2 rounded-xl font-mono text-xs font-bold text-outline cursor-pointer">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-error text-on-error hover:brightness-95 font-headline font-semibold text-xs flex items-center gap-1.5 cursor-pointer">
+                        <span class="material-symbols-outlined text-base">close</span>
+                        <span>Negar Préstamo</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endif
 @endsection
 

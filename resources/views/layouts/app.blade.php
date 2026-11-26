@@ -274,11 +274,31 @@
                 </button>
 
                 <!-- Notificaciones con Alerta -->
+                @php
+                    $topbarNotifications = \Illuminate\Support\Facades\Schema::hasTable('notifications')
+                        ? Auth::user()->unreadNotifications()->latest()->take(6)->get()
+                        : collect();
+                @endphp
                 <div class="relative">
-                    <button aria-label="Notificaciones del sistema" class="w-9 h-9 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-surface neu-btn cursor-pointer">
+                    <button id="notifications-menu-btn" aria-label="Notificaciones del sistema" class="w-9 h-9 rounded-xl neu-raised flex items-center justify-center text-primary dark:text-surface neu-btn cursor-pointer" type="button">
                         <span class="material-symbols-outlined text-lg">notifications</span>
                     </button>
-                    <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+                    @if ($topbarNotifications->isNotEmpty())
+                        <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+                    @endif
+                    <div id="notifications-dropdown" class="hidden absolute right-0 top-12 w-72 rounded-2xl bg-surface dark:bg-primary neu-floating p-3 z-50 border border-outline-variant/30 space-y-2">
+                        <p class="font-mono text-[10px] font-bold uppercase tracking-wider text-secondary pb-2 border-b border-outline-variant/20">
+                            Notificaciones ({{ $topbarNotifications->count() }})
+                        </p>
+                        @forelse ($topbarNotifications as $notif)
+                            <div class="p-2 rounded-xl bg-surface-container-low dark:bg-primary-container text-xs space-y-0.5">
+                                <p class="font-body text-primary dark:text-surface leading-snug">{{ $notif->data['message'] ?? 'Nueva notificación del sistema' }}</p>
+                                <span class="font-mono text-[10px] text-outline">{{ $notif->created_at->diffForHumans() }}</span>
+                            </div>
+                        @empty
+                            <p class="font-body text-xs text-outline py-2 text-center">Sin notificaciones pendientes.</p>
+                        @endforelse
+                    </div>
                 </div>
 
                 <!-- Perfil y Menú de Usuario -->
@@ -523,13 +543,23 @@
             if (event.key === 'Escape' && isPrivateDrawerOpen()) setPrivateDrawerOpen(false);
         });
 
-        // Menú desplegable de perfil de usuario
+        // Menú desplegable de perfil de usuario y notificaciones
         const userBtn = document.getElementById('user-profile-menu-btn');
         const userDropdown = document.getElementById('user-profile-dropdown');
+        const notifBtn = document.getElementById('notifications-menu-btn');
+        const notifDropdown = document.getElementById('notifications-dropdown');
         if (userBtn && userDropdown) {
             userBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
+                notifDropdown?.classList.add('hidden');
                 userDropdown.classList.toggle('hidden');
+            });
+        }
+        if (notifBtn && notifDropdown) {
+            notifBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown?.classList.add('hidden');
+                notifDropdown.classList.toggle('hidden');
             });
         }
 
@@ -537,6 +567,9 @@
         window.addEventListener('click', (e) => {
             if (userDropdown && !userDropdown.contains(e.target) && userBtn && !userBtn.contains(e.target)) {
                 userDropdown.classList.add('hidden');
+            }
+            if (notifDropdown && !notifDropdown.contains(e.target) && notifBtn && !notifBtn.contains(e.target)) {
+                notifDropdown.classList.add('hidden');
             }
         });
     </script>

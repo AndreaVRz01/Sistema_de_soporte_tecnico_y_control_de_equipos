@@ -20,6 +20,27 @@
 
 @section('content')
 <div class="space-y-6">
+    @php
+        $rejectedList = $rejectedLoans ?? collect();
+    @endphp
+
+    @if ($rejectedList->isNotEmpty())
+        <section class="rounded-2xl bg-error-container border border-error/35 text-on-error-container p-4 neu-raised space-y-2" aria-label="Solicitudes de préstamo no aceptadas">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-error text-xl">cancel</span>
+                <h2 class="font-headline text-sm font-bold">Tienes {{ $rejectedList->count() === 1 ? 'una solicitud de préstamo no aceptada' : $rejectedList->count() . ' solicitudes de préstamo no aceptadas' }}</h2>
+            </div>
+            <ul class="space-y-1.5 pl-7 text-xs font-body">
+                @foreach ($rejectedList as $rejected)
+                    <li>
+                        <strong class="font-mono">{{ $rejected->folio }}</strong>:
+                        {{ $rejected->rejection_reason ?: 'Tu solicitud no fue aceptada por el área de préstamos.' }}
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+    @endif
+
     <section class="grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label="Resumen personal">
         <div class="neu-raised rounded-xl p-4"><p class="font-mono text-[10px] text-outline uppercase font-semibold">Mis préstamos</p><p class="font-headline text-2xl font-bold text-primary dark:text-surface mt-1">{{ $loanCounts['total'] }}</p></div>
         <div class="neu-raised rounded-xl p-4"><p class="font-mono text-[10px] text-secondary uppercase font-semibold">En proceso</p><p class="font-headline text-2xl font-bold text-secondary mt-1">{{ $loanCounts['pending'] }}</p></div>
@@ -34,9 +55,30 @@
             </div>
             <div class="divide-y divide-outline-variant/20">
                 @forelse ($myLoans as $loan)
+                    @php
+                        $badgeClasses = match ($loan->status) {
+                            'rechazado' => 'bg-error-container text-on-error-container border border-error/40',
+                            'entregado' => 'bg-emerald-50 text-emerald-800 border border-emerald-300',
+                            'aprobado' => 'bg-blue-50 text-blue-800 border border-blue-300',
+                            'vencido' => 'bg-error-container text-on-error-container border border-error/40',
+                            default => 'bg-surface-container text-secondary',
+                        };
+                        $statusLabel = $loan->status === 'rechazado'
+                            ? 'No aceptado'
+                            : ucfirst(str_replace('_', ' ', $loan->status));
+                    @endphp
                     <div class="p-4 flex items-start justify-between gap-3">
-                        <div><p class="font-mono text-xs font-bold text-primary dark:text-surface">{{ $loan->folio }}</p><p class="font-body text-xs text-on-surface-variant mt-1">{{ $loan->purpose }}</p><p class="font-mono text-[10px] text-outline mt-1">{{ $loan->items->pluck('equipment.name')->filter()->join(', ') ?: 'Equipo por confirmar' }}</p></div>
-                        <span class="shrink-0 rounded-full bg-surface-container px-2.5 py-1 font-mono text-[10px] font-bold text-secondary">{{ ucfirst(str_replace('_', ' ', $loan->status)) }}</span>
+                        <div class="min-w-0 flex-1">
+                            <p class="font-mono text-xs font-bold text-primary dark:text-surface">{{ $loan->folio }}</p>
+                            <p class="font-body text-xs text-on-surface-variant mt-1">{{ $loan->purpose }}</p>
+                            <p class="font-mono text-[10px] text-outline mt-1">{{ $loan->items->pluck('equipment.name')->filter()->join(', ') ?: 'Equipo por confirmar' }}</p>
+                            @if ($loan->status === 'rechazado')
+                                <p class="mt-2 rounded-lg bg-error-container/60 border border-error/30 px-2.5 py-1.5 font-body text-xs text-on-error-container">
+                                    <strong>Motivo:</strong> {{ $loan->rejection_reason ?: 'No especificado.' }}
+                                </p>
+                            @endif
+                        </div>
+                        <span class="shrink-0 rounded-full px-2.5 py-1 font-mono text-[10px] font-bold {{ $badgeClasses }}">{{ $statusLabel }}</span>
                     </div>
                 @empty
                     <p class="p-5 font-body text-sm text-outline">Todavía no tienes préstamos registrados.</p>
