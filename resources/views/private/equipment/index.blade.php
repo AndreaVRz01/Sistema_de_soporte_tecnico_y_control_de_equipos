@@ -325,7 +325,12 @@
                 </div>
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Fecha de Adquisición</label>
-                    <input type="date" name="acquisition_date" value="{{ date('Y-m-d') }}" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                    <x-schedule-picker
+                        name="acquisition_date"
+                        mode="date"
+                        :required="false"
+                        :value="old('acquisition_date', \App\Support\OperatingSchedule::nextValidDate()->format('Y-m-d'))"
+                    />
                 </div>
             </div>
 
@@ -356,6 +361,7 @@
 <script>
     function openCreateModal() {
         document.getElementById('modalCreateAsset').classList.remove('hidden');
+        if (window.sigaInitSchedulePickers) window.sigaInitSchedulePickers();
     }
     function closeCreateModal() {
         document.getElementById('modalCreateAsset').classList.add('hidden');

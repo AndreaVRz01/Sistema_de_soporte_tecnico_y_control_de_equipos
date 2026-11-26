@@ -8,12 +8,15 @@ use App\Models\IncidentLog;
 use App\Models\Loan;
 use App\Models\LoanItem;
 use App\Models\User;
+use App\Notifications\LoanRejected;
+use App\Rules\ValidLoanSchedule;
 use App\Services\AuditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -96,14 +99,15 @@ class LoanController extends Controller
             'equipment_ids.*' => ['exists:equipment,id'],
             'purpose' => ['required', 'string', 'max:500'],
             'location_of_use' => ['nullable', 'string', 'max:120'],
-            'expected_return_date' => ['required', 'date', 'after:now'],
+            'expected_return_date' => ['required', 'date', new ValidLoanSchedule()],
             'accessories_included' => ['nullable', 'string', 'max:255'],
             'condition_on_loan' => ['nullable', 'in:excelente,bueno,regular'],
             'notes_on_loan' => ['nullable', 'string'],
             'immediate_dispatch' => ['nullable', 'boolean'],
         ], [
             'equipment_ids.required' => 'Debe seleccionar al menos un activo para el préstamo.',
-            'expected_return_date.after' => 'La fecha esperada de devolución debe ser posterior al momento actual.',
+            'expected_return_date.required' => 'Debe seleccionar una fecha y hora límite de devolución.',
+            'expected_return_date.date' => 'La fecha y hora límite de devolución no es válida.',
         ]);
 
         $borrower = User::findOrFail($validated['user_id']);
@@ -238,24 +242,53 @@ class LoanController extends Controller
      */
     public function reject(Request $request, Loan $loan): RedirectResponse
     {
-        $request->validate([
+        if ($loan->status !== 'solicitado') {
+            return back()->with('error', 'Solo pueden negarse o rechazarse préstamos en estado solicitado.');
+        }
+
+        $validated = $request->validate([
             'rejection_reason' => ['required', 'string', 'max:500'],
         ], [
-            'rejection_reason.required' => 'Debe especificar el motivo del rechazo del préstamo.',
+            'rejection_reason.required' => 'Debe especificar el motivo por el cual se niega el préstamo.',
         ]);
 
-        $loan->update([
-            'status' => 'rechazado',
-            'authorized_by_id' => Auth::id(),
-            'rejection_reason' => $request->rejection_reason,
-        ]);
+        DB::transaction(function () use ($loan, $validated): void {
+            $loan->load('items');
+            $loan->update([
+                'status' => 'rechazado',
+                'authorized_by_id' => Auth::id(),
+                'rejection_reason' => $validated['rejection_reason'],
+            ]);
 
-        AuditService::log('Loan', $loan->id, 'PRESTAMO_RECHAZADO', "Préstamo {$loan->folio} rechazado: {$request->rejection_reason}", null, 'advertencia');
-        app(\App\Services\ActivityLogService::class)->record($loan->user, 'prestamo.rechazado', $loan, [
-            'operator_id' => Auth::id(),
-        ]);
+            foreach ($loan->items as $item) {
+                Equipment::query()
+                    ->whereKey($item->equipment_id)
+                    ->where('status', 'reservado')
+                    ->update(['status' => 'disponible']);
+            }
+        });
 
-        return back()->with('success', "Solicitud {$loan->folio} rechazada.");
+        AuditService::log(
+            'Loan',
+            $loan->id,
+            'PRESTAMO_RECHAZADO',
+            "Préstamo {$loan->folio} rechazado: {$validated['rejection_reason']}",
+            ['folio' => $loan->folio, 'rejection_reason' => $validated['rejection_reason']],
+            'advertencia'
+        );
+
+        if ($loan->user) {
+            app(\App\Services\ActivityLogService::class)->record($loan->user, 'prestamo.rechazado', $loan, [
+                'operator_id' => Auth::id(),
+                'rejection_reason' => $validated['rejection_reason'],
+            ]);
+
+            if (Schema::hasTable('notifications')) {
+                $loan->user->notify(new LoanRejected($loan, Auth::user()?->name));
+            }
+        }
+
+        return back()->with('success', "Solicitud {$loan->folio} negada. Se notificó al solicitante.");
     }
 
     /**

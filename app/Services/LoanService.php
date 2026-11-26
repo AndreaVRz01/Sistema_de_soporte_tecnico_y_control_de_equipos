@@ -10,6 +10,8 @@ use App\Models\PaymentTicket;
 use App\Models\Sanction;
 use App\Models\User;
 use App\Notifications\LoanApprovalRequired;
+use App\Notifications\LoanRejected;
+use App\Rules\ValidLoanSchedule;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -50,7 +52,7 @@ class LoanService
             'equipment_ids' => ['required', 'array', 'min:1'],
             'equipment_ids.*' => ['required', 'integer', 'distinct', 'exists:equipment,id'],
             'purpose' => ['required', 'string', 'max:5000'],
-            'expected_return_date' => ['required', 'date', 'after:now'],
+            'expected_return_date' => ['required', 'date', new ValidLoanSchedule()],
             'location_of_use' => ['nullable', 'string', 'max:120'],
         ])->validate();
 
@@ -156,7 +158,10 @@ class LoanService
                 'rejection_reason' => $validated['reason'],
             ]);
             $this->releaseReservedEquipment($loan);
-            $this->activityLog->record($approver, 'prestamo.rechazado', $loan);
+            $this->activityLog->record($approver, 'prestamo.rechazado', $loan, [
+                'rejection_reason' => $validated['reason'],
+            ]);
+            $loan->user?->notify(new LoanRejected($loan, $approver->name));
 
             return $loan->refresh();
         });

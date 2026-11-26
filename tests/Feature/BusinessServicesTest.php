@@ -63,7 +63,8 @@ it('requiere supervisor para aprobar solicitudes con más de diez equipos', func
 
     $activityLog = new ActivityLogService();
     $service = new LoanService($activityLog, new PaymentTicketService($activityLog));
-    $loan = $service->requestLoan($requester, $equipmentIds, 'Evento de prueba', now()->addDays(2)->toDateTimeString());
+    $validReturn = now()->next(\Carbon\Carbon::MONDAY)->setTime(10, 0)->toDateTimeString();
+    $loan = $service->requestLoan($requester, $equipmentIds, 'Evento de prueba', $validReturn);
 
     expect($loan->requires_supervisor_approval)->toBeTrue()
         ->and($supervisor->notifications()->count())->toBe(1);

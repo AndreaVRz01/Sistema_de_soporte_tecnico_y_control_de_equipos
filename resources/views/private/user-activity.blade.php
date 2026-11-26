@@ -21,7 +21,21 @@
                     <tr>
                         <td class="p-3.5 whitespace-nowrap font-mono text-xs text-outline">{{ $entry->created_at->format('d/m/Y H:i') }}</td>
                         <td class="p-3.5 font-semibold text-primary dark:text-surface">{{ $entry->displayName() }}</td>
-                        <td class="p-3.5 text-on-surface-variant">@if ($entry->subject){{ $entry->subject->name ?? $entry->subject->title ?? $entry->subject->folio ?? $entry->subject->ticket_code ?? class_basename($entry->subject_type) . ' #' . $entry->subject_id }}@else Actividad de cuenta @endif</td>
+                        <td class="p-3.5 text-on-surface-variant">
+                            @if ($entry->subject)
+                                <span>{{ $entry->subject->name ?? $entry->subject->title ?? $entry->subject->folio ?? $entry->subject->ticket_code ?? class_basename($entry->subject_type) . ' #' . $entry->subject_id }}</span>
+                            @else
+                                <span>Actividad de cuenta</span>
+                            @endif
+                            @if ($entry->event === 'prestamo.rechazado')
+                                @php
+                                    $reason = $entry->metadata['rejection_reason'] ?? $entry->subject?->rejection_reason;
+                                @endphp
+                                @if ($reason)
+                                    <span class="block mt-1 text-xs text-error font-medium">Motivo: {{ $reason }}</span>
+                                @endif
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr><td colspan="3" class="p-8 text-center text-outline">Aún no hay eventos en tu bitácora.</td></tr>

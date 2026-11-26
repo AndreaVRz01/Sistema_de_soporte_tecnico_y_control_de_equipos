@@ -32,6 +32,27 @@
     </div>
 @endif
 
+@if ($errors->any())
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div class="p-4 rounded-xl bg-error-container border border-error/30 text-on-error-container neu-raised shadow-xs">
+            <div class="flex items-center justify-between gap-2 font-bold mb-1">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-error text-xl">warning</span>
+                    <span class="font-body text-sm">Por favor verifique los siguientes datos:</span>
+                </div>
+                <button onclick="this.parentElement.parentElement.parentElement.remove()" class="text-on-error-container hover:opacity-80 cursor-pointer">
+                    <span class="material-symbols-outlined text-base">close</span>
+                </button>
+            </div>
+            <ul class="list-disc list-inside text-xs font-body space-y-1 ml-6">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif
+
 <section class="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8" id="hero">
     <div class="overflow-hidden rounded-3xl bg-primary-container px-6 py-8 text-white shadow-lg sm:px-10 sm:py-10">
         <div class="max-w-3xl">
@@ -523,14 +544,19 @@
                 <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">La solicitud se vinculará a tu cuenta institucional aprobada.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 gap-3">
                 <div class="space-y-1">
                     <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Lugar donde se usará *</label>
-                    <input type="text" name="location_of_use" required placeholder="Ej. Aula 12, Laboratorio B..." class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                    <input type="text" name="location_of_use" value="{{ old('location_of_use') }}" required placeholder="Ej. Aula 12, Laboratorio B..." class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
                 </div>
                 <div class="space-y-1">
-                    <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Fecha pactada de devolución *</label>
-                    <input type="datetime-local" name="expected_return_date" required value="{{ now()->addDays(2)->format('Y-m-d\TH:i') }}" class="neu-inset w-full px-3 py-2 rounded-xl text-xs" />
+                    <label class="block font-mono text-xs font-bold text-primary dark:text-surface">Fecha y hora pactada de devolución *</label>
+                    <x-schedule-picker
+                        name="expected_return_date"
+                        mode="datetime"
+                        :required="true"
+                        :value="old('expected_return_date', \App\Support\OperatingSchedule::defaultReturnDateTime()->format('Y-m-d\TH:i'))"
+                    />
                 </div>
             </div>
 
@@ -592,6 +618,7 @@
         document.getElementById('publicLoanEquipName').textContent = name;
         document.getElementById('publicLoanEquipCode').textContent = `Código: ${code}`;
         document.getElementById('modalPublicLoan').classList.remove('hidden');
+        if (window.sigaInitSchedulePickers) window.sigaInitSchedulePickers();
     }
     function closePublicLoanModal() {
         document.getElementById('modalPublicLoan').classList.add('hidden');

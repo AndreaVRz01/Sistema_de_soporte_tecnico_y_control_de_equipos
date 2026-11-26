@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Equipment;
 use App\Models\User;
+use App\Rules\ValidOperativeDate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -47,7 +48,7 @@ class EquipmentService
             'functional_status' => ['sometimes', Rule::in(self::FUNCTIONAL_STATUSES)],
             'physical_condition' => ['sometimes', Rule::in(['excelente', 'bueno', 'regular', 'malo'])],
             'location' => ['sometimes', 'string', 'max:100'],
-            'acquisition_date' => ['nullable', 'date'],
+            'acquisition_date' => ['nullable', 'date', new ValidOperativeDate()],
             'warranty_until' => ['nullable', 'date'],
             'warranty_details' => ['nullable', 'string'],
             'notes' => ['nullable', 'string'],
@@ -65,6 +66,11 @@ class EquipmentService
     {
         $this->authorize($actor);
 
+        $acquisitionRules = ['nullable', 'date'];
+        if (!empty($data['acquisition_date']) && $data['acquisition_date'] !== $equipment->acquisition_date?->format('Y-m-d')) {
+            $acquisitionRules[] = new ValidOperativeDate();
+        }
+
         $validated = Validator::make($data, [
             'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
             'inventory_code' => ['sometimes', 'string', 'max:50', Rule::unique('equipment', 'inventory_code')->ignore($equipment->id)],
@@ -77,7 +83,7 @@ class EquipmentService
             'functional_status' => ['sometimes', Rule::in(self::FUNCTIONAL_STATUSES)],
             'physical_condition' => ['sometimes', Rule::in(['excelente', 'bueno', 'regular', 'malo'])],
             'location' => ['sometimes', 'string', 'max:100'],
-            'acquisition_date' => ['nullable', 'date'],
+            'acquisition_date' => $acquisitionRules,
             'warranty_until' => ['nullable', 'date'],
             'warranty_details' => ['nullable', 'string'],
             'notes' => ['nullable', 'string'],

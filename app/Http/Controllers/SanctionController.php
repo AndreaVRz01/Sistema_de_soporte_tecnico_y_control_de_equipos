@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sanction;
 use App\Models\User;
+use App\Rules\ValidOperativeDate;
 use App\Services\AuditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -57,11 +58,13 @@ class SanctionController extends Controller
             'user_id' => ['required', 'exists:users,id'],
             'sanction_type' => ['required', 'in:suspension_temporal,cobro_reparacion,amonestacion_escrita,bloqueo_definitivo'],
             'reason' => ['required', 'string', 'max:500'],
-            'start_date' => ['required', 'date'],
-            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+            'start_date' => ['required', 'date', new ValidOperativeDate()],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date', new ValidOperativeDate()],
             'amount_to_pay' => ['nullable', 'numeric', 'min:0'],
             'loan_id' => ['nullable', 'exists:loans,id'],
             'incident_id' => ['nullable', 'exists:incidents,id'],
+        ], [
+            'end_date.after_or_equal' => 'La fecha de fin debe ser igual o posterior a la fecha de inicio.',
         ]);
 
         DB::beginTransaction();

@@ -31,8 +31,20 @@ class DashboardController extends Controller
             $myLoans = $user->loans()->with('items.equipment')->latest('request_date')->take(5)->get();
             $myReports = $user->reportedIncidents()->with('equipment')->latest('reported_at')->take(5)->get();
             $recentActivity = $user->activityLogs()->latest()->take(6)->get();
+            $rejectedLoans = $user->loans()->where('status', 'rechazado')->latest('updated_at')->take(5)->get();
+            $unreadNotifications = Schema::hasTable('notifications')
+                ? $user->unreadNotifications()->latest()->take(5)->get()
+                : collect();
 
-            return view('private.user-dashboard', compact('user', 'loanCounts', 'myLoans', 'myReports', 'recentActivity'));
+            return view('private.user-dashboard', compact(
+                'user',
+                'loanCounts',
+                'myLoans',
+                'myReports',
+                'recentActivity',
+                'rejectedLoans',
+                'unreadNotifications'
+            ));
         }
 
         // 1. Métricas Principales (KPIs)
