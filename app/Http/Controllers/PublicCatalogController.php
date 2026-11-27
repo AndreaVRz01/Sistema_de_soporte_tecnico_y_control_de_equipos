@@ -49,14 +49,15 @@ class PublicCatalogController extends Controller
         }
 
         // 2. Filtro de Búsqueda (sólo si viene texto, insensible a mayúsculas/minúsculas)
+        $likeOp = DB::connection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
         $search = trim((string) $request->input('q', ''));
         if ($search !== '') {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'ilike', "%{$search}%")
-                  ->orWhere('brand', 'ilike', "%{$search}%")
-                  ->orWhere('model', 'ilike', "%{$search}%")
-                  ->orWhere('inventory_code', 'ilike', "%{$search}%")
-                  ->orWhere('specifications', 'ilike', "%{$search}%");
+            $query->where(function ($q) use ($search, $likeOp) {
+                $q->where('name', $likeOp, "%{$search}%")
+                  ->orWhere('brand', $likeOp, "%{$search}%")
+                  ->orWhere('model', $likeOp, "%{$search}%")
+                  ->orWhere('inventory_code', $likeOp, "%{$search}%")
+                  ->orWhere('specifications', $likeOp, "%{$search}%");
             });
         }
 
@@ -85,13 +86,15 @@ class PublicCatalogController extends Controller
             return response()->json([]);
         }
 
+        $likeOp = DB::connection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
+
         $results = Equipment::available()
             ->with('category')
-            ->where(function ($query) use ($q) {
-                $query->where('name', 'ilike', "%{$q}%")
-                      ->orWhere('brand', 'ilike', "%{$q}%")
-                      ->orWhere('model', 'ilike', "%{$q}%")
-                      ->orWhere('inventory_code', 'ilike', "%{$q}%");
+            ->where(function ($query) use ($q, $likeOp) {
+                $query->where('name', $likeOp, "%{$q}%")
+                      ->orWhere('brand', $likeOp, "%{$q}%")
+                      ->orWhere('model', $likeOp, "%{$q}%")
+                      ->orWhere('inventory_code', $likeOp, "%{$q}%");
             })
             ->select('id', 'name', 'brand', 'model', 'inventory_code', 'category_id', 'image_url')
             ->limit(8)

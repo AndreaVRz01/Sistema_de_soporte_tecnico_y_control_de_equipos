@@ -50,7 +50,7 @@ FROM php:8.2-fpm-alpine AS production
 
 LABEL maintainer="SIGA Enterprise"
 LABEL description="Sistema de Gestión de Activos, Préstamos y Mantenimiento"
-LABEL version="4.2"
+LABEL version="1.0"
 
 # ----- PASO 1: Paquetes del sistema operativo -----
 RUN apk update && apk add --no-cache \

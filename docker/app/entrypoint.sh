@@ -8,7 +8,7 @@ set -e
 APP_DIR="/var/www/siga"
 
 echo "============================================="
-echo "  SIGA Enterprise v4.2 — Iniciando"
+echo "  SIGA Enterprise v1.0 — Iniciando"
 echo "============================================="
 
 # ----- 1. Crear directorios de storage necesarios para Laravel -----

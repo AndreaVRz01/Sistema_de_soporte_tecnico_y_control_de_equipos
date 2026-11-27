@@ -182,7 +182,7 @@ class DatabaseSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80',
                 'status' => 'disponible',
                 'physical_condition' => 'excelente',
-                'location' => 'Módulo de Préstamos Edificio A',
+                'location' => 'Módulo de Préstamos Edificio A planta baja',
                 'acquisition_date' => '2024-02-15',
             ]
         );
@@ -233,7 +233,7 @@ class DatabaseSeeder extends Seeder
                 'image_url' => 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
                 'status' => 'disponible',
                 'physical_condition' => 'excelente',
-                'location' => 'Módulo de Préstamos Edificio A',
+                'location' => 'Módulo de Préstamos Edificio A planta baja',
                 'acquisition_date' => '2024-01-20',
             ]
         );
@@ -358,7 +358,7 @@ class DatabaseSeeder extends Seeder
                 'entity_id' => $prestamoActivo->id,
                 'action' => 'PRESTAMO_ENTREGADO',
                 'ip_address' => '192.168.1.25',
-                'user_agent' => 'SIGA-Client-Web/4.2',
+                'user_agent' => 'SIGA-Client-Web/1.0',
                 'description' => 'Entrega en ventanilla de acta PRE-2026-0001 a ' . $docente->name,
                 'diff_payload' => ['folio' => $prestamoActivo->folio, 'estatus' => 'entregado'],
                 'risk_level' => 'normal',
@@ -374,7 +374,7 @@ class DatabaseSeeder extends Seeder
                 'entity_id' => $incidente->id,
                 'action' => 'TICKET_CREADO',
                 'ip_address' => '192.168.1.30',
-                'user_agent' => 'SIGA-Client-Web/4.2',
+                'user_agent' => 'SIGA-Client-Web/1.0',
                 'description' => 'Apertura de orden de taller INC-2026-0001 por sobrecalentamiento y daño físico',
                 'diff_payload' => ['ticket' => 'INC-2026-0001', 'prioridad' => 'alta'],
                 'risk_level' => 'advertencia',

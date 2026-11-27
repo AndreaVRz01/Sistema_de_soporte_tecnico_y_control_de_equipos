@@ -220,7 +220,7 @@ space-xl : 2.50rem (40px)  ──  Separación entre bloques mayores
 ### 6.1 Barra Superior Institucional (TopNavBar)
 - Posición fija (`sticky top-0 z-40`) con altura `h-16`.
 - Botón táctil para el cajón lateral (*Hamburger Drawer Trigger*).
-- Título institucional en Space Grotesk (`SIGA Enterprise`) con etiqueta de versión en JetBrains Mono (`v4.2 PRO`).
+- Título institucional en Space Grotesk (`SIGA Enterprise`) con etiqueta de versión en JetBrains Mono (`v1.0 PRO`).
 - Buscador predictivo rápido con atajo de teclado accesible (`Ctrl + K`).
 
 ### 6.2 Buscador Predictivo Inteligente (`Ctrl + K`)
