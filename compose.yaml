@@ -80,12 +80,20 @@ services:
       APP_ENV:        ${APP_ENV:-production}
       APP_KEY:        ${APP_KEY:-}
       APP_URL:        ${APP_URL:-http://localhost:8000}
-      DB_CONNECTION:  ${DB_CONNECTION:-pgsql}
+      DB_CONNECTION:  pgsql
       DB_HOST:        bd
       DB_PORT:        5432
       DB_DATABASE:    ${DB_DATABASE:-siga_db}
       DB_USERNAME:    ${DB_USERNAME:-siga_user}
       DB_PASSWORD:    ${DB_PASSWORD:-siga_pass_2024}
+      MAIL_MAILER:       ${MAIL_MAILER:-log}
+      MAIL_SCHEME:       ${MAIL_SCHEME:-}
+      MAIL_HOST:         ${MAIL_HOST:-127.0.0.1}
+      MAIL_PORT:         ${MAIL_PORT:-2525}
+      MAIL_USERNAME:     ${MAIL_USERNAME:-}
+      MAIL_PASSWORD:     ${MAIL_PASSWORD:-}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-hello@example.com}
+      MAIL_FROM_NAME:    ${MAIL_FROM_NAME:-SIGA}
       SESSION_DRIVER: file
       CACHE_STORE:    file
       LOG_CHANNEL:    stderr
