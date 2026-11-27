@@ -59,23 +59,30 @@
 
     <!-- Barra de Filtros y Búsqueda Relacional -->
     <div class="neu-raised rounded-2xl p-4">
-        <form method="GET" action="{{ route('equipment.index') }}" data-ajax-filter data-filter-target="#filter-results" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+        <form method="GET" action="{{ route('equipment.index') }}" data-ajax-filter data-filter-target="#filter-results" data-equipment-search data-suggestions-url="{{ route('equipment.suggestions') }}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
             
             <!-- Campo Buscador -->
-            <div class="sm:col-span-4 neu-inset rounded-xl flex items-center px-3 py-1.5">
+            <div class="sm:col-span-4 relative neu-inset rounded-xl flex items-center px-3 py-1.5">
                 <span class="material-symbols-outlined text-secondary mr-2 text-lg">search</span>
                 <input 
                     type="text" 
                     name="search" 
                     value="{{ request('search') }}" 
-                    placeholder="Serie, código, marca o modelo..." 
-                    class="w-full bg-transparent border-0 font-body text-xs text-on-surface focus:outline-none focus:ring-0 placeholder:text-outline p-0"
+                    placeholder="Nombre, serie, código, categoría..."
+                    aria-label="Buscar activos"
+                    aria-controls="privateEquipmentSuggestions"
+                    aria-expanded="false"
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
+                    autocomplete="off"
+                    class="w-full bg-transparent border-0 font-body text-xs text-on-surface dark:text-surface focus:outline-none focus:ring-0 placeholder:text-outline dark:placeholder:text-inverse-primary p-0"
                 />
+                <div id="privateEquipmentSuggestions" data-equipment-suggestions aria-label="Sugerencias de equipos" class="neu-floating hidden absolute left-0 right-0 top-full z-50 mt-2 max-h-80 overflow-y-auto rounded-xl border border-outline-variant/40 bg-surface dark:bg-primary-container"></div>
             </div>
 
             <!-- Filtro Categoría -->
             <div class="sm:col-span-3">
-                <select name="category_id" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="category_id" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface dark:text-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Todas las Categorías</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
@@ -87,7 +94,7 @@
 
             <!-- Filtro Condición Física -->
             <div class="sm:col-span-3">
-                <select name="physical_condition" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface border-0 focus:ring-1 focus:ring-secondary">
+                <select name="physical_condition" class="neu-inset w-full px-3 py-1.5 rounded-xl font-body text-xs text-on-surface dark:text-surface border-0 focus:ring-1 focus:ring-secondary">
                     <option value="">Cualquier Condición</option>
                     <option value="excelente" {{ request('physical_condition') === 'excelente' ? 'selected' : '' }}>Excelente</option>
                     <option value="bueno" {{ request('physical_condition') === 'bueno' ? 'selected' : '' }}>Bueno</option>
@@ -109,6 +116,12 @@
             </div>
         </form>
     </div>
+
+    @if ($isFuzzySearch)
+        <p role="status" class="rounded-xl border border-secondary/30 bg-secondary-container/15 px-4 py-3 text-sm text-on-surface-variant dark:text-inverse-primary">
+            No encontramos una coincidencia exacta para <strong class="text-primary dark:text-surface">“{{ request('search') }}”</strong>; mostramos activos similares.
+        </p>
+    @endif
 
     <!-- Tabla Maestra de Activos -->
     <div class="neu-raised rounded-2xl overflow-hidden shadow-xs">
@@ -150,7 +163,7 @@
                             </td>
 
                             <!-- Ubicación -->
-                            <td class="p-3.5 font-mono text-[11px] text-on-surface-variant">
+                            <td class="p-3.5 font-mono text-[11px] text-on-surface-variant dark:text-inverse-primary">
                                 {{ $item->location }}
                             </td>
 
@@ -184,7 +197,7 @@
 
                             <!-- Condición Física -->
                             <td class="p-3.5">
-                                <span class="font-mono text-[11px] text-on-surface-variant">
+                                <span class="font-mono text-[11px] text-on-surface-variant dark:text-inverse-primary">
                                     {{ ucfirst($item->physical_condition) }}
                                 </span>
                             </td>
@@ -212,10 +225,16 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="p-8 text-center text-outline">
+                            <td colspan="7" class="p-8 text-center text-on-surface-variant dark:text-inverse-primary">
                                 <span class="material-symbols-outlined text-3xl mb-1 block">inventory_2</span>
-                                <p class="font-headline font-semibold text-sm">No se encontraron activos con los filtros indicados.</p>
+                                <p class="font-headline font-semibold text-sm text-primary dark:text-surface">No se encontraron activos con los filtros indicados.</p>
                                 <p class="font-body text-xs mt-0.5">Intente con otros criterios o registre un nuevo activo.</p>
+                                @if (request()->hasAny(['search', 'category_id', 'status', 'physical_condition', 'location']))
+                                    <a href="{{ route('equipment.index') }}" class="mt-3 inline-flex items-center gap-1 font-mono text-xs font-bold text-secondary hover:underline">
+                                        <span class="material-symbols-outlined text-sm">filter_alt_off</span>
+                                        Limpiar filtros
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforelse

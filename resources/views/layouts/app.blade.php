@@ -205,12 +205,12 @@
     <!-- ========================================================================= -->
     <!-- TOP APP BAR INSTITUCIONAL (Barra Superior Fija)                           -->
     <!-- ========================================================================= -->
-    <header id="private-topbar" class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container shadow-xs transition-colors duration-200 min-h-16 lg:ml-72 lg:w-[calc(100%-18rem)]">
+    <header id="private-topbar" class="sticky top-0 z-40 w-full bg-surface dark:bg-primary border-b border-outline-variant/60 dark:border-primary-container transition-[margin-left,width] duration-300 ease-in-out shadow-xs min-h-16">
         <div class="w-full px-4 sm:px-6 lg:px-8 min-h-16 flex items-center justify-between">
             
             <!-- Identidad institucional -->
             <div class="flex items-center gap-3">
-                <button aria-label="Cerrar menú de navegación" aria-controls="private-side-drawer" aria-expanded="true" class="fixed left-4 top-3 z-[60] p-2 rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container neu-raised" id="private-drawer-toggle" type="button" title="Mostrar u ocultar menú">
+                <button aria-label="Abrir menú de navegación" aria-controls="private-side-drawer" aria-expanded="false" class="fixed left-4 top-3 z-[60] p-2 rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container neu-raised" id="private-drawer-toggle" type="button" title="Mostrar u ocultar menú">
                     <span class="material-symbols-outlined">menu</span>
                 </button>
                 <a href="{{ Auth::user()->role === 'tecnico' ? route('incidents.index') : route('dashboard') }}" class="flex flex-col pl-12">
@@ -344,8 +344,8 @@
         </div>
     </header>
 
-    <div class="fixed inset-0 z-40 hidden bg-primary/45 backdrop-blur-sm lg:hidden" id="private-drawer-backdrop"></div>
-    <aside aria-label="Menú principal de navegación" aria-hidden="true" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col border-r border-outline-variant/50 bg-surface p-5 shadow-2xl transition-transform duration-300 dark:border-primary-container dark:bg-primary-container lg:translate-x-0" id="private-side-drawer">
+    <div class="fixed inset-0 z-40 hidden bg-primary/45 backdrop-blur-sm transition-opacity duration-300" id="private-drawer-backdrop"></div>
+    <aside aria-label="Menú principal de navegación" aria-hidden="true" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-col border-r border-outline-variant/50 bg-surface p-5 shadow-2xl transition-transform duration-300 dark:border-primary-container dark:bg-primary-container" id="private-side-drawer">
         <div class="flex items-center justify-between border-b border-outline-variant/40 pb-5 dark:border-primary">
             <div class="flex items-center gap-3">
                 <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-container text-secondary-container dark:bg-primary">
@@ -357,10 +357,10 @@
                 </div>
             </div>
             <div class="flex items-center gap-1">
-                <button aria-label="Fijar menú" aria-pressed="false" class="rounded-lg p-2 text-outline hover:bg-surface-container hover:text-secondary" id="private-drawer-pin" type="button" title="Fijar menú">
+                <button aria-label="Fijar menú" aria-pressed="false" class="rounded-lg p-2 text-outline hover:bg-surface-container hover:text-secondary dark:text-inverse-primary dark:hover:bg-primary" id="private-drawer-pin" type="button" title="Fijar menú">
                     <span class="material-symbols-outlined">push_pin</span>
                 </button>
-                <button aria-label="Cerrar menú de navegación" class="rounded-lg p-2 text-outline hover:bg-surface-container lg:hidden" id="private-drawer-close" type="button">
+                <button aria-label="Ocultar menú de navegación" class="rounded-lg p-2 text-outline hover:bg-surface-container dark:text-inverse-primary dark:hover:bg-primary" id="private-drawer-close" type="button">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
@@ -386,7 +386,7 @@
         </div>
     </aside>
 
-    <main id="private-main" class="ml-0 w-full flex-1 overflow-y-auto p-4 sm:p-6 lg:ml-72 lg:w-[calc(100%-18rem)] lg:p-8">
+    <main id="private-main" class="ml-0 w-full flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 transition-[margin-left,width] duration-300 ease-in-out">
             
             <!-- Encabezado de Página (Si se define en la vista) -->
             @hasSection('header')
@@ -475,24 +475,22 @@
         const privateMain = document.getElementById('private-main');
         const privateDesktopMenu = window.matchMedia('(min-width: 1024px)');
         const privatePinnedMenuKey = 'siga_private_menu_pinned';
-        const privateOpenMenuKey = 'siga_private_menu_open';
         let privateMenuPinned = localStorage.getItem(privatePinnedMenuKey) === 'true';
 
-        function setPrivateDrawerOpen(isOpen, persist = true) {
+        function setPrivateDrawerOpen(isOpen) {
             if (!privateDrawer || !privateDrawerBackdrop) return;
             privateDrawer.classList.toggle('-translate-x-full', !isOpen);
-            privateDrawer.style.translate = isOpen ? '0 0' : '-100% 0';
             privateDrawer.setAttribute('aria-hidden', String(!isOpen));
             privateDrawerToggle?.setAttribute('aria-expanded', String(isOpen));
             privateDrawerToggle?.setAttribute('aria-label', isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
             if (privateDesktopMenu.matches) {
-                document.body.classList.toggle('private-menu-collapsed', !isOpen);
+                const isDocked = isOpen && privateMenuPinned;
                 [privateTopbar, privateMain].forEach((element) => {
                     if (!element) return;
-                    element.style.marginLeft = isOpen ? '18rem' : '0';
-                    element.style.width = isOpen ? 'calc(100% - 18rem)' : '100%';
+                    element.style.marginLeft = isDocked ? '18rem' : '0';
+                    element.style.width = isDocked ? 'calc(100% - 18rem)' : '100%';
                 });
-                privateDrawerBackdrop.classList.add('hidden');
+                privateDrawerBackdrop.classList.toggle('hidden', !isOpen || privateMenuPinned);
                 document.body.style.overflow = '';
             } else {
                 [privateTopbar, privateMain].forEach((element) => {
@@ -503,13 +501,10 @@
                 privateDrawerBackdrop.classList.toggle('hidden', !isOpen);
                 document.body.style.overflow = isOpen ? 'hidden' : '';
             }
-            if (persist) localStorage.setItem(privateOpenMenuKey, String(isOpen));
         }
 
         function isPrivateDrawerOpen() {
-            return privateDesktopMenu.matches
-                ? !document.body.classList.contains('private-menu-collapsed')
-                : !privateDrawer.classList.contains('-translate-x-full');
+            return privateDrawer && !privateDrawer.classList.contains('-translate-x-full');
         }
 
         function updatePrivatePinButton() {
@@ -519,8 +514,7 @@
             privateDrawerPin?.classList.toggle('text-secondary', privateMenuPinned);
         }
 
-        const savedPrivateMenuOpen = localStorage.getItem(privateOpenMenuKey);
-        setPrivateDrawerOpen(privateDesktopMenu.matches && (privateMenuPinned || savedPrivateMenuOpen !== 'false'), false);
+        setPrivateDrawerOpen(privateMenuPinned);
         updatePrivatePinButton();
 
         if (privateDrawerToggle) privateDrawerToggle.addEventListener('click', () => setPrivateDrawerOpen(!isPrivateDrawerOpen()));
@@ -530,14 +524,21 @@
             privateMenuPinned = !privateMenuPinned;
             localStorage.setItem(privatePinnedMenuKey, String(privateMenuPinned));
             updatePrivatePinButton();
-            if (privateMenuPinned) setPrivateDrawerOpen(true);
+            setPrivateDrawerOpen(privateMenuPinned || isPrivateDrawerOpen());
         });
         if (privateDrawer) privateDrawer.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
             if (!privateDesktopMenu.matches || !privateMenuPinned) setPrivateDrawerOpen(false);
         }));
         window.addEventListener('resize', () => {
-            if (privateDesktopMenu.matches) setPrivateDrawerOpen(privateMenuPinned || localStorage.getItem(privateOpenMenuKey) !== 'false', false);
-            else setPrivateDrawerOpen(false, false);
+            setPrivateDrawerOpen(privateMenuPinned);
+        });
+        document.addEventListener('click', (event) => {
+            if (isPrivateDrawerOpen()
+                && !privateMenuPinned
+                && !privateDrawer.contains(event.target)
+                && !privateDrawerToggle?.contains(event.target)) {
+                setPrivateDrawerOpen(false);
+            }
         });
         window.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && isPrivateDrawerOpen()) setPrivateDrawerOpen(false);

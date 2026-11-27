@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('activos')->name('equipment.')->middleware('role:admin,supervisor,encargado_activos')->group(function () {
         Route::get('/', [EquipmentController::class, 'index'])->name('index');
+        Route::get('/sugerencias', [EquipmentController::class, 'suggestions'])->name('suggestions');
         Route::get('/exportar/csv', [EquipmentController::class, 'export'])->name('export');
         Route::post('/', [EquipmentController::class, 'store'])->name('store');
         Route::get('/{equipment}', [EquipmentController::class, 'show'])->name('show');

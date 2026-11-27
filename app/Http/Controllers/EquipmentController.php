@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Equipment;
 use App\Rules\ValidOperativeDate;
 use App\Services\AuditService;
+use App\Services\EquipmentSearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,20 +22,13 @@ class EquipmentController extends Controller
      * Listado maestro de activos con filtros multifactoriales.
      * Basado en: docs/stitch_asset_loan_maintenance_system/control_de_activos_y_pr_stamos_crud
      */
-    public function index(Request $request): View
+    public function index(Request $request, EquipmentSearchService $searchService): View
     {
         $query = Equipment::with(['category', 'openIncidents']);
+        $isFuzzySearch = false;
 
-        // 1. Búsqueda por texto (Nombre, Serie, Código de Activo, Marca o Modelo)
-        if ($search = $request->input('search')) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('inventory_code', 'like', "%{$search}%")
-                  ->orWhere('serial_number', 'like', "%{$search}%")
-                  ->orWhere('brand', 'like', "%{$search}%")
-                  ->orWhere('model', 'like', "%{$search}%");
-            });
-        }
+        // 1. Búsqueda por datos del activo y su categoría.
+        $search = trim($request->validate(['search' => ['nullable', 'string', 'max:100']])['search'] ?? '');
 
         // 2. Filtro por Categoría
         if ($categoryId = $request->input('category_id')) {
@@ -55,6 +50,22 @@ class EquipmentController extends Controller
             $query->where('location', $location);
         }
 
+        if ($search !== '') {
+            $exactQuery = clone $query;
+            $this->applySearch($exactQuery, $search);
+
+            if ($exactQuery->exists()) {
+                $query = $exactQuery;
+            } else {
+                $categoryId = is_numeric($request->input('category_id'))
+                    ? (int) $request->input('category_id')
+                    : null;
+                $similar = $searchService->similar($search, categoryId: $categoryId);
+                $query->whereIn('id', $similar->pluck('id'));
+                $isFuzzySearch = $similar->isNotEmpty() && $query->exists();
+            }
+        }
+
         // Conteo rápido para insignias de estado
         $counts = [
             'total' => Equipment::count(),
@@ -68,7 +79,42 @@ class EquipmentController extends Controller
         $categories = Category::where('is_active', true)->get();
         $locations = Equipment::select('location')->distinct()->pluck('location');
 
-        return view('private.equipment.index', compact('equipment', 'categories', 'locations', 'counts'));
+        return view('private.equipment.index', compact('equipment', 'categories', 'locations', 'counts', 'isFuzzySearch'));
+    }
+
+    public function suggestions(Request $request, EquipmentSearchService $searchService): JsonResponse
+    {
+        $validated = $request->validate([
+            'q' => ['nullable', 'string', 'max:100'],
+            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+        ]);
+        $search = trim($validated['q'] ?? '');
+
+        if (mb_strlen($search) < 2) {
+            return response()->json([]);
+        }
+
+        $categoryId = isset($validated['category_id']) ? (int) $validated['category_id'] : null;
+        $exactQuery = Equipment::with('category')->when(
+            $categoryId,
+            fn (Builder $query) => $query->where('category_id', $categoryId)
+        );
+        $this->applySearch($exactQuery, $search);
+        $exact = $exactQuery->orderBy('name')->limit(8)->get();
+        $similar = $exact->isEmpty()
+            ? $searchService->similar($search, categoryId: $categoryId)
+            : collect();
+
+        return response()->json($exact->concat($similar)->take(8)->map(fn ($item) => [
+            'id' => $item->id,
+            'name' => $item->name,
+            'brand' => $item->brand,
+            'model' => $item->model,
+            'inventory_code' => $item->inventory_code,
+            'category_name' => $item->category?->name ?? 'General',
+            'category_code' => $item->category?->code ?? '',
+            'is_similar' => !$exact->contains('id', $item->id),
+        ])->values());
     }
 
     /**
@@ -274,6 +320,22 @@ class EquipmentController extends Controller
             }
             fclose($handle);
         }, 200, $headers);
+    }
+
+    private function applySearch(Builder $query, string $search): void
+    {
+        $query->where(function (Builder $matches) use ($search) {
+            $pattern = "%{$search}%";
+            $matches->whereRaw('LOWER(name) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(inventory_code) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(serial_number) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(brand) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(model) LIKE LOWER(?)', [$pattern])
+                ->orWhereRaw('LOWER(specifications) LIKE LOWER(?)', [$pattern])
+                ->orWhereHas('category', fn (Builder $category) => $category
+                    ->whereRaw('LOWER(name) LIKE LOWER(?)', [$pattern])
+                    ->orWhereRaw('LOWER(code) LIKE LOWER(?)', [$pattern]));
+        });
     }
 }
 
