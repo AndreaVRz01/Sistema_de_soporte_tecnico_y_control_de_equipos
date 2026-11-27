@@ -142,8 +142,21 @@
                             <td class="p-3.5 max-w-xs">
                                 <p class="font-headline font-semibold text-xs text-primary dark:text-surface truncate">{{ $ticket->title }}</p>
                                 <p class="font-body text-[11px] text-outline truncate">{{ $ticket->description }}</p>
-                                <span class="inline-block mt-0.5 px-2 py-0.2 rounded font-mono text-[9px] bg-surface-container text-outline">
-                                    {{ str_replace('_', ' ', strtoupper($ticket->type)) }}
+                                @php
+                                    $serviceTypeLabels = [
+                                        'hardware' => 'Hardware',
+                                        'software' => 'Software',
+                                        'daño_fisico' => 'Daño físico',
+                                        'desgaste_natural' => 'Desgaste natural',
+                                        'perdida_accesorio' => 'Pérdida de accesorio',
+                                        'mantenimiento_preventivo' => 'Mantenimiento preventivo',
+                                    ];
+                                    $rawType = str_replace('_', ' ', mb_strtolower((string) $ticket->type, 'UTF-8'));
+                                    $formattedType = $serviceTypeLabels[$ticket->type]
+                                        ?? (mb_strtoupper(mb_substr($rawType, 0, 1, 'UTF-8'), 'UTF-8') . mb_substr($rawType, 1, null, 'UTF-8'));
+                                @endphp
+                                <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full font-mono text-[10px] font-semibold bg-surface-container border border-outline-variant/40 text-[#001a2b] dark:!text-[#001a2b]">
+                                    {{ $formattedType }}
                                 </span>
                             </td>
 

@@ -53,8 +53,8 @@
     </div>
 @endif
 
-<section class="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8" id="hero">
-    <div class="overflow-hidden rounded-3xl bg-primary-container px-6 py-8 text-white shadow-lg sm:px-10 sm:py-10">
+<section class="relative z-30 mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 lg:px-8" id="hero">
+    <div class="relative rounded-3xl bg-primary-container px-6 py-8 text-white shadow-lg sm:px-10 sm:py-10">
         <div class="max-w-3xl">
             <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-secondary-container">
                 <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
@@ -106,9 +106,8 @@
 
                 {{-- Menú desplegable de sugerencias y semejanzas en tiempo real --}}
                 <div id="searchSuggestions"
-                     data-equipment-suggestions
-                     aria-label="Sugerencias de equipos"
-                     class="neu-floating hidden absolute z-50 left-0 right-0 top-full mt-2 rounded-2xl bg-surface dark:bg-primary-container border border-outline-variant/40 overflow-hidden divide-y divide-outline-variant/20 max-h-80 overflow-y-auto">
+                     aria-live="polite"
+                     class="hidden absolute z-[70] left-0 right-0 top-full mt-2 rounded-2xl bg-white text-[#001a2b] dark:bg-primary-container dark:text-surface shadow-2xl border border-outline-variant/40 dark:border-outline-variant/25 divide-y divide-outline-variant/20 max-h-80 overflow-y-auto">
                 </div>
             </form>
         </div>
@@ -275,11 +274,11 @@
                             @endif
 
                             {{-- Estado de disponibilidad --}}
-                            <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-emerald-500/95 text-white px-2.5 py-1 font-mono text-[10px] font-bold uppercase shadow-md backdrop-blur-xs">
+                            <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-emerald-600/95 text-white px-2.5 py-1 font-mono text-[10px] font-bold uppercase shadow-md backdrop-blur-xs">
                                 <span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span> Disponible
                             </span>
                             {{-- Código institucional --}}
-                            <span class="absolute right-3 top-3 rounded-full bg-white/95 px-2.5 py-1 font-mono text-[10px] font-bold text-primary shadow-md border border-outline-variant/30">
+                            <span class="absolute right-3 top-3 rounded-full bg-primary/90 text-white px-2.5 py-1 font-mono text-[10px] font-bold shadow-md border border-white/25 backdrop-blur-xs">
                                 {{ $item->inventory_code }}
                             </span>
                         </div>
@@ -309,12 +308,12 @@
 
                             {{-- Datos lógicos: Ubicación y Estado físico --}}
                             <div class="mt-4 space-y-2 border-t border-outline-variant/40 pt-3">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-outline flex items-center gap-1">
+                                <div class="flex items-start justify-between gap-3 text-xs">
+                                    <span class="text-outline flex items-center gap-1 shrink-0">
                                         <span class="material-symbols-outlined text-sm">location_on</span>
                                         Lugar de entrega:
                                     </span>
-                                    <span class="font-medium text-primary dark:text-surface truncate max-w-[150px]">{{ $item->location }}</span>
+                                    <span class="font-medium text-primary dark:text-surface text-right break-words">{{ $item->location }}</span>
                                 </div>
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="text-outline flex items-center gap-1">
@@ -538,10 +537,19 @@
                 <span class="font-mono text-xs text-secondary" id="publicLoanEquipCode"></span>
             </div>
 
-            <div class="rounded-xl bg-surface-container-low p-3 dark:bg-primary">
-                <span class="font-mono text-[10px] font-bold uppercase text-outline">Solicitante:</span>
-                <p class="mt-1 font-headline text-sm font-bold text-primary dark:text-surface">{{ Auth::user()->name }}</p>
-                <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">La solicitud se vinculará a tu cuenta institucional aprobada.</p>
+            <div class="rounded-xl bg-surface-container-low p-3 dark:bg-primary space-y-2">
+                <div>
+                    <span class="font-mono text-[10px] font-bold uppercase text-outline">Solicitante:</span>
+                    <p class="mt-1 font-headline text-sm font-bold text-primary dark:text-surface">{{ Auth::user()->name }}</p>
+                    <p class="font-body text-xs text-on-surface-variant dark:text-inverse-primary">La solicitud se vinculará a tu cuenta institucional aprobada.</p>
+                </div>
+                <div class="pt-2 border-t border-outline-variant/30">
+                    <span class="font-mono text-[10px] font-bold uppercase text-outline">Lugar donde se realiza el préstamo:</span>
+                    <p class="mt-0.5 font-headline text-xs font-bold text-primary dark:text-surface flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm text-secondary">location_on</span>
+                        <span>Módulo de Préstamos Edificio A planta baja</span>
+                    </p>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 gap-3">
@@ -624,5 +632,141 @@
         document.getElementById('modalPublicLoan').classList.add('hidden');
     }
 
+    // =========================================================================
+    // LÓGICA DE BÚSQUEDA Y SUGERENCIAS EN TIEMPO REAL (con semejanzas)
+    // =========================================================================
+    const searchInput = document.getElementById('catalogSearchInput');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    let debounceTimer = null;
+
+    function clearSearchInput() {
+        if (!searchInput) return;
+        searchInput.value = '';
+        if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+        if (searchSuggestions) searchSuggestions.classList.add('hidden');
+        // Enviar formulario para recargar resultados limpios
+        document.getElementById('catalogSearchForm').submit();
+    }
+
+    if (searchInput) {
+        function escapeHtml(text) {
+            return String(text ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function fetchAndRenderSuggestions(query) {
+            fetch(`{{ route('public.catalog.suggestions') }}?q=${encodeURIComponent(query)}`, {
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error('Error al consultar sugerencias');
+                    return res.json();
+                })
+                .then(data => {
+                    if (!Array.isArray(data) || data.length === 0) {
+                        searchSuggestions.innerHTML = `
+                            <div class="p-4 text-center text-xs text-[#42474d] dark:text-inverse-primary font-body">
+                                No se encontraron sugerencias para "<span class="font-semibold text-[#001a2b] dark:text-surface">${escapeHtml(query)}</span>".
+                                <br><span class="text-[11px]">Pulsa "Buscar equipos" para hacer una búsqueda amplia.</span>
+                            </div>
+                        `;
+                        searchSuggestions.classList.remove('hidden');
+                        return;
+                    }
+
+                    let html = `
+                        <div class="px-4 py-2 bg-surface-container-low dark:bg-primary text-[10px] font-mono uppercase tracking-wider text-[#835500] dark:text-secondary-container font-bold flex items-center justify-between gap-2">
+                            <span>Sugerencias (${data.length}) · selecciona un equipo o continúa la búsqueda</span>
+                            <span class="text-[10px] lowercase text-[#72787e] dark:text-inverse-primary shrink-0">clic para autocompletar</span>
+                        </div>
+                    `;
+
+                    data.forEach(item => {
+                        const imgHtml = item.image_url
+                            ? `<img src="${escapeHtml(item.image_url)}" alt="" class="w-9 h-9 rounded-lg object-cover shrink-0 border border-outline-variant/30" />`
+                            : `<div class="w-9 h-9 rounded-lg bg-surface-container dark:bg-primary flex items-center justify-center shrink-0 text-[#835500] dark:text-secondary-container"><span class="material-symbols-outlined text-lg">devices</span></div>`;
+
+                        html += `
+                            <button type="button"
+                                    data-suggestion-item
+                                    data-suggestion-name="${escapeHtml(item.name)}"
+                                    class="w-full text-left px-4 py-2.5 hover:bg-surface-container dark:hover:bg-primary/60 flex items-center gap-3 cursor-pointer transition-colors">
+                                ${imgHtml}
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-bold text-[#001a2b] dark:text-surface truncate">${escapeHtml(item.name)}</p>
+                                    <p class="text-[11px] text-[#42474d] dark:text-inverse-primary flex items-center gap-2 truncate">
+                                        <span>${escapeHtml(item.brand)} ${escapeHtml(item.model)}</span>
+                                        <span>·</span>
+                                        <span class="text-[#835500] dark:text-secondary-container font-mono">${escapeHtml(item.category_name)}</span>
+                                    </p>
+                                </div>
+                                <span class="font-mono text-[10px] bg-surface-container-low dark:bg-primary px-2 py-0.5 rounded text-[#001a2b] dark:text-surface border border-outline-variant/30 shrink-0">${escapeHtml(item.inventory_code)}</span>
+                            </button>
+                        `;
+                    });
+
+                    searchSuggestions.innerHTML = html;
+                    searchSuggestions.classList.remove('hidden');
+                })
+                .catch(() => {
+                    searchSuggestions.classList.add('hidden');
+                });
+        }
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (clearSearchBtn) {
+                clearSearchBtn.classList.toggle('hidden', query.length === 0);
+            }
+
+            clearTimeout(debounceTimer);
+
+            if (query.length < 2) {
+                if (searchSuggestions) searchSuggestions.classList.add('hidden');
+                return;
+            }
+
+            debounceTimer = setTimeout(() => fetchAndRenderSuggestions(query), 200);
+        });
+
+        searchInput.addEventListener('focus', function() {
+            const query = this.value.trim();
+            if (query.length >= 2) {
+                fetchAndRenderSuggestions(query);
+            }
+        });
+
+        searchSuggestions.addEventListener('click', (e) => {
+            const option = e.target instanceof Element ? e.target.closest('[data-suggestion-item]') : null;
+            if (!option) return;
+            selectSuggestion(option.dataset.suggestionName || '');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchSuggestions.classList.add('hidden');
+            }
+        });
+    }
+
+    function selectSuggestion(name) {
+        if (!searchInput) return;
+        searchInput.value = name;
+        if (searchSuggestions) searchSuggestions.classList.add('hidden');
+        if (clearSearchBtn) clearSearchBtn.classList.remove('hidden');
+        document.getElementById('catalogSearchForm').submit();
+    }
 </script>
 @endsection

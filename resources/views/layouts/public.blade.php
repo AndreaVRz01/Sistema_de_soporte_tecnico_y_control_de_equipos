@@ -293,7 +293,7 @@
 
         <div class="pt-6 border-t border-outline-variant/20">
             <p class="font-mono text-[10px] text-outline text-center uppercase tracking-widest">
-                SIGA v4.2 • Tactile Design System
+                SIGA v1.0 • Tactile Design System
             </p>
         </div>
     </aside>

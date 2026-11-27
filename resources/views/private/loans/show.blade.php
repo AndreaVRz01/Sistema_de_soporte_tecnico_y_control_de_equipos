@@ -96,6 +96,7 @@
             <div class="neu-inset p-4 rounded-xl space-y-2">
                 <span class="font-mono text-[10px] text-secondary font-bold uppercase tracking-wider block">Condiciones del Préstamo</span>
                 <div class="font-mono text-xs text-on-surface-variant space-y-1.5">
+                    <p><span class="text-outline font-bold">Lugar donde se realiza el préstamo:</span> Módulo de Préstamos Edificio A planta baja</p>
                     <p><span class="text-outline font-bold">Ubicación de Uso:</span> {{ $loan->location_of_use ?? 'Campus Central' }}</p>
                     <p><span class="text-outline font-bold">Propósito:</span> {{ $loan->purpose }}</p>
                     <p><span class="text-outline font-bold">Fecha de Entrega:</span> {{ $loan->loan_date ? $loan->loan_date->format('d/m/Y H:i') : 'Pendiente' }}</p>
